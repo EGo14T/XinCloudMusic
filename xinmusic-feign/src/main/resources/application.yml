@@ -1,0 +1,11 @@
+server:
+  port: 8090 #端口号
+
+eureka:
+  client:
+    serviceUrl: #注册中心的注册地址
+      defaultZone: http://127.0.0.1:8081/eureka/
+
+spring:
+  application:
+    name: XinMusicFeign #服务名称--调用的时候根据名称来调用该服务的方法
