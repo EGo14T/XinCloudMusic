@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/XinCloudMusic.iml" filepath="$PROJECT_DIR$/.idea/XinCloudMusic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oauth2/oauth2.iml" filepath="$PROJECT_DIR$/oauth2/oauth2.iml" />
       <module fileurl="file://$PROJECT_DIR$/XinMusic/xinmusic.iml" filepath="$PROJECT_DIR$/XinMusic/xinmusic.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-eureka/xinmusic-eureka.iml" filepath="$PROJECT_DIR$/xinmusic-eureka/xinmusic-eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-feign/xinmusic-feign.iml" filepath="$PROJECT_DIR$/xinmusic-feign/xinmusic-feign.iml" />

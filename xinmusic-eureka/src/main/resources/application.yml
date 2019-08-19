@@ -4,6 +4,11 @@ server:
 eureka:
   instance:
     hostname: 127.0.0.1
+
+  # server:
+    # enable-self-preservation: false # 关闭自我保护模式
+    # eviction-interval-timer-in-ms: 6000 # 设置清理间隔
+
   client:
     registerWithEureka: false #是否注册自己
     fetchRegistry: false
