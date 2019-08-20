@@ -6,10 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="oauth2" />
         <module name="xinmusic" />
         <module name="xinmusic-eureka" />
         <module name="xinmusic-feign" />
+        <module name="xinmusic-oauth2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +17,7 @@
       <module name="xinmusic" target="1.8" />
       <module name="xinmusic-eureka" target="1.8" />
       <module name="xinmusic-feign" target="1.8" />
+      <module name="xinmusic-oauth2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -25,6 +26,7 @@
       <module name="xinmusic" options="-parameters" />
       <module name="xinmusic-eureka" options="-parameters" />
       <module name="xinmusic-feign" options="-parameters" />
+      <module name="xinmusic-oauth2" options="-parameters" />
     </option>
   </component>
 </project>
