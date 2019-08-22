@@ -27,11 +27,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        auth.inMemoryAuthentication()
-                // 在内存中创建用户并为密码加密
-                .withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
-
     }
 }
