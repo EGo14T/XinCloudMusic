@@ -10,7 +10,7 @@ spring:
     hikari:
       minimum-idle: 5
       idle-timeout: 600000
-      maximum-pool-size: 10
+      maximum-pool-size: 10  #<--限制最大连接
       auto-commit: true
       pool-name: MyHikariCP
       max-lifetime: 1800000
