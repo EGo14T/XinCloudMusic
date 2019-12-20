@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.controller;
 
+import com.ego14t.xinmusicfeign.pojo.MusiclistUser;
 import com.ego14t.xinmusicfeign.service.MusicListService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +13,23 @@ import java.util.List;
  * Description：
  */
 @RestController
-@RequestMapping(value = "/my/music")
+@RequestMapping(value = "/resource")
 public class MusicListController {
     @Resource
     private MusicListService musicListService;
 
-    @GetMapping(value = "/musiclist")
-    public List<Object> musiclist(@RequestParam(value="id") Integer id ){
-        return musicListService.musicList(id);
+    /**
+     * 根据歌单ID获取歌单列表
+    * @param id 歌单ID
+     * @return 歌单列表
+     */
+    @GetMapping(value = "/musiclist/{musicListID}")
+    public List<Object> getMusiclist(@PathVariable(value="musicListID") Integer id ){
+        return musicListService.getMusicList(id);
     }
 
-
+    @PostMapping(value = "/musiclist")
+    public List<Object> addMuscilist(@RequestBody MusiclistUser musiclistUser){
+        return musicListService.addMusicList(musiclistUser);
+    }
 }
