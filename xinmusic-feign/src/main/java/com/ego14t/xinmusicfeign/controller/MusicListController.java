@@ -28,7 +28,8 @@ public class MusicListController {
      */
     @GetMapping(value = "/musiclist/{musicListID}")
     public ResponseEntity<?> getMusiclist(@PathVariable(value="musicListID") Integer id){
-        return new ResponseEntity<>(musicListService.getMusicList(id), HttpStatus.OK);
+        //return new ResponseEntity<>(musicListService.getMusicList(id), HttpStatus.OK);
+        return ResponseJsonResult.OK(musicListService.getMusicList(id),"请求成功");
     }
 
 
@@ -63,15 +64,16 @@ public class MusicListController {
      */
     @DeleteMapping(value = "/musiclist/{musicListID}")
     public ResponseEntity<?> deleteMusicList(@PathVariable(value="musicListID") Integer id){
-        ResponseJsonResult result = musicListService.delMusicList(id);
-        int status = result.getStatus();
-        if (status == 404){
-            return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
-        }else if (status == 405){
-            return new ResponseEntity<>(result,HttpStatus.METHOD_NOT_ALLOWED);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+//        ResponseJsonResult result = musicListService.delMusicList(id);
+//        HttpStatus status = result.getStatus();
+//        if (status == HttpStatus.NOT_FOUND){
+//            return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
+//        }else if (status == HttpStatus.METHOD_NOT_ALLOWED){
+//            return new ResponseEntity<>(result,HttpStatus.METHOD_NOT_ALLOWED);
+//        }else{
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+        return null;
     }
 
     /**

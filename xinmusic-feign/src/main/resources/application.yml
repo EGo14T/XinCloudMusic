@@ -9,3 +9,5 @@ eureka:
 spring:
   application:
     name: XinMusicFeign #服务名称--调用的时候根据名称来调用该服务的方法
+  main:
+    allow-bean-definition-overriding: true  #允许相同的名称覆盖
