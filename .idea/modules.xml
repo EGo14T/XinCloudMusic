@@ -4,8 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/XinCloudMusic.iml" filepath="$PROJECT_DIR$/.idea/XinCloudMusic.iml" />
       <module fileurl="file://$PROJECT_DIR$/XinMusic/xinmusic.iml" filepath="$PROJECT_DIR$/XinMusic/xinmusic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinmusic-comments/xinmusic-comments.iml" filepath="$PROJECT_DIR$/xinmusic-comments/xinmusic-comments.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-eureka/xinmusic-eureka.iml" filepath="$PROJECT_DIR$/xinmusic-eureka/xinmusic-eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-feign/xinmusic-feign.iml" filepath="$PROJECT_DIR$/xinmusic-feign/xinmusic-feign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinmusic-gateway/xinmusic-gateway.iml" filepath="$PROJECT_DIR$/xinmusic-gateway/xinmusic-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-oauth2/xinmusic-oauth2.iml" filepath="$PROJECT_DIR$/xinmusic-oauth2/xinmusic-oauth2.iml" />
     </modules>
   </component>
