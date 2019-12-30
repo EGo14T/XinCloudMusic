@@ -3,7 +3,9 @@ package com.ego14t.xinmusicfeign.service;
 import com.ego14t.xinmusicfeign.pojo.MusicList;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 /**
@@ -17,4 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface MusicService {
     @GetMapping(value = "/music/song/{musicID}")
     MusicList getMusic(@PathVariable(value="musicID") Integer id);
+
+    @PostMapping(value = "/music/song/{musicID}/{musicListID}")
+    String addMusicToList(@PathVariable(name="musicID") Integer musicID,
+                          @PathVariable(name = "musicListID" )Integer musicListID);
+
 }

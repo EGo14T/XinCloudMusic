@@ -3,12 +3,10 @@ package com.ego14t.xinmusicfeign.controller;
 import com.ego14t.xinmusicfeign.pojo.MusiclistUser;
 import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
 import com.ego14t.xinmusicfeign.service.MusicListService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * Create By EGo1ST
@@ -28,8 +26,7 @@ public class MusicListController {
      */
     @GetMapping(value = "/musiclist/{musicListID}")
     public ResponseEntity<?> getMusiclist(@PathVariable(value="musicListID") Integer id){
-        //return new ResponseEntity<>(musicListService.getMusicList(id), HttpStatus.OK);
-        return ResponseJsonResult.OK(musicListService.getMusicList(id),"请求成功");
+        return ResponseJsonResult.OK(musicListService.getMusicList(id),"获取成功");
     }
 
 
@@ -40,10 +37,9 @@ public class MusicListController {
      * @return  歌单的详细信息
      */
     @GetMapping(value = "/musiclist/{userID}/{musicListID}")
-    public List<Object> getMusicList(@PathVariable(value="userID") Integer userId,
+    public ResponseEntity<?> getMusicList(@PathVariable(value="userID") Integer userId,
                                      @PathVariable(name="musicListID") Integer musicListID){
-
-        return musicListService.getMusicList(userId,musicListID);
+        return ResponseJsonResult.OK(musicListService.getMusicList(userId,musicListID),"获取成功");
     }
 
 
@@ -54,7 +50,7 @@ public class MusicListController {
      */
     @PostMapping(value = "/musiclist")
     public ResponseEntity<?> addMuscilist(@RequestBody MusiclistUser musiclistUser){
-        return new ResponseEntity<>(musicListService.addMusicList(musiclistUser),HttpStatus.CREATED);
+        return ResponseJsonResult.CREATED(musicListService.addMusicList(musiclistUser),"创建歌单成功");
     }
 
     /**
@@ -64,15 +60,16 @@ public class MusicListController {
      */
     @DeleteMapping(value = "/musiclist/{musicListID}")
     public ResponseEntity<?> deleteMusicList(@PathVariable(value="musicListID") Integer id){
-//        ResponseJsonResult result = musicListService.delMusicList(id);
-//        HttpStatus status = result.getStatus();
-//        if (status == HttpStatus.NOT_FOUND){
-//            return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
-//        }else if (status == HttpStatus.METHOD_NOT_ALLOWED){
-//            return new ResponseEntity<>(result,HttpStatus.METHOD_NOT_ALLOWED);
-//        }else{
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
+        String result = musicListService.delMusicList(id);
+        if ("404".equals(result)){
+            return ResponseJsonResult.NOT_FOUND(null,"资源未找到！");
+        }
+        if ("401".equals(result)){
+            return ResponseJsonResult.METHOD_NOT_ALLOWED(null,"没有权限！");
+        }
+        if ("204".equals(result)){
+            return ResponseJsonResult.NO_CONTENT(null,null);
+        }
         return null;
     }
 
@@ -86,6 +83,6 @@ public class MusicListController {
     public ResponseEntity<?> updateMusicList(@PathVariable(value = "musicListID")Integer musicListID
                                             ,@RequestBody MusiclistUser musiclistUser)
     {
-        return new ResponseEntity<>(musicListService.updateMusicList(musicListID,musiclistUser),HttpStatus.OK);
+        return ResponseJsonResult.OK(musicListService.updateMusicList(musicListID,musiclistUser),"修改成功");
     }
 }

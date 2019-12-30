@@ -1,6 +1,7 @@
 package com.ego14t.xinmusicfeign.controller;
 
 import com.ego14t.xinmusicfeign.pojo.MusicList;
+import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
 import com.ego14t.xinmusicfeign.service.MusicService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,20 @@ public class MusicController {
             return new ResponseEntity<>("资源不存在",HttpStatus.NOT_FOUND);
         }else{
             return new ResponseEntity<>(musicService.getMusic(musicID), HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "/song/{musicListID}/{musicID}")
+    @ResponseBody
+    public ResponseEntity<?> addMusicToList(@PathVariable(name="musicID") Integer musicID,
+                                            @PathVariable(name = "musicListID" )Integer musicListID){
+
+        String result = musicService.addMusicToList(musicID,musicListID);
+
+        if ("200".equals(result)){
+            return ResponseJsonResult.OK(null,"添加歌曲成功！");
+        }else{
+            return ResponseJsonResult.OK(null,result);
         }
     }
 }

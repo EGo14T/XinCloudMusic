@@ -1,7 +1,6 @@
 package com.ego14t.xinmusicfeign.service;
 
 import com.ego14t.xinmusicfeign.pojo.MusiclistUser;
-import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,7 @@ public interface MusicListService {
     int addMusicList(@RequestBody MusiclistUser musiclistUser);
 
     @DeleteMapping(value = ("/my/music/musiclist/{musicListID}"))
-    ResponseJsonResult delMusicList(@PathVariable(value = "musicListID") Integer id);
+    String delMusicList(@PathVariable(value = "musicListID") Integer id);
 
     @PatchMapping(value = "/my/music/musiclist/{musicListID}")
     int updateMusicList(@PathVariable(value = "musicListID")Integer musicListID

@@ -28,7 +28,6 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>${hikaricp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
