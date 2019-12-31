@@ -1,8 +1,10 @@
 package com.ego14t.comments.mapper;
 
 import com.ego14t.comments.pojo.CommentsInfo;
-import com.ego14t.comments.pojo.example.CommentsInfoExample;
+
 import java.util.List;
+
+import com.ego14t.comments.pojo.example.CommentsInfoExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
