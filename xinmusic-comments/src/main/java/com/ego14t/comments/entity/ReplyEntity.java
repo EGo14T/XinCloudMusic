@@ -1,6 +1,9 @@
 package com.ego14t.comments.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * @author 王富昕
@@ -11,15 +14,16 @@ import lombok.Data;
 
 @Data
 public class ReplyEntity {
+    private Integer id;
+    private String commentId;
+    private String fromId;
+    private String fromName;
+    private String fromAvatar;
     private String toId;
-    private String date;
     private String toName;
     private String toAvatar;
-    private String fromName;
-    private String commentId;
-    private String id;
-    private String fromId;
-    private String fromAvatar;
     private String content;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date;
 
 }

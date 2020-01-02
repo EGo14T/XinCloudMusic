@@ -1,5 +1,6 @@
 package com.ego14t.comments.service;
 
+import com.ego14t.comments.entity.ReplyEntity;
 import com.ego14t.comments.pojo.CommentsInfo;
 import com.ego14t.comments.pojo.CommentsReply;
 
@@ -15,4 +16,5 @@ public interface CommentsService {
     String saveComments(CommentsInfo commentsInfo);
     List<CommentsInfo> findByOwnerId(String ownerId);
     String saveReplay(CommentsReply commentsReply);
+    List<ReplyEntity> getReply(String commentId);
 }

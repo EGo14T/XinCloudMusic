@@ -1,7 +1,10 @@
 package com.ego14t.comments.pojo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -56,12 +59,14 @@ public class CommentsReply implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     /**
      * 修改时间
      */
-    private Date updateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
 }

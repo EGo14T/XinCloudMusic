@@ -1,17 +1,15 @@
 package com.ego14t.comments.controller;
 
 import com.ego14t.comments.entity.CommentsInfoEntity;
+import com.ego14t.comments.entity.ReplyEntity;
 import com.ego14t.comments.pojo.CommentsInfo;
 import com.ego14t.comments.pojo.CommentsReply;
 import com.ego14t.comments.service.CommentsService;
+import com.ego14t.comments.utils.BeanCopyUtils;
 import com.ego14t.comments.utils.UidUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -54,8 +52,9 @@ public class CommentsController {
         List<CommentsInfoEntity> entities = commentsInfos
                 .stream().map(info -> {
                     CommentsInfoEntity entity = new CommentsInfoEntity();
-                    BeanUtils.copyProperties(info,entity);
+                    BeanCopyUtils.copy(info,entity);
                     entity.setDate(info.getCreateTime());
+                    entity.setReply(commentsService.getReply(entity.getId()));
                     return entity;
                 }).collect(Collectors.toList());
         return entities ;
@@ -65,5 +64,11 @@ public class CommentsController {
     @ResponseBody
     public String saveReplay(@RequestBody CommentsReply commentsReply){
         return commentsService.saveReplay(commentsReply);
+    }
+
+    @GetMapping("/getReply/{commentId}")
+    @ResponseBody
+    public List<ReplyEntity> getReply(@PathVariable(value = "commentId") String commentId){
+        return commentsService.getReply(commentId);
     }
 }

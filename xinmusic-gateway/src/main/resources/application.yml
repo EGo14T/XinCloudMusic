@@ -8,4 +8,4 @@ eureka:
 
 spring:
   application:
-    name: XinMusicGateway #服务名称--调用的时候根据名称来调用该服务的方法
+    name: XinMusic-Gateway #服务名称--调用的时候根据名称来调用该服务的方法
