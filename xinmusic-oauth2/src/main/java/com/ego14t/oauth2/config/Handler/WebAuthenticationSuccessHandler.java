@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 public class WebAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
-    @ResponseBody
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
          httpServletResponse.setCharacterEncoding("utf-8");
          httpServletResponse.setContentType("application/json;charset=utf-8");
