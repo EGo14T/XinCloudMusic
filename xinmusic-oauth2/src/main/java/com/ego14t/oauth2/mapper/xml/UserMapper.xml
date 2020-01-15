@@ -2,16 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ego14t.oauth2.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.ego14t.oauth2.pojo.User">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
-    <result column="from_id" jdbcType="VARCHAR" property="fromId" />
-    <result column="from_name" jdbcType="VARCHAR" property="fromName" />
-    <result column="from_avatar" jdbcType="VARCHAR" property="fromAvatar" />
-    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,8 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `type`, owner_id, from_id, from_name, from_avatar, like_num, content, create_time, 
-    update_time
+    id, username, `password`
   </sql>
   <select id="selectByExample" parameterType="com.ego14t.oauth2.pojo.UserExample" resultMap="BaseResultMap">
     select
@@ -81,7 +73,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from comments_info
+    from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -97,137 +89,78 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from comments_info
-    where id = #{id,jdbcType=VARCHAR}
+    from user
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from comments_info
-    where id = #{id,jdbcType=VARCHAR}
+  <!--根据用户名查询密码-->
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{userName,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.ego14t.oauth2.pojo.UserExample">
-    delete from comments_info
+    delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.ego14t.oauth2.pojo.User">
-    insert into comments_info (id, `type`, owner_id, 
-      from_id, from_name, from_avatar, 
-      like_num, content, create_time, 
-      update_time)
-    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{ownerId,jdbcType=VARCHAR}, 
-      #{fromId,jdbcType=VARCHAR}, #{fromName,jdbcType=VARCHAR}, #{fromAvatar,jdbcType=VARCHAR}, 
-      #{likeNum,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into user (id, username, `password`
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ego14t.oauth2.pojo.User">
-    insert into comments_info
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="type != null">
-        `type`,
+      <if test="username != null">
+        username,
       </if>
-      <if test="ownerId != null">
-        owner_id,
-      </if>
-      <if test="fromId != null">
-        from_id,
-      </if>
-      <if test="fromName != null">
-        from_name,
-      </if>
-      <if test="fromAvatar != null">
-        from_avatar,
-      </if>
-      <if test="likeNum != null">
-        like_num,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
+      <if test="password != null">
+        `password`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="ownerId != null">
-        #{ownerId,jdbcType=VARCHAR},
-      </if>
-      <if test="fromId != null">
-        #{fromId,jdbcType=VARCHAR},
-      </if>
-      <if test="fromName != null">
-        #{fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="fromAvatar != null">
-        #{fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="likeNum != null">
-        #{likeNum,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ego14t.oauth2.pojo.UserExample" resultType="java.lang.Long">
-    select count(*) from comments_info
+    select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update comments_info
+    update user
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.type != null">
-        `type` = #{record.type,jdbcType=TINYINT},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.ownerId != null">
-        owner_id = #{record.ownerId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fromId != null">
-        from_id = #{record.fromId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fromName != null">
-        from_name = #{record.fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fromAvatar != null">
-        from_avatar = #{record.fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="record.likeNum != null">
-        like_num = #{record.likeNum,jdbcType=INTEGER},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      <if test="record.password != null">
+        `password` = #{record.password,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -235,65 +168,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update comments_info
-    set id = #{record.id,jdbcType=VARCHAR},
-      `type` = #{record.type,jdbcType=TINYINT},
-      owner_id = #{record.ownerId,jdbcType=VARCHAR},
-      from_id = #{record.fromId,jdbcType=VARCHAR},
-      from_name = #{record.fromName,jdbcType=VARCHAR},
-      from_avatar = #{record.fromAvatar,jdbcType=VARCHAR},
-      like_num = #{record.likeNum,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    update user
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      `password` = #{record.password,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ego14t.oauth2.pojo.User">
-    update comments_info
+    update user
     <set>
-      <if test="type != null">
-        `type` = #{type,jdbcType=TINYINT},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="ownerId != null">
-        owner_id = #{ownerId,jdbcType=VARCHAR},
-      </if>
-      <if test="fromId != null">
-        from_id = #{fromId,jdbcType=VARCHAR},
-      </if>
-      <if test="fromName != null">
-        from_name = #{fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="fromAvatar != null">
-        from_avatar = #{fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="likeNum != null">
-        like_num = #{likeNum,jdbcType=INTEGER},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ego14t.oauth2.pojo.User">
-    update comments_info
-    set `type` = #{type,jdbcType=TINYINT},
-      owner_id = #{ownerId,jdbcType=VARCHAR},
-      from_id = #{fromId,jdbcType=VARCHAR},
-      from_name = #{fromName,jdbcType=VARCHAR},
-      from_avatar = #{fromAvatar,jdbcType=VARCHAR},
-      like_num = #{likeNum,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

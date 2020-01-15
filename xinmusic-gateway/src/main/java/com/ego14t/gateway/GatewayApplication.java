@@ -7,6 +7,9 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author EGo1ST
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class GatewayApplication {
@@ -23,7 +26,7 @@ public class GatewayApplication {
                 .route(r -> r
                         .path("/my/**")
                         .filters(f->f.stripPrefix(1).prefixPath("/resource"))
-                        .uri("lb://XinMusicFeign/**"))
+                        .uri("lb://XinMusic-Feign/**"))
                 .build();
     }
 

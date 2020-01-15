@@ -1,6 +1,21 @@
+server:
+  port: 9000
+
+eureka:
+  client:
+    serviceUrl: #注册中心的注册地址
+      defaultZone: http://127.0.0.1:8081/eureka/
+    #registerWithEureka: true
+    #fetchRegistry: true #change to true，ok ok Last：Thanks
+    #enabled: true
+  #instance:
+  #  prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
+  #  instance-id: 49.232.14.91:8083 # 线上地址
+
 spring:
   application:
-    name: XinMusic-OAuth2
+    name: xinmusic-oauth2
+
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,5 +31,18 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       connection-test-query: SELECT 1
-server:
-  port: 8083
+
+mybatis:
+  mapper-locations: classpath:com/ego14t/oauth2/mapper/xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: classpath:com/ego14t/oauth2/pojo/  # 注意：对应实体类的路径
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  returnPageInfo: check
+
+logging:
+  level:
+    com.ego14t.oauth2.mapper: debug

@@ -8,14 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="xinmusic-feign" />
         <module name="xinmusic" />
-        <module name="xinmusic-gateway" />
+        <module name="xinmusic-eureka" />
         <module name="xinmusic-comments" />
         <module name="xinmusic-oauth2" />
-        <module name="xinmusic-eureka" />
+        <module name="xinmusic-gateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="oauth2" target="1.8" />
       <module name="xinmusic" target="1.8" />
       <module name="xinmusic-comments" target="1.8" />
       <module name="xinmusic-eureka" target="1.8" />
@@ -26,7 +25,6 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="oauth2" options="-parameters" />
       <module name="xinmusic" options="-parameters" />
       <module name="xinmusic-comments" options="-parameters" />
       <module name="xinmusic-eureka" options="-parameters" />

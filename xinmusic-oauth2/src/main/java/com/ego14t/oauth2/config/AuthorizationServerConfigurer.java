@@ -1,25 +1,31 @@
 package com.ego14t.oauth2.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 
 import javax.annotation.Resource;
 
-@Configuration
+
+/**
+ * @author 王富昕
+ * Created by EGo1ST
+ * Date：Created in 2020/1/15 09:43
+ * Description:
+ */
+
 @EnableAuthorizationServer
-public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+@Configuration
+        public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
 
     @Resource
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 读取客户端配置
-        //clients.withClientDetails(jdbcClientDetails());
+        // 配置客户端
         clients
                 // 使用内存设置
                 .inMemory()
@@ -31,14 +37,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .authorizedGrantTypes("authorization_code")
                 // 授权范围
                 .scopes("app")
+                .autoApprove(true)
                 // 注册回调地址
                 .redirectUris("http://www.baidu.com");
-    }
-
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints
-                .pathMapping("/oauth/token","/xinmusic/token")
-                .pathMapping("/oauth/authorize","/xinmusic/authorize");
     }
 }

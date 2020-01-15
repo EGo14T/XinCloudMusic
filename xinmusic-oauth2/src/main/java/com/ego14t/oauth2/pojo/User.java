@@ -1,64 +1,58 @@
 package com.ego14t.oauth2.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * comments_info
+ * user
  * @author 
  */
 @Data
-public class User implements Serializable {
-    /**
-     * 评论主键id
-     */
-    private String id;
+public class User implements Serializable, UserDetails {
+    private Integer id;
 
-    /**
-     * 评论类型：2：对人评论，1：对项目评论，0：对资源评论
-     */
-    private Byte type;
+    private String username;
 
-    /**
-     * 被评论者id，可以是人、项目、资源
-     */
-    private String ownerId;
-
-    /**
-     * 评论者id
-     */
-    private String fromId;
-
-    /**
-     * 评论者名字
-     */
-    private String fromName;
-
-    /**
-     * 评论者头像
-     */
-    private String fromAvatar;
-
-    /**
-     * 点赞的数量
-     */
-    private Integer likeNum;
-
-    /**
-     * 评论内容
-     */
-    private String content;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
+    private String password;
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return authorities;
+    }
+
+    // 账户是否过期,过期无法验证
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    // 指定用户是否被锁定或者解锁,锁定的用户无法进行身份验证
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    // 指示是否已过期的用户的凭据(密码),过期的凭据防止认证
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    // 是否被禁用,禁用的用户不能身份验证
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
