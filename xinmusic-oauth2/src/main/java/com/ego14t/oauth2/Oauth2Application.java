@@ -11,10 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class Oauth2Application {
-
     public static void main(String[] args) {
         System.out.println("加密后"+new BCryptPasswordEncoder().encode("test"));
         SpringApplication.run(Oauth2Application.class, args);
     }
-
 }

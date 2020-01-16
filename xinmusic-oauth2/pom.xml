@@ -64,6 +64,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>8.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -126,6 +133,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.jks</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
@@ -134,7 +142,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.yml</include>
-                    <include>**/*.yml</include>
+                    <include>**/*.jks</include>
                 </includes>
             </resource>
         </resources>

@@ -1,12 +1,28 @@
 package com.ego14t.oauth2.config;
 
+import jdk.nashorn.internal.parser.Token;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.token.*;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.security.KeyPair;
+import java.util.Arrays;
 
 
 /**
@@ -18,10 +34,14 @@ import javax.annotation.Resource;
 
 @EnableAuthorizationServer
 @Configuration
-        public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private AuthenticationManager authenticationManager;
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -34,11 +54,43 @@ import javax.annotation.Resource;
                 // client_secret
                 .secret(passwordEncoder.encode("secret"))
                 // 授权类型
-                .authorizedGrantTypes("authorization_code")
+                .authorizedGrantTypes("authorization_code","password","refresh_token")
                 // 授权范围
-                .scopes("app")
+                .scopes("all")
                 .autoApprove(true)
                 // 注册回调地址
-                .redirectUris("http://www.baidu.com");
+                .redirectUris("/getCode");
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security
+                .tokenKeyAccess("permitAll()")    // 公钥公开
+                .checkTokenAccess("isAuthenticated()")    // 检测token公开
+                .allowFormAuthenticationForClients();    // 表单认证
+
+    }
+
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.tokenStore(new InMemoryTokenStore())
+                .accessTokenConverter(accessTokenConverter())
+                .authenticationManager(authenticationManager)
+                .reuseRefreshTokens(false);
+    }
+
+    /** 配置jwt转换器 */
+    @Bean
+    public AccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        jwtAccessTokenConverter.setKeyPair(keyPair());
+        return jwtAccessTokenConverter;
+    }
+
+
+    @Bean
+    public KeyPair keyPair() {
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("demojwt.jks"), "keystorepass".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("jwt", "keypairpass".toCharArray());
     }
 }
