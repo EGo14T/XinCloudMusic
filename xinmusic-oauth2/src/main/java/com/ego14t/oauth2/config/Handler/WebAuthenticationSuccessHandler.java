@@ -1,7 +1,7 @@
 package com.ego14t.oauth2.config.Handler;
 
 import com.alibaba.fastjson.JSON;
-import com.ego14t.oauth2.pojo.ResponseJsonResult;
+import com.ego14t.oauth2.entity.ResponseJsonResult;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

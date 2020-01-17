@@ -1,7 +1,7 @@
 package com.ego14t.oauth2.mapper;
 
 import com.ego14t.oauth2.pojo.User;
-import com.ego14t.oauth2.pojo.UserExample;
+import com.ego14t.oauth2.pojo.example.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

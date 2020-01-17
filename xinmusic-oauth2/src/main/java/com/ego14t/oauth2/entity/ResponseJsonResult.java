@@ -1,4 +1,4 @@
-package com.ego14t.oauth2.pojo;
+package com.ego14t.oauth2.entity;
 
 import lombok.Data;
 import lombok.ToString;

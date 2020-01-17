@@ -1,8 +1,7 @@
 package com.ego14t.oauth2.config.Handler;
 
 import com.alibaba.fastjson.JSON;
-import com.ego14t.oauth2.pojo.ResponseJsonResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ego14t.oauth2.entity.ResponseJsonResult;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
@@ -13,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author 王富昕

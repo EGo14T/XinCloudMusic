@@ -2,6 +2,7 @@ package com.ego14t.oauth2.config;
 
 import com.ego14t.oauth2.config.Handler.WebAuthenticationFailureHandler;
 import com.ego14t.oauth2.config.Handler.WebAuthenticationSuccessHandler;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,12 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //加入自定义安全认证
         auth.authenticationProvider(selfAuthenticationProvider);
 
-
-//        auth.inMemoryAuthentication()
-//                // 在内存中创建用户并为密码加密
-//                .withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
-//                .and()
-//                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
+        auth.inMemoryAuthentication()
+                // 在内存中创建用户并为密码加密
+                .withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
+                .and()
+                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
 
     }
     @Override
@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .httpBasic()
               .and()
               .authorizeRequests()
-              .antMatchers("/**").permitAll()
+              .antMatchers("/**","/.well-known/jwks.json").permitAll()
+              .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
               .anyRequest()
               .authenticated()
 

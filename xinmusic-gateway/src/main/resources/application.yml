@@ -9,17 +9,7 @@ eureka:
 spring:
   application:
     name: XinMusic-Gateway #服务名称--调用的时候根据名称来调用该服务的方法
-
-
-security:
-  oauth2:
-    client:
-      client-id: client
-      client-secret: secret
-      access-token-uri: http://localhost:9000/oauth/token
-      user-authorization-uri: http://localhost:8080/oauth/authorize
-    resource:
-      token-info-uri: http://localhost:8080/oauth/check_token
+  security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 
 
 

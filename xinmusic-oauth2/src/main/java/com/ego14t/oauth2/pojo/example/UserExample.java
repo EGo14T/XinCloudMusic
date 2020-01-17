@@ -1,4 +1,4 @@
-package com.ego14t.oauth2.pojo;
+package com.ego14t.oauth2.pojo.example;
 
 import java.util.ArrayList;
 import java.util.List;

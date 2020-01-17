@@ -26,7 +26,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class Oauth2Controller {
 
-    private final KeyPair keyPair;
+    @Resource
+    private KeyPair keyPair;
 
     @GetMapping("/.well-known/jwks.json")
     public Map<String, Object> getKey() {

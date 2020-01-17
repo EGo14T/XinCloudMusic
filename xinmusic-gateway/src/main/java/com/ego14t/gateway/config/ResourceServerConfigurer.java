@@ -13,7 +13,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
  */
 
 @EnableWebFluxSecurity
-public class ResourceServerConfig {
+public class ResourceServerConfigurer {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -22,8 +22,6 @@ public class ResourceServerConfig {
                 .anyExchange().authenticated();
 
         http.oauth2ResourceServer().jwt();
-
         return http.build();
     }
-
 }
