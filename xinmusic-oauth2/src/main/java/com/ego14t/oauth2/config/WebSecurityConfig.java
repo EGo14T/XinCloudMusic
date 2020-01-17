@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .httpBasic()
               .and()
               .authorizeRequests()
-              .antMatchers("/**","/.well-known/jwks.json").permitAll()
+              .antMatchers("/login").permitAll()
               .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
               .anyRequest()
               .authenticated()
