@@ -1,6 +1,7 @@
 package com.ego14t.gateway.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -12,16 +13,17 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
  * Description:
  */
 
+@Configuration
 @EnableWebFluxSecurity
 public class ResourceServerConfigurer {
-
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http.authorizeExchange()
-                .pathMatchers("/actuator/**").permitAll()
-                .anyExchange().authenticated();
-
-        http.oauth2ResourceServer().jwt();
+    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        http.csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/login/**").permitAll()
+                .anyExchange().authenticated()
+                .and()
+                .oauth2ResourceServer().jwt();
         return http.build();
     }
 }

@@ -3,8 +3,8 @@ package com.ego14t.oauth2.controller;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPublicKey;
@@ -28,5 +28,11 @@ public class Oauth2Controller {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAKey key = new RSAKey.Builder(publicKey).build();
         return new JWKSet(key).toJSONObject();
+    }
+
+    @GetMapping("/getCode")
+    @ResponseBody
+    public String getCode(@RequestParam String code) {
+        return code;
     }
 }
