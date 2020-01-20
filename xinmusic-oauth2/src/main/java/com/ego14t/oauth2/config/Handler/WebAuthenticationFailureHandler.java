@@ -17,7 +17,7 @@ import java.io.IOException;
  * @author 王富昕
  * Created by EGo1ST
  * Date：Created in 2020/1/15 16:18
- * Description:
+ * Description: 处理登录失败
  */
 @Configuration
 public class WebAuthenticationFailureHandler implements AuthenticationFailureHandler {

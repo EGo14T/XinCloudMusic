@@ -1,5 +1,6 @@
 package com.ego14t.oauth2.config;
 
+import com.ego14t.oauth2.config.Handler.WebAuthenticationEntryPoint;
 import com.ego14t.oauth2.config.Handler.WebAuthenticationFailureHandler;
 import com.ego14t.oauth2.config.Handler.WebAuthenticationSuccessHandler;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
@@ -10,7 +11,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 
@@ -34,11 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private WebAuthenticationSuccessHandler webAuthenticationSuccessHandler;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        // 设置默认的加密方式
-        return new BCryptPasswordEncoder();
-    }
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private WebAuthenticationEntryPoint webAuthenticationEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -49,27 +52,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication()
                 // 在内存中创建用户并为密码加密
-                .withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
+                .withUser("user").password(passwordEncoder.encode("123456")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
+                .withUser("admin").password(passwordEncoder.encode("123456")).roles("ADMIN");
 
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-              .httpBasic()
+                //使用JWT 关闭session
+              .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
               .and()
+                //设置未登录的处理方式
+              .httpBasic().authenticationEntryPoint(webAuthenticationEntryPoint)
+              .and()
+                //设置过滤地址
               .authorizeRequests()
-              .antMatchers("/login","/.well-known/jwks.json","/my").permitAll()
+              .antMatchers("/login","/.well-known/jwks.json","/my","/user/**","/oauth/**","/getCode").permitAll()
               .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
               .anyRequest()
               .authenticated()
-
               .and()
-              .formLogin()  // 开启登录
+                //设置自定义登录
+              .formLogin()
               .loginProcessingUrl("/user/login")
-              .usernameParameter("username")//请求验证参数
-              .passwordParameter("password")//请求验证参数
+                //自定义请求参数 账号 密码
+              .usernameParameter("username")
+              .passwordParameter("password")
+                //登录结果处理方式
               .successHandler(webAuthenticationSuccessHandler) // 登录成功
               .failureHandler(webAuthenticationFailureHandler) // 登录失败
               .permitAll();

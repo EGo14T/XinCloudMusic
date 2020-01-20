@@ -2,9 +2,14 @@ package com.ego14t.oauth2.config.Handler;
 
 import com.alibaba.fastjson.JSON;
 import com.ego14t.oauth2.entity.ResponseJsonResult;
+import com.ego14t.oauth2.service.Oauth2UserService;
+import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +20,7 @@ import java.io.IOException;
  * @author 王富昕
  * Created by EGo1ST
  * Date：Created in 2020/1/15 16:41
- * Description:
+ * Description: 处理登录成功
  */
 @Configuration
 public class WebAuthenticationSuccessHandler implements AuthenticationSuccessHandler {

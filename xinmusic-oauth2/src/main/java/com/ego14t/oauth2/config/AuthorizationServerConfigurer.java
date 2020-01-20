@@ -1,9 +1,12 @@
 package com.ego14t.oauth2.config;
 
+import com.ego14t.oauth2.config.JWTconfig.CustomTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -11,13 +14,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.*;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
 import java.security.KeyPair;
-
+import java.util.Arrays;
 
 
 /**
@@ -31,12 +34,18 @@ import java.security.KeyPair;
 @Configuration
 public class AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
 
-    @Resource
-    private PasswordEncoder passwordEncoder;
 
     @Resource
     private AuthenticationManager authenticationManager;
 
+    @Resource
+    private KeyPair keyPair;
+
+    @Resource
+    private RedisConnectionFactory connectionFactory;
+
+    @Resource
+    private CustomTokenEnhancer customTokenEnhancer;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -47,7 +56,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 // client_id
                 .withClient("client")
                 // client_secret
-                .secret(passwordEncoder.encode("secret"))
+                .secret(passwordEncoder().encode("secret"))
                 // 授权类型
                 .authorizedGrantTypes("authorization_code","password","refresh_token")
                 // 授权范围
@@ -59,6 +68,15 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        /*
+         *  /oauth/authorize : 授权端点
+         *  /oauth/token : 令牌端点
+         *  /oauth/confirm_access : 用户确认授权提交端点
+         *  /oauth/error : 授权服务错误信息端点
+         *  /oauth/check_token : 用于资源服务访问的令牌解析端点
+         *  /oauth/token_key : 提供公钥的端点，如果使用的是JWT令牌。
+         *
+         */
         security
                 .tokenKeyAccess("permitAll()")    // 公钥公开
                 .checkTokenAccess("isAuthenticated()")    // 检测token公开
@@ -67,24 +85,37 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     }
 
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(new InMemoryTokenStore())
-                .accessTokenConverter(accessTokenConverter())
-                .authenticationManager(authenticationManager)
-                .reuseRefreshTokens(false);
+    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter()));
+        endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).authenticationManager(authenticationManager);
     }
 
-    /** 配置jwt转换器 */
+
     @Bean
-    public AccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setKeyPair(keyPair());
-        return jwtAccessTokenConverter;
+    public TokenStore tokenStore() {
+        return new RedisTokenStore(connectionFactory);
     }
 
     @Bean
-    public KeyPair keyPair() {
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mykey.jks"), "shuaibxin666".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("ego1st", "shuaibxin666".toCharArray());
+    public JwtAccessTokenConverter accessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setKeyPair(keyPair);
+        return converter;
+    }
+
+    @Bean
+    @Primary
+    public DefaultTokenServices tokenServices() {
+        final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setTokenStore(tokenStore());
+        defaultTokenServices.setSupportRefreshToken(true);
+        return defaultTokenServices;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        // 设置默认的加密方式
+        return new BCryptPasswordEncoder();
     }
 }
