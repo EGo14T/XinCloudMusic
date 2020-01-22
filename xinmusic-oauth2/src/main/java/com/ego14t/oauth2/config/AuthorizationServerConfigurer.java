@@ -3,11 +3,8 @@ package com.ego14t.oauth2.config;
 import com.ego14t.oauth2.config.JWTconfig.CustomTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -15,11 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.annotation.Resource;
-import java.security.KeyPair;
 import java.util.Arrays;
 
 
@@ -38,14 +32,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     @Resource
     private AuthenticationManager authenticationManager;
 
-    @Resource
-    private KeyPair keyPair;
-
-    @Resource
-    private RedisConnectionFactory connectionFactory;
-
-    @Resource
-    private CustomTokenEnhancer customTokenEnhancer;
+    @Resource DefaultTokenServices defaultTokenServices;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -58,10 +45,11 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 // client_secret
                 .secret(passwordEncoder().encode("secret"))
                 // 授权类型
-                .authorizedGrantTypes("authorization_code","password","refresh_token")
+                .authorizedGrantTypes("password","refresh_token")
                 // 授权范围
                 .scopes("all")
                 .autoApprove(true)
+                //.accessTokenValiditySeconds(20)
                 // 注册回调地址
                 .redirectUris("/getCode");
     }
@@ -86,32 +74,12 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        final TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter()));
-        endpoints.tokenStore(tokenStore()).tokenEnhancer(tokenEnhancerChain).authenticationManager(authenticationManager);
+
+        endpoints
+                .tokenServices(defaultTokenServices)
+                .authenticationManager(authenticationManager);
     }
 
-
-    @Bean
-    public TokenStore tokenStore() {
-        return new RedisTokenStore(connectionFactory);
-    }
-
-    @Bean
-    public JwtAccessTokenConverter accessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setKeyPair(keyPair);
-        return converter;
-    }
-
-    @Bean
-    @Primary
-    public DefaultTokenServices tokenServices() {
-        final DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setTokenStore(tokenStore());
-        defaultTokenServices.setSupportRefreshToken(true);
-        return defaultTokenServices;
-    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
