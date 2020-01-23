@@ -47,11 +47,9 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
                 // 授权类型
                 .authorizedGrantTypes("password","refresh_token")
                 // 授权范围
-                .scopes("all")
-                .autoApprove(true)
+                .scopes("all");
                 //.accessTokenValiditySeconds(20)
                 // 注册回调地址
-                .redirectUris("/getCode");
     }
 
     @Override

@@ -94,8 +94,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/getCode");
     }
 
-
-
     /**
      * 配置这项 支持密码模式
      * @return
