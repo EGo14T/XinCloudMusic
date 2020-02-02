@@ -34,9 +34,9 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("用户名不存在！");
         }
 
-        boolean checkpw = BCrypt.checkpw(password, userDetails.getPassword());
+        boolean check = BCrypt.checkpw(password, userDetails.getPassword());
 
-        if (!checkpw) {
+        if (!check) {
             throw new BadCredentialsException("密码不正确，请重新登陆！");
         }
 
