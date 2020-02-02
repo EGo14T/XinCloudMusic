@@ -7,10 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="xinmusic-feign" />
-        <module name="xinmusic" />
         <module name="xinmusic-eureka" />
         <module name="xinmusic-comments" />
         <module name="xinmusic-oauth2" />
+        <module name="xinmusic-music" />
         <module name="xinmusic-gateway" />
       </profile>
     </annotationProcessing>
@@ -20,6 +20,7 @@
       <module name="xinmusic-eureka" target="1.8" />
       <module name="xinmusic-feign" target="1.8" />
       <module name="xinmusic-gateway" target="1.8" />
+      <module name="xinmusic-music" target="1.8" />
       <module name="xinmusic-oauth2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -30,6 +31,7 @@
       <module name="xinmusic-eureka" options="-parameters" />
       <module name="xinmusic-feign" options="-parameters" />
       <module name="xinmusic-gateway" options="-parameters" />
+      <module name="xinmusic-music" options="-parameters" />
       <module name="xinmusic-oauth2" options="-parameters" />
     </option>
   </component>
