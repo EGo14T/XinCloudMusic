@@ -21,6 +21,7 @@ import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,7 +139,7 @@ public class MusicListServiceImpl implements MusicListService {
      */
     @Override
     public int addMusicList(MusiclistUser musiclistUser) {
-        musiclistUser.setCreateTime(new TimeUtils().nowTimeFormatForDatabase("yyy-MM-dd"));
+        musiclistUser.setCreateTime(LocalDate.now());
         musiclistUser.setMusiclistImg("ego");
         musiclistUserMapper.insertSelective(musiclistUser);
         return musiclistUser.getMusiclistid();

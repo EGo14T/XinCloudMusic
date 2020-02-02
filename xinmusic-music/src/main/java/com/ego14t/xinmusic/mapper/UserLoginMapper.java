@@ -1,6 +1,5 @@
 package com.ego14t.xinmusic.mapper;
 
-import com.ego14t.xinmusic.pojo.UserLogin;
 import com.ego14t.xinmusic.pojo.example.UserLoginExample;
 import org.apache.ibatis.annotations.Param;
 
