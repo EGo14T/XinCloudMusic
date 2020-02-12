@@ -16,5 +16,5 @@ public interface CommentsService {
     String saveComments(CommentsInfo commentsInfo);
     List<CommentsInfo> findByOwnerId(String ownerId);
     String saveReplay(CommentsReply commentsReply);
-    List<ReplyEntity> getReply(String commentId);
+    ReplyEntity getReply(String commentId);
 }

@@ -68,7 +68,7 @@ public class CommentsController {
 
     @GetMapping("/getReply/{commentId}")
     @ResponseBody
-    public List<ReplyEntity> getReply(@PathVariable(value = "commentId") String commentId){
+    public ReplyEntity getReply(@PathVariable(value = "commentId") String commentId){
         return commentsService.getReply(commentId);
     }
 }

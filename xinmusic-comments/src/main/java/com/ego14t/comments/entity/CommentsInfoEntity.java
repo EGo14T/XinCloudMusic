@@ -25,5 +25,5 @@ public class CommentsInfoEntity {
     private String fromAvatar;
     private int likeNum;
     private String content;
-    private List<ReplyEntity> reply;
+    private ReplyEntity reply;
 }

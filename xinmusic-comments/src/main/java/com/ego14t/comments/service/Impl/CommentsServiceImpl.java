@@ -52,17 +52,21 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public List<ReplyEntity> getReply(String commentId) {
+    public ReplyEntity getReply(String commentId) {
         CommentsReplyExample commentsReplyExample = new CommentsReplyExample();
         commentsReplyExample.createCriteria().andCommentIdEqualTo(commentId);
         List<CommentsReply> commentsReplies = commentsReplyMapper.selectByExample(commentsReplyExample);
-        List<ReplyEntity> replyEntities = commentsReplies
-                .stream().map(entity -> {
-                    ReplyEntity replyEntity = new ReplyEntity();
-                    BeanCopyUtils.copy(entity,replyEntity);
-                    replyEntity.setDate(entity.getCreateTime());
-                    return replyEntity;
-                }).collect(Collectors.toList());
-        return replyEntities;
+        if (commentsReplies.isEmpty()){
+            return null;
+        }else{
+            List<ReplyEntity> replyEntities = commentsReplies
+                    .stream().map(entity -> {
+                        ReplyEntity replyEntity = new ReplyEntity();
+                        BeanCopyUtils.copy(entity,replyEntity);
+                        replyEntity.setDate(entity.getCreateTime());
+                        return replyEntity;
+                    }).collect(Collectors.toList());
+            return replyEntities.get(0);
+        }
     }
 }
