@@ -1,5 +1,6 @@
 package com.ego14t.comments.mapper;
 
+import com.ego14t.comments.entity.CommentsEntity;
 import com.ego14t.comments.pojo.Comments;
 import com.ego14t.comments.pojo.example.CommentsExample;
 import java.util.List;
@@ -29,4 +30,10 @@ public interface CommentsMapper {
     int updateByPrimaryKeySelective(Comments record);
 
     int updateByPrimaryKey(Comments record);
+
+    List<CommentsEntity> getCommentsList(String showId,Integer start, Integer total);
+
+    List<CommentsEntity> testSelect(String showId);
+
+    CommentsEntity getOriginComment(String id);
 }

@@ -23,9 +23,9 @@ public class CommentsEntity {
      * 添加评论者头像和名称
      */
 
-    private String userAvatar;
+    private String avatar;
 
-    private String userName;
+    private String name;
 
 
 }

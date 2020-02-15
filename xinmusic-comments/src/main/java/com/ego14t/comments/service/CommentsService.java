@@ -13,5 +13,12 @@ import java.util.List;
  * Description:
  */
 public interface CommentsService {
+    /**
+     * 新增评论
+     * @param comments 评论实体
+     * @return 该条评论
+     */
     CommentsResponseResult saveComments(Comments comments);
+
+    List<CommentsResponseResult> getComments(String showId, Integer page, Integer total);
 }

@@ -1,18 +1,14 @@
 package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.entity.MusicList;
-import com.ego14t.xinmusic.entity.ResponseJsonResult;
-import com.ego14t.xinmusic.mapper.MusicMapper;
 
+import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.MusiclistMusic;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.util.RedisUtil;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

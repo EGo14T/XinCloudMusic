@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+
 @RestController
 @RequestMapping(value = "/comments")
 public class CommentsController {
@@ -26,7 +27,12 @@ public class CommentsController {
         return commentsService.saveComments(comments);
     }
 
-    //@GetMapping(value = "getComments/{showId}")
+    @GetMapping(value = "getComments/{showId}/{page}/{total}")
+    public List<CommentsResponseResult> getComments(@PathVariable(value = "showId")String showId,
+                                                    @PathVariable(value = "page")Integer page,
+                                                    @PathVariable(value = "total")Integer total){
+        return commentsService.getComments(showId,page,total);
+    }
 
 
 }

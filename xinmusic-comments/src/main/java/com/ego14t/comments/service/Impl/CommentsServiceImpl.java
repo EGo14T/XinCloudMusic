@@ -10,10 +10,13 @@ import com.ego14t.comments.pojo.UserInfo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.utils.BeanCopyUtils;
 import com.ego14t.comments.utils.UidUtils;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -47,14 +50,13 @@ public class CommentsServiceImpl implements CommentsService {
 
         CommentsEntity replyComments = new CommentsEntity();
         BeanCopyUtils.copy(comments,replyComments);
-        replyComments.setUserName(fromName);
-        replyComments.setUserAvatar(fromAvatar);
+        replyComments.setName(fromName);
+        replyComments.setAvatar(fromAvatar);
 
         //判断是否是回复别人的评论
         if (comments.getToId().isEmpty()){
             return CommentsResponseResult.builder()
                     .replyComments(replyComments)
-                    .originComments(new CommentsEntity())
                     .build();
         }else{
             CommentsEntity originCommentsEntity = new CommentsEntity();
@@ -63,8 +65,8 @@ public class CommentsServiceImpl implements CommentsService {
             String toName = toInfo.getName();
             String toAvatar = toInfo.getAvatar();
 
-            originCommentsEntity.setUserName(toName);
-            originCommentsEntity.setUserAvatar(toAvatar);
+            originCommentsEntity.setName(toName);
+            originCommentsEntity.setAvatar(toAvatar);
 
             BeanCopyUtils.copy(originComments,originCommentsEntity);
             return CommentsResponseResult.builder()
@@ -72,6 +74,26 @@ public class CommentsServiceImpl implements CommentsService {
                     .originComments(originCommentsEntity)
                     .build();
         }
+
+    }
+
+    @Override
+    public List<CommentsResponseResult> getComments(String showId, Integer page, Integer total) {
+        //计算偏移
+        int start = (page - 1) * total;
+        //自定义sql查询资源下的所有评论
+        List<CommentsEntity> commentsEntities = commentsMapper.getCommentsList(showId,start,total);
+        //使用stream流
+        return commentsEntities.stream()
+                .map(entity-> {
+                    CommentsResponseResult result = new CommentsResponseResult();
+                    if (!entity.getToId().isEmpty()){
+                        result.setOriginComments(commentsMapper.getOriginComment(entity.getToId()));
+                    }
+                    result.setReplyComments(entity);
+                    return result;
+                })
+                .collect(Collectors.toList());
 
     }
 }

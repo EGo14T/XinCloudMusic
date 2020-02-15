@@ -11,6 +11,21 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+
+  <resultMap id="CommentsEntity" type="com.ego14t.comments.entity.CommentsEntity">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="show_id" jdbcType="VARCHAR" property="showId" />
+    <result column="from_id" jdbcType="VARCHAR" property="fromId" />
+    <result column="to_id" jdbcType="VARCHAR" property="toId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="like" jdbcType="INTEGER" property="like" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -263,4 +278,31 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <select id="getCommentsList" resultMap="CommentsEntity">
+    SELECT
+      a.*,
+      b.name,
+      b.avatar
+    FROM comments a,
+         user_info b
+    WHERE
+        a.from_id = b.id
+      AND a.show_id = #{showId,jdbcType=VARCHAR}
+    order by create_time DESC
+    limit #{start,jdbcType=INTEGER},#{total,jdbcType=INTEGER};
+  </select>
+
+  <select id="getOriginComment" parameterType="java.lang.String" resultMap="CommentsEntity">
+    SELECT
+        a.*,
+        b.`name`,
+        b.avatar
+    FROM
+        comments a,
+        user_info b
+    WHERE
+        a.from_id = b.id
+        AND a.id = #{id,jdbcType=VARCHAR};
+  </select>
 </mapper>
