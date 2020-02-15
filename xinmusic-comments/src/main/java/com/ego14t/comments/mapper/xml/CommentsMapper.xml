@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ego14t.comments.mapper.CommentsInfoMapper">
-  <resultMap id="BaseResultMap" type="com.ego14t.comments.pojo.CommentsInfo">
+<mapper namespace="com.ego14t.comments.mapper.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.ego14t.comments.pojo.Comments">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="owner_id" jdbcType="VARCHAR" property="ownerId" />
+    <result column="show_id" jdbcType="VARCHAR" property="showId" />
     <result column="from_id" jdbcType="VARCHAR" property="fromId" />
-    <result column="from_name" jdbcType="VARCHAR" property="fromName" />
-    <result column="from_avatar" jdbcType="VARCHAR" property="fromAvatar" />
-    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="to_id" jdbcType="VARCHAR" property="toId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="like" jdbcType="INTEGER" property="like" />
+    <result column="state" jdbcType="INTEGER" property="state" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,16 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `type`, owner_id, from_id, from_name, from_avatar, like_num, content, create_time, 
-    update_time
+    id, show_id, from_id, to_id, content, `like`, `state`, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.ego14t.comments.pojo.example.CommentsInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.ego14t.comments.pojo.example.CommentsExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from comments_info
+    from comments
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -100,134 +97,114 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from comments_info
+    from comments
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from comments_info
+    delete from comments
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ego14t.comments.pojo.example.CommentsInfoExample">
-    delete from comments_info
+  <delete id="deleteByExample" parameterType="com.ego14t.comments.pojo.example.CommentsExample">
+    delete from comments
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ego14t.comments.pojo.CommentsInfo">
-    insert into comments_info (id, `type`, owner_id, 
-      from_id, from_name, from_avatar, 
-      like_num, content, create_time, 
-      update_time)
-    values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{ownerId,jdbcType=VARCHAR}, 
-      #{fromId,jdbcType=VARCHAR}, #{fromName,jdbcType=VARCHAR}, #{fromAvatar,jdbcType=VARCHAR}, 
-      #{likeNum,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.ego14t.comments.pojo.Comments">
+    insert into comments (id, show_id, from_id, 
+      to_id, content, `like`, 
+      `state`, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{showId,jdbcType=VARCHAR}, #{fromId,jdbcType=VARCHAR}, 
+      #{toId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{like,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ego14t.comments.pojo.CommentsInfo" useGeneratedKeys="true" keyProperty="id">
-    insert into comments_info
+  <insert id="insertSelective" parameterType="com.ego14t.comments.pojo.Comments">
+    insert into comments
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="type != null">
-        `type`,
-      </if>
-      <if test="ownerId != null">
-        owner_id,
+      <if test="showId != null">
+        show_id,
       </if>
       <if test="fromId != null">
         from_id,
       </if>
-      <if test="fromName != null">
-        from_name,
-      </if>
-      <if test="fromAvatar != null">
-        from_avatar,
-      </if>
-      <if test="likeNum != null">
-        like_num,
+      <if test="toId != null">
+        to_id,
       </if>
       <if test="content != null">
         content,
       </if>
+      <if test="like != null">
+        `like`,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
       <if test="createTime != null">
         create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
-      </if>
-      <if test="ownerId != null">
-        #{ownerId,jdbcType=VARCHAR},
+      <if test="showId != null">
+        #{showId,jdbcType=VARCHAR},
       </if>
       <if test="fromId != null">
         #{fromId,jdbcType=VARCHAR},
       </if>
-      <if test="fromName != null">
-        #{fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="fromAvatar != null">
-        #{fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="likeNum != null">
-        #{likeNum,jdbcType=INTEGER},
+      <if test="toId != null">
+        #{toId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
+      <if test="like != null">
+        #{like,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ego14t.comments.pojo.example.CommentsInfoExample" resultType="java.lang.Long">
-    select count(*) from comments_info
+  <select id="countByExample" parameterType="com.ego14t.comments.pojo.example.CommentsExample" resultType="java.lang.Long">
+    select count(*) from comments
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update comments_info
+    update comments
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.type != null">
-        `type` = #{record.type,jdbcType=TINYINT},
-      </if>
-      <if test="record.ownerId != null">
-        owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      <if test="record.showId != null">
+        show_id = #{record.showId,jdbcType=VARCHAR},
       </if>
       <if test="record.fromId != null">
         from_id = #{record.fromId,jdbcType=VARCHAR},
       </if>
-      <if test="record.fromName != null">
-        from_name = #{record.fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.fromAvatar != null">
-        from_avatar = #{record.fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="record.likeNum != null">
-        like_num = #{record.likeNum,jdbcType=INTEGER},
+      <if test="record.toId != null">
+        to_id = #{record.toId,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
+      <if test="record.like != null">
+        `like` = #{record.like,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        `state` = #{record.state,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -235,65 +212,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update comments_info
+    update comments
     set id = #{record.id,jdbcType=VARCHAR},
-      `type` = #{record.type,jdbcType=TINYINT},
-      owner_id = #{record.ownerId,jdbcType=VARCHAR},
+      show_id = #{record.showId,jdbcType=VARCHAR},
       from_id = #{record.fromId,jdbcType=VARCHAR},
-      from_name = #{record.fromName,jdbcType=VARCHAR},
-      from_avatar = #{record.fromAvatar,jdbcType=VARCHAR},
-      like_num = #{record.likeNum,jdbcType=INTEGER},
+      to_id = #{record.toId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      `like` = #{record.like,jdbcType=INTEGER},
+      `state` = #{record.state,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ego14t.comments.pojo.CommentsInfo">
-    update comments_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.ego14t.comments.pojo.Comments">
+    update comments
     <set>
-      <if test="type != null">
-        `type` = #{type,jdbcType=TINYINT},
-      </if>
-      <if test="ownerId != null">
-        owner_id = #{ownerId,jdbcType=VARCHAR},
+      <if test="showId != null">
+        show_id = #{showId,jdbcType=VARCHAR},
       </if>
       <if test="fromId != null">
         from_id = #{fromId,jdbcType=VARCHAR},
       </if>
-      <if test="fromName != null">
-        from_name = #{fromName,jdbcType=VARCHAR},
-      </if>
-      <if test="fromAvatar != null">
-        from_avatar = #{fromAvatar,jdbcType=VARCHAR},
-      </if>
-      <if test="likeNum != null">
-        like_num = #{likeNum,jdbcType=INTEGER},
+      <if test="toId != null">
+        to_id = #{toId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
+      <if test="like != null">
+        `like` = #{like,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.ego14t.comments.pojo.CommentsInfo">
-    update comments_info
-    set `type` = #{type,jdbcType=TINYINT},
-      owner_id = #{ownerId,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.ego14t.comments.pojo.Comments">
+    update comments
+    set show_id = #{showId,jdbcType=VARCHAR},
       from_id = #{fromId,jdbcType=VARCHAR},
-      from_name = #{fromName,jdbcType=VARCHAR},
-      from_avatar = #{fromAvatar,jdbcType=VARCHAR},
-      like_num = #{likeNum,jdbcType=INTEGER},
+      to_id = #{toId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      `like` = #{like,jdbcType=INTEGER},
+      `state` = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

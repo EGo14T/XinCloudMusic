@@ -1,8 +1,8 @@
 package com.ego14t.comments.service;
 
-import com.ego14t.comments.entity.ReplyEntity;
-import com.ego14t.comments.pojo.CommentsInfo;
-import com.ego14t.comments.pojo.CommentsReply;
+import com.ego14t.comments.entity.CommentsEntity;
+import com.ego14t.comments.entity.CommentsResponseResult;
+import com.ego14t.comments.pojo.Comments;
 
 import java.util.List;
 
@@ -13,8 +13,5 @@ import java.util.List;
  * Description:
  */
 public interface CommentsService {
-    String saveComments(CommentsInfo commentsInfo);
-    List<CommentsInfo> findByOwnerId(String ownerId);
-    String saveReplay(CommentsReply commentsReply);
-    ReplyEntity getReply(String commentId);
+    CommentsResponseResult saveComments(Comments comments);
 }

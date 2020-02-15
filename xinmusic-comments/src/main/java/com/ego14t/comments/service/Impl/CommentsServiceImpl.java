@@ -1,20 +1,20 @@
 package com.ego14t.comments.service.Impl;
 
-import com.ego14t.comments.entity.ReplyEntity;
-import com.ego14t.comments.mapper.CommentsInfoMapper;
-import com.ego14t.comments.mapper.CommentsReplyMapper;
-import com.ego14t.comments.pojo.CommentsInfo;
-import com.ego14t.comments.pojo.CommentsReply;
-import com.ego14t.comments.pojo.example.CommentsInfoExample;
-import com.ego14t.comments.pojo.example.CommentsReplyExample;
+
+import com.ego14t.comments.entity.CommentsEntity;
+import com.ego14t.comments.entity.CommentsResponseResult;
+import com.ego14t.comments.mapper.CommentsMapper;
+import com.ego14t.comments.mapper.UserInfoMapper;
+import com.ego14t.comments.pojo.Comments;
+import com.ego14t.comments.pojo.UserInfo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.utils.BeanCopyUtils;
+import com.ego14t.comments.utils.UidUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+
 
 /**
  * @author 王富昕
@@ -26,47 +26,52 @@ import java.util.stream.Collectors;
 public class CommentsServiceImpl implements CommentsService {
 
     @Resource
-    private CommentsInfoMapper commentsInfoMapper;
+    private CommentsMapper commentsMapper;
 
     @Resource
-    private CommentsReplyMapper commentsReplyMapper;
-
-
-    @Override
-    public String saveComments(CommentsInfo commentsInfo) {
-        commentsInfoMapper.insertSelective(commentsInfo);
-        return commentsInfo.getId();
-    }
+    private UserInfoMapper userInfoMapper;
 
     @Override
-    public List<CommentsInfo> findByOwnerId(String ownerId) {
-        CommentsInfoExample commentsInfoExample = new CommentsInfoExample();
-        commentsInfoExample.createCriteria().andOwnerIdEqualTo(ownerId);
-        return commentsInfoMapper.selectByExample(commentsInfoExample);
-    }
+    public CommentsResponseResult saveComments(Comments comments) {
 
-    @Override
-    public String saveReplay(CommentsReply commentsReply) {
-        commentsReplyMapper.insertSelective(commentsReply);
-        return commentsReply.getCommentId();
-    }
+        //设置基础值 全局唯一ID  创建时间  状态
+        comments.setId(UidUtils.genUniqueKey());
+        comments.setCreateTime(LocalDateTime.now());
+        comments.setState(1);
+        commentsMapper.insertSelective(comments);
 
-    @Override
-    public ReplyEntity getReply(String commentId) {
-        CommentsReplyExample commentsReplyExample = new CommentsReplyExample();
-        commentsReplyExample.createCriteria().andCommentIdEqualTo(commentId);
-        List<CommentsReply> commentsReplies = commentsReplyMapper.selectByExample(commentsReplyExample);
-        if (commentsReplies.isEmpty()){
-            return null;
+        //查询用户昵称和头像信息
+        UserInfo fromInfo = userInfoMapper.selectByPrimaryKey(comments.getFromId());
+        String fromName = fromInfo.getName();
+        String fromAvatar = fromInfo.getAvatar();
+
+        CommentsEntity replyComments = new CommentsEntity();
+        BeanCopyUtils.copy(comments,replyComments);
+        replyComments.setUserName(fromName);
+        replyComments.setUserAvatar(fromAvatar);
+
+        //判断是否是回复别人的评论
+        if (comments.getToId().isEmpty()){
+            return CommentsResponseResult.builder()
+                    .replyComments(replyComments)
+                    .originComments(new CommentsEntity())
+                    .build();
         }else{
-            List<ReplyEntity> replyEntities = commentsReplies
-                    .stream().map(entity -> {
-                        ReplyEntity replyEntity = new ReplyEntity();
-                        BeanCopyUtils.copy(entity,replyEntity);
-                        replyEntity.setDate(entity.getCreateTime());
-                        return replyEntity;
-                    }).collect(Collectors.toList());
-            return replyEntities.get(0);
+            CommentsEntity originCommentsEntity = new CommentsEntity();
+            Comments originComments = commentsMapper.selectByPrimaryKey(comments.getToId());
+            UserInfo toInfo = userInfoMapper.selectByPrimaryKey(originComments.getFromId());
+            String toName = toInfo.getName();
+            String toAvatar = toInfo.getAvatar();
+
+            originCommentsEntity.setUserName(toName);
+            originCommentsEntity.setUserAvatar(toAvatar);
+
+            BeanCopyUtils.copy(originComments,originCommentsEntity);
+            return CommentsResponseResult.builder()
+                    .replyComments(replyComments)
+                    .originComments(originCommentsEntity)
+                    .build();
         }
+
     }
 }
