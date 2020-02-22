@@ -28,6 +28,7 @@ public class CommentsController {
     }
 
     @GetMapping(value = "getComments/{showId}/{page}/{total}")
+    @ResponseBody
     public List<CommentsResponseResult> getComments(@PathVariable(value = "showId")String showId,
                                                     @PathVariable(value = "page")Integer page,
                                                     @PathVariable(value = "total")Integer total){

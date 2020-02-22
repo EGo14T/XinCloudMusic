@@ -5,6 +5,7 @@ import com.ego14t.oauth2.config.Handler.WebAuthenticationFailureHandler;
 import com.ego14t.oauth2.config.Handler.WebAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -56,7 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.requestMatchers().antMatchers(HttpMethod.OPTIONS, "/oauth/**")
+                .and()
+                .cors()
+                .and()
+                .csrf().disable()
                 //使用JWT 关闭session
               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
               .and()

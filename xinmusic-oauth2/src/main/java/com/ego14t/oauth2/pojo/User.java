@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Data
 public class User implements Serializable, UserDetails {
-    private Integer id;
+    private String id;
 
     private String username;
 
