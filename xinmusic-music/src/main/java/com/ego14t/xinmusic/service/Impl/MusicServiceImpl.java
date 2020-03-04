@@ -6,7 +6,6 @@ import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.MusiclistMusic;
-import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.util.RedisUtil;
 import org.springframework.stereotype.Service;

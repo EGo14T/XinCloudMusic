@@ -45,10 +45,9 @@ public class MusicListController {
     }
 
 
-
     @GetMapping(value = "/musiclist/{userID}")
     @ResponseBody
-    @ApiOperation(value="根据歌单id返回歌单详细信息",notes="根据歌单id返回歌单详细信息")
+    @ApiOperation(value="根据歌单id返回用户的歌单列表",notes="歌单列表  而不是歌曲列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "int")
     })
@@ -57,6 +56,16 @@ public class MusicListController {
         return musicListService.getMusicListInfo(userId);
 
     }
+
+//    @GetMapping(value = "/musiclist/{musicListID}")
+//    @ResponseBody
+//    @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+//    })
+
+
+
 
     /**
      * 根据歌单id删除歌单

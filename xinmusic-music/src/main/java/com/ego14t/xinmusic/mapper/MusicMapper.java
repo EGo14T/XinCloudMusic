@@ -2,16 +2,17 @@ package com.ego14t.xinmusic.mapper;
 
 import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.example.MusicExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
+@Mapper
 public interface MusicMapper {
-    int countByExample(MusicExample example);
+    long countByExample(MusicExample example);
 
     int deleteByExample(MusicExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(Music record);
 
@@ -19,7 +20,7 @@ public interface MusicMapper {
 
     List<Music> selectByExample(MusicExample example);
 
-    Music selectByPrimaryKey(Integer id);
+    Music selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") Music record, @Param("example") MusicExample example);
 
@@ -29,11 +30,13 @@ public interface MusicMapper {
 
     int updateByPrimaryKey(Music record);
 
-    List<Music> searchMusicList(Integer id);
 
-    List<Music> searchCollection(Integer userId);
+    //自定义
+    List<Music> searchMusicList(String id);
 
-    List<Music> searchNumList(Integer musicListID,Integer userId);
+    List<Music> searchCollection(String userId);
 
-    void delMusicListById(Integer id);
+    List<Music> searchNumList(String musicListID,String userId);
+
+    void delMusicListById(String id);
 }

@@ -2,7 +2,6 @@ package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.entity.MusicListInfo;
-import com.ego14t.xinmusic.entity.ResponseJsonResult;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
@@ -10,14 +9,12 @@ import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
 import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.MusiclistMusic;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
+import com.ego14t.xinmusic.pojo.MusiclistUserKey;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
 import com.ego14t.xinmusic.util.BeanCopyUtils;
-import com.ego14t.xinmusic.util.TimeUtils;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,10 +45,10 @@ public class MusicListServiceImpl implements MusicListService {
      * @param userId  用户ID
      * @return MusicList
      * 自定义sql语句进行联表查询
-     * Description：查询歌单
+     * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<MusicList> getMusicList(Integer musicListID,Integer userId) {
+    public List<MusicList> getMusicList(String musicListID,String userId) {
         List<Music> musics = musicMapper.searchNumList(musicListID,userId);
         List<MusicList> musicLists = new ArrayList<>();
         for (Music music : musics) {
@@ -75,7 +72,7 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     @Override
-    public List<MusicListInfo> getMusicListInfo(Integer userId) {
+    public List<MusicListInfo> getMusicListInfo(String userId) {
         MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
         musiclistUserExample.createCriteria().andUseridEqualTo(userId);
         List<MusiclistUser> musiclistUsers = musiclistUserMapper.selectByExample(musiclistUserExample);
@@ -103,10 +100,9 @@ public class MusicListServiceImpl implements MusicListService {
      * Description：删除歌单
      */
     @Override
-    public String delMusicList(Integer id) {
+    public String delMusicList(String id) {
 
         MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(id);
-        
 
         MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
         musiclistMusicExample.createCriteria().andMusiclistidEqualTo(id);
@@ -120,7 +116,7 @@ public class MusicListServiceImpl implements MusicListService {
             if (musiclistUser.getStatus()==0){
                 return "401";
             }else if(musiclistMusics.size() == 0){
-                musiclistUserMapper.deleteByPrimaryKey(id);
+                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey());
                 return "204";
 
             }else {

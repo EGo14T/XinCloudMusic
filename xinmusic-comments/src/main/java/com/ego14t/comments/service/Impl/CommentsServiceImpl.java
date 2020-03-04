@@ -10,7 +10,6 @@ import com.ego14t.comments.pojo.UserInfo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.utils.BeanCopyUtils;
 import com.ego14t.comments.utils.UidUtils;
-import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

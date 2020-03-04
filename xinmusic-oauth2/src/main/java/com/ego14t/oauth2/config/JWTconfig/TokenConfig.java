@@ -67,8 +67,8 @@ public class TokenConfig {
         defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
-        defaultTokenServices.setAccessTokenValiditySeconds(120);
-        defaultTokenServices.setRefreshTokenValiditySeconds(240);
+        defaultTokenServices.setAccessTokenValiditySeconds(36000);
+        defaultTokenServices.setRefreshTokenValiditySeconds(36000);
         return defaultTokenServices;
     }
 }

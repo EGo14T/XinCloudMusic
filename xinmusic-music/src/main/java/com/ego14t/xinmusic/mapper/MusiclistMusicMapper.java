@@ -2,12 +2,13 @@ package com.ego14t.xinmusic.mapper;
 
 import com.ego14t.xinmusic.pojo.MusiclistMusic;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
+@Mapper
 public interface MusiclistMusicMapper {
-    int countByExample(MusiclistMusicExample example);
+    long countByExample(MusiclistMusicExample example);
 
     int deleteByExample(MusiclistMusicExample example);
 

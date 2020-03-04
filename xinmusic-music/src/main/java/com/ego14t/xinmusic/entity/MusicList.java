@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class MusicList implements Serializable {
     private static final long serialVersionUID = 716387502575184309L;
 
-    private int id;
+    private String id;
     private String name;
     private String artist;
     private String album;

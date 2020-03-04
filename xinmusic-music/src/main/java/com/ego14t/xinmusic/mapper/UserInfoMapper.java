@@ -2,16 +2,17 @@ package com.ego14t.xinmusic.mapper;
 
 import com.ego14t.xinmusic.pojo.UserInfo;
 import com.ego14t.xinmusic.pojo.example.UserInfoExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
+@Mapper
 public interface UserInfoMapper {
-    int countByExample(UserInfoExample example);
+    long countByExample(UserInfoExample example);
 
     int deleteByExample(UserInfoExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(UserInfo record);
 
@@ -19,7 +20,7 @@ public interface UserInfoMapper {
 
     List<UserInfo> selectByExample(UserInfoExample example);
 
-    UserInfo selectByPrimaryKey(Integer id);
+    UserInfo selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
 
