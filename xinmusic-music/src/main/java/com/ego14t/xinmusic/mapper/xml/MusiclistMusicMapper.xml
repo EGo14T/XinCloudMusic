@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ego14t.xinmusic.mapper.MusiclistMusicMapper">
-  <resultMap id="BaseResultMap" type="com.ego14t.xinmusic.pojo.MusiclistMusic">
-    <result column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
-    <result column="musicID" jdbcType="VARCHAR" property="musicid" />
+  <resultMap id="BaseResultMap" type="com.ego14t.xinmusic.pojo.MusiclistMusicKey">
+    <id column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
+    <id column="musicID" jdbcType="VARCHAR" property="musicid" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -88,17 +88,22 @@
       </if>
     </if>
   </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusicKey">
+    delete from musiclist_music
+    where musicListID = #{musiclistid,jdbcType=VARCHAR}
+      and musicID = #{musicid,jdbcType=VARCHAR}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ego14t.xinmusic.pojo.example.MusiclistMusicExample">
     delete from musiclist_music
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusic">
+  <insert id="insert" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusicKey">
     insert into musiclist_music (musicListID, musicID)
     values (#{musiclistid,jdbcType=VARCHAR}, #{musicid,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusic">
+  <insert id="insertSelective" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusicKey">
     insert into musiclist_music
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="musiclistid != null">
@@ -145,4 +150,13 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+
+  <select id="selectByPrimaryKey" parameterType="com.ego14t.xinmusic.pojo.MusiclistMusicKey" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from musiclist_music
+    where musicListID = #{musiclistid,jdbcType=VARCHAR}
+    and musicID = #{musicid,jdbcType=VARCHAR}
+  </select>
 </mapper>

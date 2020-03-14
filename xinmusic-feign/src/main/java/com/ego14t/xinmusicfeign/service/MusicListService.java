@@ -22,19 +22,20 @@ public interface MusicListService {
      * @return 歌单信息
      */
     @GetMapping(value = "/my/music/musiclist/{userID}")
-    List<Object> getMusicList(@PathVariable(value="userID") Integer id);
+    List<Object> getMusicList(@PathVariable(value="userID") String id);
 
     @GetMapping(value = "/my/music/musiclist/{userID}/{musicListID}")
-    List<Object> getMusicList(@PathVariable(value="userID") Integer userId,
-                              @PathVariable(name="musicListID") Integer musicListID);
+    List<Object> getMusicList(@PathVariable(value="userID") String userId,
+                              @PathVariable(name="musicListID") String musicListID);
 
     @PostMapping(value = "my/music/musiclist")
-    int addMusicList(@RequestBody MusiclistUser musiclistUser);
+    String addMusicList(@RequestBody MusiclistUser musiclistUser);
 
-    @DeleteMapping(value = ("/my/music/musiclist/{musicListID}"))
-    String delMusicList(@PathVariable(value = "musicListID") Integer id);
+    @DeleteMapping(value = ("/my/music/musiclist/{userID}/{musicListID}"))
+    String delMusicList(@PathVariable(value="userID")String userID,
+                        @PathVariable(value="musicListID") String musicListID);
 
     @PatchMapping(value = "/my/music/musiclist/{musicListID}")
-    int updateMusicList(@PathVariable(value = "musicListID")Integer musicListID
+    int updateMusicList(@PathVariable(value = "musicListID")String musicListID
             ,@RequestBody MusiclistUser musiclistUser);
 }

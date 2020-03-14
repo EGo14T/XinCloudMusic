@@ -2,7 +2,7 @@ package com.ego14t.xinmusic.Controller;
 
 
 import com.ego14t.xinmusic.entity.MusicList;
-import com.ego14t.xinmusic.entity.MusicListInfo;
+import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
 import io.swagger.annotations.Api;
@@ -24,8 +24,26 @@ public class MusicListController {
     @Resource
     MusicListService musicListService;
 
+
     /**
-     * 检索歌单
+     * 检索用户的歌单列表
+     * @param userId 用户ID
+     * @return 返回歌单列表
+     */
+    @GetMapping(value = "/musiclist/{userID}")
+    @ResponseBody
+    @ApiOperation(value="根据歌单id返回用户的歌单列表",notes="歌单列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String")
+    })
+    public List<UserMusicListInfo> getUserMusicListInfo(@PathVariable(value="userID") String userId){
+
+        return musicListService.getUserMusicListInfo(userId);
+
+    }
+
+    /**
+     * 检索歌单中的歌曲
      * @param musicListID 歌单ID
      * @param userId 用户ID
      * @return 歌单list
@@ -34,36 +52,24 @@ public class MusicListController {
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "int"),
-            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "int")
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     })
-    public List<MusicList> getMusicList(@PathVariable(name="musicListID") Integer musicListID ,
-                                        @PathVariable(value="userID") Integer userId){
+    public List<MusicList> getMusicList(@PathVariable(name="musicListID") String musicListID ,
+                                        @PathVariable(value="userID") String userId){
 
         return musicListService.getMusicList(musicListID,userId);
 
     }
 
 
-    @GetMapping(value = "/musiclist/{userID}")
-    @ResponseBody
-    @ApiOperation(value="根据歌单id返回用户的歌单列表",notes="歌单列表  而不是歌曲列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "int")
-    })
-    public List<MusicListInfo> getMusicListInfo(@PathVariable(value="userID") Integer userId){
-
-        return musicListService.getMusicListInfo(userId);
-
-    }
-
-//    @GetMapping(value = "/musiclist/{musicListID}")
+//    @GetMapping(value = "/musiclistinfo/{musicListID}")
 //    @ResponseBody
 //    @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
 //    })
-
+//    public
 
 
 
@@ -72,13 +78,17 @@ public class MusicListController {
      * @param musicListID 歌单ID
      * @return 状态
      */
-    @DeleteMapping(value = "/musiclist/{musicListID}")
+    @DeleteMapping(value = "/musiclist/{userID}/{musicListID}")
     @ResponseBody
     @ApiOperation(value = "根据歌单id删除歌单",notes="注意问题点")
-    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "int")
-    public String delMusicList(@PathVariable(value = "musicListID")Integer musicListID){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+    })
+    public String delMusicList(@PathVariable(value = "userID")String userID,
+                               @PathVariable(value = "musicListID")String musicListID){
 
-        return musicListService.delMusicList(musicListID);
+        return musicListService.delMusicList(userID,musicListID);
 
         }
 
@@ -90,10 +100,9 @@ public class MusicListController {
     @PostMapping(value = "/musiclist")
     @ResponseBody
     @ApiOperation(value = "新建歌单",notes="注意问题点")
-    public int addMusicList(
+    public String addMusicList(
             @RequestBody MusiclistUser musiclistUser)
     {
-
         return musicListService.addMusicList(musiclistUser);
     }
 
@@ -107,8 +116,8 @@ public class MusicListController {
     @PatchMapping(value = "/musiclist/{musicListID}")
     @ResponseBody
     @ApiOperation(value = "修改歌单",notes="注意问题点")
-    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "int")
-    public int updateMusicList(@PathVariable(value = "musicListID")Integer musicListID
+    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+    public String updateMusicList(@PathVariable(value = "musicListID")String musicListID
                                          ,@RequestBody MusiclistUser musiclistUser)
     {
         return musicListService.updateMusicList(musicListID,musiclistUser);

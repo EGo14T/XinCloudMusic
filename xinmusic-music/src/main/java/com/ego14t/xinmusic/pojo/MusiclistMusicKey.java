@@ -1,6 +1,8 @@
 package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,7 +10,8 @@ import lombok.Data;
  * @author 
  */
 @Data
-public class MusiclistMusic implements Serializable {
+@AllArgsConstructor
+public class MusiclistMusicKey implements Serializable {
     /**
      * 歌单的唯一标识ID
      */

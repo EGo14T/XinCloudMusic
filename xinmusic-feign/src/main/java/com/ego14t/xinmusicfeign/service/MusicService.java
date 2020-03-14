@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 @FeignClient(value = "music-list-service")
 public interface MusicService {
     @GetMapping(value = "/music/song/{musicID}")
-    MusicList getMusic(@PathVariable(value="musicID") Integer id);
+    MusicList getMusic(@PathVariable(value="musicID") String id);
 
     @PostMapping(value = "/music/song/{musicID}/{musicListID}")
-    String addMusicToList(@PathVariable(name="musicID") Integer musicID,
-                          @PathVariable(name = "musicListID" )Integer musicListID);
+    String addMusicToList(@PathVariable(name="musicID") String musicID,
+                          @PathVariable(name = "musicListID" )String musicListID);
 
 }

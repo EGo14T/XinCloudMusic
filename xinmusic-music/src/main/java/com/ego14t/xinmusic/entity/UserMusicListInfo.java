@@ -9,11 +9,9 @@ import lombok.Data;
  * Description:
  */
 @Data
-public class MusicListInfo {
+public class UserMusicListInfo {
     private Integer musiclistid;
     private String musiclistName;
     private Integer status;
     private Integer iscollecting;
-
-
 }

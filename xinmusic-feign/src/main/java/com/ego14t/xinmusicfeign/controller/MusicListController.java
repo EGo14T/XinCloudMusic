@@ -25,7 +25,7 @@ public class MusicListController {
      * @return 歌单列表
      */
     @GetMapping(value = "/musiclist/{musicListID}")
-    public ResponseEntity<?> getMusiclist(@PathVariable(value="musicListID") Integer id){
+    public ResponseEntity<?> getMusiclist(@PathVariable(value="musicListID") String id){
         return ResponseJsonResult.OK(musicListService.getMusicList(id),"获取成功");
     }
 
@@ -37,8 +37,8 @@ public class MusicListController {
      * @return  歌单的详细信息
      */
     @GetMapping(value = "/musiclist/{userID}/{musicListID}")
-    public ResponseEntity<?> getMusicList(@PathVariable(value="userID") Integer userId,
-                                     @PathVariable(name="musicListID") Integer musicListID){
+    public ResponseEntity<?> getMusicList(@PathVariable(value="userID") String userId,
+                                     @PathVariable(name="musicListID") String musicListID){
         return ResponseJsonResult.OK(musicListService.getMusicList(userId,musicListID),"获取成功");
     }
 
@@ -55,12 +55,14 @@ public class MusicListController {
 
     /**
      * 删除歌单
-     * @param id 歌单ID
+     * @param userID 用户ID
+     * @param musicListID  歌单ID
      * @return 无 状态码
      */
-    @DeleteMapping(value = "/musiclist/{musicListID}")
-    public ResponseEntity<?> deleteMusicList(@PathVariable(value="musicListID") Integer id){
-        String result = musicListService.delMusicList(id);
+    @DeleteMapping(value = "/musiclist/{userID}/{musicListID}")
+    public ResponseEntity<?> deleteMusicList(@PathVariable(value="userID")String userID,
+                                             @PathVariable(value="musicListID") String musicListID){
+        String result = musicListService.delMusicList(userID,musicListID);
         if ("404".equals(result)){
             return ResponseJsonResult.NOT_FOUND(null,"资源未找到！");
         }
@@ -80,7 +82,7 @@ public class MusicListController {
      * @return  修改的歌单ID
      */
     @PatchMapping(value = "/musiclist/{musicListID}")
-    public ResponseEntity<?> updateMusicList(@PathVariable(value = "musicListID")Integer musicListID
+    public ResponseEntity<?> updateMusicList(@PathVariable(value = "musicListID")String musicListID
                                             ,@RequestBody MusiclistUser musiclistUser)
     {
         return ResponseJsonResult.OK(musicListService.updateMusicList(musicListID,musiclistUser),"修改成功");

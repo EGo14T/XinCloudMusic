@@ -5,7 +5,8 @@ import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.pojo.Music;
-import com.ego14t.xinmusic.pojo.MusiclistMusic;
+import com.ego14t.xinmusic.pojo.MusiclistMusicKey;
+import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.util.RedisUtil;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class MusicServiceImpl implements MusicService {
      * @return 歌曲信息
      */
     @Override
-    public MusicList getMusic(int id) {
+    public MusicList getMusic(String id) {
         if (redisUtil.get("musicList::"+id)==null){
             Music music = musicMapper.selectByPrimaryKey(id);
             if (music==null){
@@ -70,7 +71,7 @@ public class MusicServiceImpl implements MusicService {
      * @return 删除信息报文
      */
     @Override
-    public String delMusic(Integer musicListID, Integer musicID) {
+    public String delMusic(String musicListID, String musicID) {
         MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
         //创建查询条件
         musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID)
@@ -81,17 +82,11 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public String addMusicToList(Integer musicListID, Integer musicID) {
-        MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
-        musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID)
-                                              .andMusicidEqualTo(musicID);
-
-        List<MusiclistMusic> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
-        if (musiclistMusics.size()==0){
-            MusiclistMusic musiclistMusic = new MusiclistMusic();
-            musiclistMusic.setMusicid(musicID);
-            musiclistMusic.setMusiclistid(musicListID);
-            musiclistMusicMapper.insert(musiclistMusic);
+    public String addMusicToList(String musicListID, String musicID) {
+        MusiclistMusicKey ans = new MusiclistMusicKey(musicListID,musicID);
+        MusiclistMusicKey musiclistMusicKey = musiclistMusicMapper.selectByPrimaryKey(ans);
+        if (musiclistMusicKey==null){
+            musiclistMusicMapper.insert(ans);
             return "200";
         }else{
             return "歌曲已存在！";

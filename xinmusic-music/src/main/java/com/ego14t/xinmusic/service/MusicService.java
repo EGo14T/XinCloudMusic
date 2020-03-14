@@ -11,10 +11,10 @@ import org.springframework.http.ResponseEntity;
  */
 public interface MusicService {
     //根据歌曲id返回歌曲信息
-    MusicList getMusic(int id);
+    MusicList getMusic(String id);
     //根据歌曲id删除歌曲（从歌单中删除）
-    String delMusic(Integer musicID, Integer musicListID);
+    String delMusic(String musicID, String musicListID);
     //把歌曲添加到歌单中
-    String addMusicToList(Integer musicID, Integer musicListID);
+    String addMusicToList(String musicID, String musicListID);
 
 }

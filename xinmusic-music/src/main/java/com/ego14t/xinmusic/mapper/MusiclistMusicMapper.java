@@ -1,7 +1,7 @@
 package com.ego14t.xinmusic.mapper;
 
-import com.ego14t.xinmusic.pojo.MusiclistMusic;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
+import com.ego14t.xinmusic.pojo.MusiclistMusicKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -12,13 +12,17 @@ public interface MusiclistMusicMapper {
 
     int deleteByExample(MusiclistMusicExample example);
 
-    int insert(MusiclistMusic record);
+    int deleteByPrimaryKey(MusiclistMusicKey key);
 
-    int insertSelective(MusiclistMusic record);
+    int insert(MusiclistMusicKey record);
 
-    List<MusiclistMusic> selectByExample(MusiclistMusicExample example);
+    int insertSelective(MusiclistMusicKey record);
 
-    int updateByExampleSelective(@Param("record") MusiclistMusic record, @Param("example") MusiclistMusicExample example);
+    List<MusiclistMusicKey> selectByExample(MusiclistMusicExample example);
 
-    int updateByExample(@Param("record") MusiclistMusic record, @Param("example") MusiclistMusicExample example);
+    MusiclistMusicKey selectByPrimaryKey(MusiclistMusicKey musiclistMusicKey);
+
+    int updateByExampleSelective(@Param("record") MusiclistMusicKey record, @Param("example") MusiclistMusicExample example);
+
+    int updateByExample(@Param("record") MusiclistMusicKey record, @Param("example") MusiclistMusicExample example);
 }

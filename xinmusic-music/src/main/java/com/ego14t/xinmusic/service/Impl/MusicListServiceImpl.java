@@ -1,13 +1,13 @@
 package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.entity.MusicList;
-import com.ego14t.xinmusic.entity.MusicListInfo;
+import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
 
 import com.ego14t.xinmusic.pojo.Music;
-import com.ego14t.xinmusic.pojo.MusiclistMusic;
+import com.ego14t.xinmusic.pojo.MusiclistMusicKey;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.pojo.MusiclistUserKey;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
@@ -15,6 +15,8 @@ import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
 import com.ego14t.xinmusic.util.BeanCopyUtils;
 
+import com.ego14t.xinmusic.util.IDworker;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -72,16 +74,16 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     @Override
-    public List<MusicListInfo> getMusicListInfo(String userId) {
+    public List<UserMusicListInfo> getUserMusicListInfo(String userId) {
         MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
         musiclistUserExample.createCriteria().andUseridEqualTo(userId);
         List<MusiclistUser> musiclistUsers = musiclistUserMapper.selectByExample(musiclistUserExample);
 
-        List<MusicListInfo> musicListInfos = new ArrayList<>();
+        List<UserMusicListInfo> musicListInfos = new ArrayList<>();
 
         for (MusiclistUser musiclistUser : musiclistUsers) {
-            MusicListInfo musicListInfo = new MusicListInfo();
-            //BeanUtils.copyProperties(musiclistUser,musicListInfo);
+            UserMusicListInfo musicListInfo = new UserMusicListInfo();
+            BeanUtils.copyProperties(musiclistUser,musicListInfo);
             BeanCopyUtils.copy(musiclistUser,musicListInfo);
             if (musiclistUser.getStatus()==0){
                 musicListInfos.add(0,musicListInfo);
@@ -94,20 +96,20 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     /**
-     *
-     * @param id
+     * @param userID 用户ID
+     * @param musicListID 歌单ID
      * @return ResponseJsonResult
      * Description：删除歌单
      */
     @Override
-    public String delMusicList(String id) {
+    public String delMusicList(String userID,String musicListID) {
 
-        MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(id);
+        MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(new MusiclistUserKey(userID,musicListID));
 
         MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
-        musiclistMusicExample.createCriteria().andMusiclistidEqualTo(id);
+        musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID);
 
-        List<MusiclistMusic> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
+        List<MusiclistMusicKey> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
         //System.out.println(musiclistMusics.get(0).getMusicid());
 
         if (musiclistUser==null){
@@ -116,11 +118,11 @@ public class MusicListServiceImpl implements MusicListService {
             if (musiclistUser.getStatus()==0){
                 return "401";
             }else if(musiclistMusics.size() == 0){
-                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey());
+                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey(userID,musicListID));
                 return "204";
 
             }else {
-                musicMapper.delMusicListById(id);
+                musicMapper.delMusicListById(musicListID);
                 return "204";
             }
         }
@@ -134,9 +136,10 @@ public class MusicListServiceImpl implements MusicListService {
      * Description：添加歌单
      */
     @Override
-    public int addMusicList(MusiclistUser musiclistUser) {
+    public String addMusicList(MusiclistUser musiclistUser) {
         musiclistUser.setCreateTime(LocalDate.now());
         musiclistUser.setMusiclistImg("ego");
+        musiclistUser.setMusiclistid(new IDworker(0,0).nextId());
         musiclistUserMapper.insertSelective(musiclistUser);
         return musiclistUser.getMusiclistid();
     }
@@ -148,7 +151,7 @@ public class MusicListServiceImpl implements MusicListService {
          * @return 歌单ID
          */
         @Override
-        public int updateMusicList(Integer id, MusiclistUser musiclistUser) {
+        public String updateMusicList(String id, MusiclistUser musiclistUser) {
             //创建查询条件
             MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
             musiclistUserExample.createCriteria().andMusiclistidEqualTo(id);
