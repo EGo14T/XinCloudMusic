@@ -303,12 +303,12 @@ WHERE
 	d.id;
 </select>
 
-  <delete id="delMusicListById" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" >
+<delete id="delMusicListById" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" >
     DELETE
     musiclist_user,musiclist_music
     FROM
     musiclist_user,musiclist_music
     WHERE musiclist_user.musicListID = musiclist_music.musicListID
     AND musiclist_user.musicListID = #{id,jdbcType=VARCHAR};
-  </delete>
+</delete>
 </mapper>

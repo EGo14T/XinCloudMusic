@@ -2,6 +2,7 @@ package com.ego14t.xinmusic.Controller;
 
 
 import com.ego14t.xinmusic.entity.MusicList;
+import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
@@ -63,13 +64,16 @@ public class MusicListController {
     }
 
 
-//    @GetMapping(value = "/musiclistinfo/{musicListID}")
-//    @ResponseBody
-//    @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
-//    })
-//    public
+    @GetMapping(value = "/musiclistinfo/{musicListID}")
+    @ResponseBody
+    @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+    })
+    public MusicListInfo getMusicListInfo(@PathVariable(name = "musicListID") String musicListID){
+
+        return musicListService.getMusicListInfo(musicListID);
+    }
 
 
 

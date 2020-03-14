@@ -1,6 +1,7 @@
 package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.entity.MusicList;
+import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
@@ -93,6 +94,11 @@ public class MusicListServiceImpl implements MusicListService {
         }
 
         return musicListInfos;
+    }
+
+    @Override
+    public MusicListInfo getMusicListInfo(String musicListID) {
+
     }
 
     /**

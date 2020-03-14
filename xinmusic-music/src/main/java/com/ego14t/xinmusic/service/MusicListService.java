@@ -1,6 +1,7 @@
 package com.ego14t.xinmusic.service;
 
 import com.ego14t.xinmusic.entity.MusicList;
+import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 
@@ -16,6 +17,8 @@ public interface MusicListService {
     List<MusicList> getMusicList(String musicListID,String userID);
     //获取用户歌单
     List<UserMusicListInfo> getUserMusicListInfo(String userID);
+    //获取歌单信息
+    MusicListInfo getMusicListInfo(String musicListID);
     //删除歌单
     String delMusicList(String userID,String musicListID);
     //添加歌单
