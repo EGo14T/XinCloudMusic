@@ -16,7 +16,6 @@ public class CommentsController {
     @Resource
     private CommentsService commentsService;
 
-
     /**
      * 添加评论 相对于资源来说  每首歌曲下面的评论
      * @param comments 评论实体
@@ -27,7 +26,7 @@ public class CommentsController {
         return commentsService.saveComments(comments);
     }
 
-    @GetMapping(value = "getComments/{showId}/{page}/{total}")
+    @GetMapping(value = "/getComments/{showId}/{page}/{total}")
     @ResponseBody
     public List<CommentsResponseResult> getComments(@PathVariable(value = "showId")String showId,
                                                     @PathVariable(value = "page")Integer page,

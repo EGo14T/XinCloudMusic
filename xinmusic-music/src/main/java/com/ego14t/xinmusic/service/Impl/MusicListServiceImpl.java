@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class MusicListServiceImpl implements MusicListService {
 
     @Override
     public MusicListInfo getMusicListInfo(String musicListID) {
-
+        return musiclistUserMapper.searchMusicListInfo(musicListID);
     }
 
     /**
@@ -143,7 +144,7 @@ public class MusicListServiceImpl implements MusicListService {
      */
     @Override
     public String addMusicList(MusiclistUser musiclistUser) {
-        musiclistUser.setCreateTime(LocalDate.now());
+        musiclistUser.setCreateTime(LocalDateTime.now());
         musiclistUser.setMusiclistImg("ego");
         musiclistUser.setMusiclistid(new IDworker(0,0).nextId());
         musiclistUserMapper.insertSelective(musiclistUser);

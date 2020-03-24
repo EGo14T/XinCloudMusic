@@ -42,6 +42,12 @@ public class MusicListController {
         return ResponseJsonResult.OK(musicListService.getMusicList(userId,musicListID),"获取成功");
     }
 
+    @GetMapping(value = "/musiclistinfo/{musicListID}")
+    public ResponseEntity<?>getMusicListInfo(@PathVariable(value = "musicListID")String musiclistID){
+
+        return ResponseJsonResult.OK(musicListService.getMusicListInfo(musiclistID),"获取成功");
+    }
+
 
     /**
      * 添加歌单

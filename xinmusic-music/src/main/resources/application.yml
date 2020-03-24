@@ -13,7 +13,7 @@ eureka:
   #  instance-id: 49.232.14.91:8083 # 线上地址
 spring:
   application:
-      name: music-list-service #服务名称--调用的时候根据名称来调用该服务的方法
+      name: xinmusic-music #服务名称--调用的时候根据名称来调用该服务的方法
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

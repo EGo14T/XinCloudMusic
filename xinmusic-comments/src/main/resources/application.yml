@@ -8,9 +8,9 @@ eureka:
     #registerWithEureka: true
     #fetchRegistry: true #change to true，ok ok Last：Thanks
     #enabled: true
-  #instance:
-  #  prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
-  #  instance-id: 49.232.14.91:8083 # 线上地址
+#  instance:
+#    prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
+#    instance-id: 49.232.14.91:8083 # 线上地址
 
 spring:
   application:

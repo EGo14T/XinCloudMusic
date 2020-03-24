@@ -14,7 +14,7 @@ import java.util.List;
  *
  * 调用xinmusic项目的接口
  */
-@FeignClient(value = "music-list-service")
+@FeignClient(value = "xinmusic-music")
 public interface MusicListService {
     /**
      * 根据歌单ID查询歌单
@@ -27,6 +27,9 @@ public interface MusicListService {
     @GetMapping(value = "/my/music/musiclist/{userID}/{musicListID}")
     List<Object> getMusicList(@PathVariable(value="userID") String userId,
                               @PathVariable(name="musicListID") String musicListID);
+
+    @GetMapping(value = "/my/music/musiclistinfo//{musicListID}")
+    Object getMusicListInfo(@PathVariable(value = "musicListID")String musicListID);
 
     @PostMapping(value = "my/music/musiclist")
     String addMusicList(@RequestBody MusiclistUser musiclistUser);

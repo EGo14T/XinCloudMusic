@@ -1,14 +1,20 @@
 package com.ego14t.xinmusic.entity;
 
 import com.ego14t.xinmusic.pojo.MusiclistUser;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class MusicListInfo {
+public class MusicListInfo extends MusiclistUser {
 
-    private MusiclistUser musiclistUser;
-
+    @Getter
+    @Setter
     private String username;
 
+    @Getter
+    @Setter
     private String avatar;
+
+    public MusicListInfo(String userid, String musiclistid) {
+        super(userid, musiclistid);
+    }
 }

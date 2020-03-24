@@ -27,6 +27,11 @@ public class GatewayApplication {
                         .path("/my/**")
                         .filters(f->f.stripPrefix(1).prefixPath("/resource"))
                         .uri("lb://XinMusic-Feign/**"))
+
+                .route(r -> r
+                        .path("/comments/**")
+                        .filters(f->f.stripPrefix(1).prefixPath("/comments"))
+                        .uri("lb://XinMusic-Feign/**"))
                 .build();
     }
 

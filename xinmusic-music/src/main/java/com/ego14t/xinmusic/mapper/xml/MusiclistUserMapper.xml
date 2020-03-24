@@ -12,6 +12,21 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="isCollecting" jdbcType="INTEGER" property="iscollecting" />
   </resultMap>
+
+  <resultMap id="MusicListInfoResultMap" type="com.ego14t.xinmusic.entity.MusicListInfo">
+    <id column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
+    <id column="userID" jdbcType="VARCHAR" property="userid" />
+    <result column="musicList_name" jdbcType="VARCHAR" property="musiclistName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="musiclist_img" jdbcType="VARCHAR" property="musiclistImg" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="isCollecting" jdbcType="INTEGER" property="iscollecting" />
+    <result column="name" jdbcType="VARCHAR" property="username" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -281,4 +296,20 @@
     where musicListID = #{musiclistid,jdbcType=VARCHAR}
       and userID = #{userid,jdbcType=VARCHAR}
   </update>
+
+
+
+  <!-- 查询歌单信息 -->
+  <select id="searchMusicListInfo" resultMap="MusicListInfoResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" >
+    SELECT
+	a.*,
+	b.`name`,
+	b.avatar
+FROM
+	musiclist_user a,
+	user_info b
+WHERE
+	a.musicListID = #{musiclistid,jdbcType=VARCHAR}
+	AND a.userID = b.id;
+  </select>
 </mapper>

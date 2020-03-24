@@ -2,8 +2,10 @@ package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 /**
@@ -24,7 +26,8 @@ public class MusiclistUser extends MusiclistUserKey implements Serializable {
      */
     @Getter
     @Setter
-    private LocalDate createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     /**
      * 歌曲Tags
