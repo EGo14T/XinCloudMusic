@@ -16,11 +16,15 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @Configuration
 @EnableWebFluxSecurity
 public class ResourceServerConfigurer {
+
+    private final String[] ALLOW_REQUEST = {"/my/**"
+                                           ,"/comments/**"};
+
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http.csrf().disable()
                 .authorizeExchange()
-                .pathMatchers("/login/**").permitAll()
+                .pathMatchers(ALLOW_REQUEST).permitAll()
                 .anyExchange().authenticated()
                 .and()
                 .oauth2ResourceServer().jwt();

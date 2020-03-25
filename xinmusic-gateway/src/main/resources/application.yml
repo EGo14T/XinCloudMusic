@@ -6,9 +6,28 @@ eureka:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8081/eureka/
 
+
+
+
 spring:
   application:
     name: XinMusic-Gateway #服务名称--调用的时候根据名称来调用该服务的方法
+
+  cloud.gateway.routes:
+    - id: music-resource
+      uri: lb://XinMusic-Feign/
+      predicates:
+        - Path=/my/**
+      filters:
+        - StripPrefix=1
+        - PrefixPath=/resource
+
+    - id: music-comments
+      uri: lb://XinMusic-Feign/
+      predicates:
+        - Path=/comments/**
+
+
   security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 
 
