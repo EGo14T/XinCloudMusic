@@ -17,12 +17,20 @@ import java.util.List;
 @FeignClient(value = "xinmusic-music")
 public interface MusicListService {
     /**
-     * 根据歌单ID查询歌单
+     * 根据歌单ID查询歌单 创建&默认
      * @param id 歌单ID
      * @return 歌单信息
      */
-    @GetMapping(value = "/my/music/musiclist/{userID}")
-    List<Object> getMusicList(@PathVariable(value="userID") String id);
+    @GetMapping(value = "/my/music/create/musiclist/{userID}")
+    List<Object> getCreateMusicList(@PathVariable(value="userID") String id);
+
+    /**
+     * 根据歌单ID查询歌单 收藏
+     * @param id 歌单ID
+     * @return 歌单信息
+     */
+    @GetMapping(value = "/my/music/collect/musiclist/{userID}")
+    List<Object> getCollectMusicList(@PathVariable(value="userID") String id);
 
     @GetMapping(value = "/my/music/musiclist/{userID}/{musicListID}")
     List<Object> getMusicList(@PathVariable(value="userID") String userId,

@@ -1,6 +1,7 @@
 package com.ego14t.xinmusic.mapper;
 
 import com.ego14t.xinmusic.entity.MusicListInfo;
+import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.pojo.MusiclistUserKey;
@@ -33,4 +34,8 @@ public interface MusiclistUserMapper {
     int updateByPrimaryKey(MusiclistUser record);
 
     MusicListInfo searchMusicListInfo(String musiclistid);
+
+    List<UserMusicListInfo> getCreateMusicListInfo(String userId);
+
+
 }

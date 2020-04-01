@@ -24,9 +24,19 @@ public class MusicListController {
      * @param id 歌单ID
      * @return 歌单列表
      */
-    @GetMapping(value = "/musiclist/{musicListID}")
-    public ResponseEntity<?> getMusiclist(@PathVariable(value="musicListID") String id){
-        return ResponseJsonResult.OK(musicListService.getMusicList(id),"获取成功");
+    @GetMapping(value = "/create/musiclist/{musicListID}")
+    public ResponseEntity<?> getCreateMusicList(@PathVariable(value="musicListID") String id){
+        return ResponseJsonResult.OK(musicListService.getCreateMusicList(id),"获取创建歌单成功");
+    }
+
+    /**
+     * 根据歌单ID获取歌单列表
+     * @param id 歌单ID
+     * @return 歌单列表
+     */
+    @GetMapping(value = "/collect/musiclist/{musicListID}")
+    public ResponseEntity<?> getCollectMusicList(@PathVariable(value="musicListID") String id){
+        return ResponseJsonResult.OK(musicListService.getCollectMusicList(id),"获取收藏歌单成功");
     }
 
 

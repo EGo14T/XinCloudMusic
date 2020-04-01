@@ -13,5 +13,4 @@ public class UserMusicListInfo {
     private String musiclistid;
     private String musiclistName;
     private Integer status;
-    private Integer iscollecting;
 }

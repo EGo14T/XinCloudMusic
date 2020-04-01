@@ -27,19 +27,36 @@ public class MusicListController {
 
 
     /**
-     * 检索用户的歌单列表
+     * 检索用户的歌单列表(创建&默认)
      * @param userId 用户ID
      * @return 返回歌单列表
      */
-    @GetMapping(value = "/musiclist/{userID}")
+    @GetMapping(value = "/create/musiclist/{userID}")
     @ResponseBody
-    @ApiOperation(value="根据歌单id返回用户的歌单列表",notes="歌单列表")
+    @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String")
     })
-    public List<UserMusicListInfo> getUserMusicListInfo(@PathVariable(value="userID") String userId){
+    public List<UserMusicListInfo> getCreateMusicListInfo(@PathVariable(value="userID") String userId){
 
-        return musicListService.getUserMusicListInfo(userId);
+        return musicListService.getCreateMusicListInfo(userId);
+
+    }
+
+    /**
+     * 检索用户的歌单列表(收藏)
+     * @param userId 用户ID
+     * @return 返回歌单列表
+     */
+    @GetMapping(value = "/collect/musiclist/{userID}")
+    @ResponseBody
+    @ApiOperation(value="根据歌单id返回用户的歌单列表（用户收藏的歌单）",notes="歌单列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String")
+    })
+    public List<UserMusicListInfo> getCollectMusicListInfo(@PathVariable(value="userID") String userId){
+
+        return musicListService.getCollectMusicListInfo(userId);
 
     }
 

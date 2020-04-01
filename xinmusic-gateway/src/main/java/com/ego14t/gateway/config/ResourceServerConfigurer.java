@@ -17,8 +17,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class ResourceServerConfigurer {
 
-    private final String[] ALLOW_REQUEST = {"/my/**"
-                                           ,"/comments/**"};
+    private final String[] ALLOW_REQUEST = {"/comments/**",
+                                            "/my/musiclistinfo/**"};
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {

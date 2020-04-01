@@ -21,7 +21,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,9 +75,10 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     @Override
-    public List<UserMusicListInfo> getUserMusicListInfo(String userId) {
+    public List<UserMusicListInfo> getCreateMusicListInfo(String userId) {
         MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
         musiclistUserExample.createCriteria().andUseridEqualTo(userId);
+        musiclistUserExample.setOrderByClause("create_time");
         List<MusiclistUser> musiclistUsers = musiclistUserMapper.selectByExample(musiclistUserExample);
 
         List<UserMusicListInfo> musicListInfos = new ArrayList<>();
@@ -96,6 +96,14 @@ public class MusicListServiceImpl implements MusicListService {
 
         return musicListInfos;
     }
+
+    @Override
+    public List<UserMusicListInfo> getCollectMusicListInfo(String userId) {
+
+        return musiclistUserMapper.getCreateMusicListInfo(userId);
+    }
+
+
 
     @Override
     public MusicListInfo getMusicListInfo(String musicListID) {

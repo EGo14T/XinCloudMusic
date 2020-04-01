@@ -10,7 +10,6 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="musiclist_img" jdbcType="VARCHAR" property="musiclistImg" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="isCollecting" jdbcType="INTEGER" property="iscollecting" />
   </resultMap>
 
   <resultMap id="MusicListInfoResultMap" type="com.ego14t.xinmusic.entity.MusicListInfo">
@@ -22,9 +21,14 @@
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="musiclist_img" jdbcType="VARCHAR" property="musiclistImg" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="isCollecting" jdbcType="INTEGER" property="iscollecting" />
     <result column="name" jdbcType="VARCHAR" property="username" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+  </resultMap>
+
+  <resultMap id="CollectMusicListResultMap" type="com.ego14t.xinmusic.entity.UserMusicListInfo">
+    <id column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
+    <result column="musicList_name" jdbcType="VARCHAR" property="musiclistName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -87,7 +91,7 @@
   </sql>
   <sql id="Base_Column_List">
     musicListID, userID, musicList_name, create_time, tags, description, musiclist_img, 
-    `status`, isCollecting
+    `status`
   </sql>
   <select id="selectByExample" parameterType="com.ego14t.xinmusic.pojo.example.MusiclistUserExample" resultMap="BaseResultMap">
     select
@@ -132,11 +136,11 @@
   <insert id="insert" parameterType="com.ego14t.xinmusic.pojo.MusiclistUser">
     insert into musiclist_user (musicListID, userID, musicList_name, 
       create_time, tags, description, 
-      musiclist_img, `status`, isCollecting
+      musiclist_img, `status`
       )
     values (#{musiclistid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{musiclistName,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{tags,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{musiclistImg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{iscollecting,jdbcType=INTEGER}
+      #{musiclistImg,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ego14t.xinmusic.pojo.MusiclistUser">
@@ -166,9 +170,6 @@
       <if test="status != null">
         `status`,
       </if>
-      <if test="iscollecting != null">
-        isCollecting,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="musiclistid != null">
@@ -194,9 +195,6 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
-      </if>
-      <if test="iscollecting != null">
-        #{iscollecting,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -233,9 +231,6 @@
       <if test="record.status != null">
         `status` = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.iscollecting != null">
-        isCollecting = #{record.iscollecting,jdbcType=INTEGER},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -250,8 +245,7 @@
       tags = #{record.tags,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       musiclist_img = #{record.musiclistImg,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=INTEGER},
-      isCollecting = #{record.iscollecting,jdbcType=INTEGER}
+      `status` = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -277,9 +271,6 @@
       <if test="status != null">
         `status` = #{status,jdbcType=INTEGER},
       </if>
-      <if test="iscollecting != null">
-        isCollecting = #{iscollecting,jdbcType=INTEGER},
-      </if>
     </set>
     where musicListID = #{musiclistid,jdbcType=VARCHAR}
       and userID = #{userid,jdbcType=VARCHAR}
@@ -291,8 +282,7 @@
       tags = #{tags,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       musiclist_img = #{musiclistImg,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=INTEGER},
-      isCollecting = #{iscollecting,jdbcType=INTEGER}
+      `status` = #{status,jdbcType=INTEGER}
     where musicListID = #{musiclistid,jdbcType=VARCHAR}
       and userID = #{userid,jdbcType=VARCHAR}
   </update>
@@ -300,7 +290,7 @@
 
 
   <!-- 查询歌单信息 -->
-  <select id="searchMusicListInfo" resultMap="MusicListInfoResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" >
+  <select id="searchMusicListInfo" resultMap="MusicListInfoResultMap">
     SELECT
 	a.*,
 	b.`name`,
@@ -311,5 +301,18 @@ FROM
 WHERE
 	a.musicListID = #{musiclistid,jdbcType=VARCHAR}
 	AND a.userID = b.id;
+  </select>
+
+
+  <!-- 查询收藏的歌单 -->
+  <select id="getCreateMusicListInfo" resultMap="CollectMusicListResultMap">
+    SELECT
+	a.musicListID,
+	a.musicList_name,
+	a.`status`
+FROM
+	musiclist_user a
+WHERE
+	a.musicListID IN ( SELECT musiclistID FROM musiclist_collect WHERE userID = #{userId,jdbcType=VARCHAR});
   </select>
 </mapper>

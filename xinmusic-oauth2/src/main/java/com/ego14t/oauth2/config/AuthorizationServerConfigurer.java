@@ -73,7 +73,8 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 
         endpoints
                 .tokenServices(defaultTokenServices)
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .reuseRefreshTokens(false);
     }
 
 

@@ -57,12 +57,6 @@ public class MusiclistUser extends MusiclistUserKey implements Serializable {
     @Setter
     private Integer status;
 
-    /**
-     * 是否被收藏 0未收藏  1已收藏
-     */
-    @Getter
-    @Setter
-    private Integer iscollecting;
 
     private static final long serialVersionUID = 1L;
 

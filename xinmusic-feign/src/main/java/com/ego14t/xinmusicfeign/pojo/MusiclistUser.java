@@ -21,6 +21,5 @@ public class MusiclistUser {
 
     private Integer status;
 
-    private Integer iscollecting;
 
 }

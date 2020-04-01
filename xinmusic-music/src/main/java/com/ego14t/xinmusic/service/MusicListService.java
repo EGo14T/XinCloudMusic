@@ -15,8 +15,10 @@ import java.util.List;
 public interface MusicListService {
     //获取歌单中的歌曲
     List<MusicList> getMusicList(String musicListID,String userID);
-    //获取用户歌单
-    List<UserMusicListInfo> getUserMusicListInfo(String userID);
+    //获取用户歌单（创建&默认）
+    List<UserMusicListInfo> getCreateMusicListInfo(String userID);
+    //获取用户歌单（用户收藏）
+    List<UserMusicListInfo> getCollectMusicListInfo(String userID);
     //获取歌单信息
     MusicListInfo getMusicListInfo(String musicListID);
     //删除歌单
