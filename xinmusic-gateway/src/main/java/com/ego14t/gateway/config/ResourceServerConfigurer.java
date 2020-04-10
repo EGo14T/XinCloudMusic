@@ -18,7 +18,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class ResourceServerConfigurer {
 
     private final String[] ALLOW_REQUEST = {"/comments/**",
-                                            "/my/musiclistinfo/**"};
+                                            "/my/musiclistinfo/**",
+                                            "/oauth/**"};
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {

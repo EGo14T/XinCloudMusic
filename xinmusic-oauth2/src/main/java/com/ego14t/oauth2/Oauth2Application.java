@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableAuthorizationServer
 public class Oauth2Application {
     public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("test"));
+        //System.out.println(new BCryptPasswordEncoder().encode("test"));
         SpringApplication.run(Oauth2Application.class, args);
     }
 }

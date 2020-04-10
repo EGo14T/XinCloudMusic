@@ -14,7 +14,7 @@ eureka:
 
 spring:
   application:
-    name: xinmusic-oauth2
+    name: XinMusic-Oauth #服务名称--调用的时候根据名称来调用该服务的方法
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

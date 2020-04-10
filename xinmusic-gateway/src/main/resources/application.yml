@@ -27,6 +27,10 @@ spring:
       predicates:
         - Path=/comments/**
 
+    - id: music-oauth
+      uri: lb://xinmusic-oauth/
+      predicates:
+        - Path=/oauth/**
 
   security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 
