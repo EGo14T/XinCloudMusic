@@ -48,7 +48,7 @@ public class MusicServiceImpl implements MusicService {
                 MusicList musicList = MusicList.builder()
                         .id(music.getId())
                         .name(music.getName())
-                        .artist(music.getSinger())
+                        .singer(music.getSinger())
                         .album(music.getAlbum())
                         .img(music.getImgurl())
                         .lrc(music.getLrcurl())

@@ -19,7 +19,7 @@ public class MusicList implements Serializable {
 
     private int id;
     private String name;
-    private String artist;
+    private String singer;
     private String album;
     private String length;
     private String url;

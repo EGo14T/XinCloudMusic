@@ -51,14 +51,14 @@ public class MusicListServiceImpl implements MusicListService {
      * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<MusicList> getMusicList(String musicListID,String userId) {
-        List<Music> musics = musicMapper.searchNumList(musicListID,userId);
+    public List<MusicList> getUserMusicList(String musicListID,String userId) {
+        List<Music> musics = musicMapper.searchUserNumList(musicListID,userId);
         List<MusicList> musicLists = new ArrayList<>();
         for (Music music : musics) {
             MusicList musicList = MusicList.builder()
                     .id(music.getId())
                     .name(music.getName())
-                    .artist(music.getSinger())
+                    .singer(music.getSinger())
                     .album(music.getAlbum())
                     .length(music.getLength())
                     .img(music.getImgurl())
@@ -72,6 +72,18 @@ public class MusicListServiceImpl implements MusicListService {
             musicLists.add(musicList);
         }
         return musicLists;
+    }
+
+    /**
+     *
+     * @param musicListID 歌单ID
+     * @return MusicList
+     * 自定义sql语句进行联表查询
+     * Description：查询歌单 中的 所有歌曲
+     */
+    @Override
+    public List<Music> getMusicList(String musicListID) {
+        return musicMapper.searchNumList(musicListID);
     }
 
     @Override

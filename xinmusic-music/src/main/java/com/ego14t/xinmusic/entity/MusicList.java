@@ -1,9 +1,7 @@
 package com.ego14t.xinmusic.entity;
 
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.Tolerate;
 
 import java.io.Serializable;
@@ -21,7 +19,7 @@ public class MusicList implements Serializable {
 
     private String id;
     private String name;
-    private String artist;
+    private String singer;
     private String album;
     private String length;
     private String url;

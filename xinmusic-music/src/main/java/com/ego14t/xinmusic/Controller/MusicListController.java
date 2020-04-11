@@ -4,6 +4,7 @@ package com.ego14t.xinmusic.Controller;
 import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
+import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
 import io.swagger.annotations.Api;
@@ -73,10 +74,25 @@ public class MusicListController {
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     })
-    public List<MusicList> getMusicList(@PathVariable(name="musicListID") String musicListID ,
+    public List<MusicList> getUserMusicList(@PathVariable(name="musicListID") String musicListID ,
                                         @PathVariable(value="userID") String userId){
 
-        return musicListService.getMusicList(musicListID,userId);
+        return musicListService.getUserMusicList(musicListID,userId);
+
+    }
+
+    /**
+     * 检索歌单中的歌曲
+     * @param musicListID 歌单ID
+     * @return 歌单list
+     */
+    @GetMapping(value = "/musiclist/{musicListID}")
+    @ResponseBody
+    @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲",notes="根据歌单id查询歌曲列表")
+    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+    public List<Music> getMusicList(@PathVariable(name="musicListID") String musicListID){
+
+        return musicListService.getMusicList(musicListID);
 
     }
 

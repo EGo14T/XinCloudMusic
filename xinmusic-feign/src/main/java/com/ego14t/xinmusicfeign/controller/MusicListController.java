@@ -41,15 +41,25 @@ public class MusicListController {
 
 
     /**
-     * 根据歌单ID 和 用户ID 查询带状态的歌单详细信息
+     * 根据歌单ID 和 用户ID 查询带状态的歌单歌曲列表
      * @param userId 用户ID
      * @param musicListID 歌单ID
      * @return  歌单的详细信息
      */
     @GetMapping(value = "/musiclist/{userID}/{musicListID}")
-    public ResponseEntity<?> getMusicList(@PathVariable(value="userID") String userId,
+    public ResponseEntity<?> getUserMusicList(@PathVariable(value="userID") String userId,
                                      @PathVariable(name="musicListID") String musicListID){
-        return ResponseJsonResult.OK(musicListService.getMusicList(userId,musicListID),"获取成功");
+        return ResponseJsonResult.OK(musicListService.getUserMusicList(userId,musicListID),"获取成功");
+    }
+
+    /**
+     * 根据歌单ID查询歌单歌曲列表
+     * @param musicListID 歌单ID
+     * @return  歌单的详细信息
+     */
+    @GetMapping(value = "/musiclist/{musicListID}")
+    public ResponseEntity<?> getMusicList(@PathVariable(name="musicListID") String musicListID){
+        return ResponseJsonResult.OK(musicListService.getMusicList(musicListID),"获取成功");
     }
 
     @GetMapping(value = "/musiclistinfo/{musicListID}")

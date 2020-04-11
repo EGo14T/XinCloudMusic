@@ -283,7 +283,7 @@
 
 
     <!--根据歌单id，用户id，查询musiclist_music表,和user_music表。返回带收藏信息的总结果集-->
-<select id="searchNumList" resultMap="BaseResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample">
+<select id="searchUserNumList" resultMap="BaseResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample">
     SELECT
 	d.*,
 	c.musicID
@@ -302,7 +302,21 @@ WHERE
 	ORDER BY
 	d.id;
 </select>
-
+  <!-- 根据歌单ID 查询歌单中的歌曲列表-->
+<select id="searchNumList" resultMap="BaseResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample">
+SELECT
+	a.*
+FROM
+	music a
+WHERE
+	a.id IN (
+	SELECT
+		b.musicID
+	FROM
+		musiclist_music b
+WHERE
+	b.musicListID = #{musicListID,jdbcType=VARCHAR});
+</select>
 <delete id="delMusicListById" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" >
     DELETE
     musiclist_user,musiclist_music
