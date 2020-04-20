@@ -16,8 +16,4 @@ public class Music {
     private String album;
 
     private String length;
-
-    private String imgurl;
-
-    private String lrcurl;
 }

@@ -50,9 +50,7 @@ public class MusicServiceImpl implements MusicService {
                         .name(music.getName())
                         .singer(music.getSinger())
                         .album(music.getAlbum())
-                        .img(music.getImgurl())
-                        .lrc(music.getLrcurl())
-                        .url("http://source.ego1st.cn/song/id="+music.getId()+".mp3")
+                        .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
                         .build();
 
                 redisUtil.set("musicList::"+id,musicList,60);
@@ -72,13 +70,13 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public String delMusic(String musicListID, String musicID) {
-        MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
-        //创建查询条件
-        musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID)
-                                              .andMusicidEqualTo(musicID);
-        musiclistMusicMapper.deleteByExample(musiclistMusicExample);
-        //返回删除报文
-        return "204";
+        int res = musiclistMusicMapper.deleteByPrimaryKey(new MusiclistMusicKey(musicListID,musicID));
+        if (res == 1){
+            //返回删除报文
+            return "204";
+        }else {
+            return "删除失败";
+        }
     }
 
     @Override

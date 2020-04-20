@@ -36,15 +36,6 @@ public class Music implements Serializable {
      */
     private String length;
 
-    /**
-     * 歌曲封面
-     */
-    private String imgurl;
-
-    /**
-     * 歌词地址
-     */
-    private String lrcurl;
 
     private static final long serialVersionUID = 1L;
 }

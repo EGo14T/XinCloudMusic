@@ -7,8 +7,6 @@
     <result column="singer" jdbcType="VARCHAR" property="singer" />
     <result column="album" jdbcType="VARCHAR" property="album" />
     <result column="length" jdbcType="VARCHAR" property="length" />
-    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
-    <result column="lrcurl" jdbcType="VARCHAR" property="lrcurl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, `name`, singer, album, `length`, imgurl, lrcurl
+    id, `name`, singer, album, `length`
   </sql>
   <select id="selectByExample" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample" resultMap="BaseResultMap">
     select
@@ -111,11 +109,9 @@
   </delete>
   <insert id="insert" parameterType="com.ego14t.xinmusic.pojo.Music">
     insert into music (id, `name`, singer, 
-      album, `length`, imgurl, 
-      lrcurl)
+      album, `length`)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{singer,jdbcType=VARCHAR}, 
-      #{album,jdbcType=VARCHAR}, #{length,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
-      #{lrcurl,jdbcType=VARCHAR})
+      #{album,jdbcType=VARCHAR}, #{length,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ego14t.xinmusic.pojo.Music">
     insert into music
@@ -135,12 +131,6 @@
       <if test="length != null">
         `length`,
       </if>
-      <if test="imgurl != null">
-        imgurl,
-      </if>
-      <if test="lrcurl != null">
-        lrcurl,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -157,12 +147,6 @@
       </if>
       <if test="length != null">
         #{length,jdbcType=VARCHAR},
-      </if>
-      <if test="imgurl != null">
-        #{imgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="lrcurl != null">
-        #{lrcurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -190,12 +174,6 @@
       <if test="record.length != null">
         `length` = #{record.length,jdbcType=VARCHAR},
       </if>
-      <if test="record.imgurl != null">
-        imgurl = #{record.imgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.lrcurl != null">
-        lrcurl = #{record.lrcurl,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,9 +185,7 @@
       `name` = #{record.name,jdbcType=VARCHAR},
       singer = #{record.singer,jdbcType=VARCHAR},
       album = #{record.album,jdbcType=VARCHAR},
-      `length` = #{record.length,jdbcType=VARCHAR},
-      imgurl = #{record.imgurl,jdbcType=VARCHAR},
-      lrcurl = #{record.lrcurl,jdbcType=VARCHAR}
+      `length` = #{record.length,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -229,12 +205,6 @@
       <if test="length != null">
         `length` = #{length,jdbcType=VARCHAR},
       </if>
-      <if test="imgurl != null">
-        imgurl = #{imgurl,jdbcType=VARCHAR},
-      </if>
-      <if test="lrcurl != null">
-        lrcurl = #{lrcurl,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -243,9 +213,7 @@
     set `name` = #{name,jdbcType=VARCHAR},
       singer = #{singer,jdbcType=VARCHAR},
       album = #{album,jdbcType=VARCHAR},
-      `length` = #{length,jdbcType=VARCHAR},
-      imgurl = #{imgurl,jdbcType=VARCHAR},
-      lrcurl = #{lrcurl,jdbcType=VARCHAR}
+      `length` = #{length,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -284,23 +252,20 @@
 
     <!--根据歌单id，用户id，查询musiclist_music表,和user_music表。返回带收藏信息的总结果集-->
 <select id="searchUserNumList" resultMap="BaseResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample">
-    SELECT
-	d.*,
-	c.musicID
+SELECT
+	c.*,
+	collect.musicID
 FROM
-	music d,
-	musiclist_user a,
-	musiclist_music b
-	LEFT JOIN user_music c ON b.musicID = c.musicID
-	AND c.userID = #{userId,jdbcType=VARCHAR}
+	music c
+	LEFT JOIN (
+	SELECT
+		b.musicID
+	FROM
+		musiclist_music b
+	WHERE
+	b.musicListID IN ( SELECT a.musicListID FROM musiclist_user a WHERE a.userID = #{userId,jdbcType=VARCHAR} AND a.`status` = 0 )) AS collect ON collect.musicID = c.id
 WHERE
-	a.userID = #{userId,jdbcType=VARCHAR}
-	AND a.musicListID = #{musicListID,jdbcType=VARCHAR}
-	AND b.musicListID = #{musicListID,jdbcType=VARCHAR}
-	AND a.musicListID = b.musicListID
-	AND b.musicID = d.id
-	ORDER BY
-	d.id;
+	c.id IN ( SELECT b.musicID FROM musiclist_music b WHERE b.musicListID = #{musicListID,jdbcType=VARCHAR});
 </select>
   <!-- 根据歌单ID 查询歌单中的歌曲列表-->
 <select id="searchNumList" resultMap="BaseResultMap" parameterType="com.ego14t.xinmusic.pojo.example.MusicExample">

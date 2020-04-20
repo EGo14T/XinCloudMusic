@@ -23,8 +23,6 @@ public class MusicList implements Serializable {
     private String album;
     private String length;
     private String url;
-    private String lrc;
-    private String img;
     private int collection;
 
     //创建无参构造器 @Tolerate 绕过编译器检查，解决与@Data @Builder 一起使用出现的冲突

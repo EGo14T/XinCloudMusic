@@ -44,4 +44,18 @@ public class MusicController {
             return ResponseJsonResult.OK(null,result);
         }
     }
+
+    @DeleteMapping(value = "/song/{musicListID}/{musicID}")
+    @ResponseBody
+    public ResponseEntity<?> delMusicFromList(@PathVariable(name="musicID") String musicID,
+                                            @PathVariable(name = "musicListID" )String musicListID){
+
+        String result = musicService.delMusicFromList(musicID,musicListID);
+
+        if ("204".equals(result)){
+            return ResponseJsonResult.NO_CONTENT(null,null);
+        }else{
+            return ResponseJsonResult.OK(null,result);
+        }
+    }
 }

@@ -54,11 +54,17 @@ public class MusicController {
         return musicService.delMusic(musicID,musicListID);
     }
 
+
+    /**
+     * 歌曲添加到歌单中
+     * @param musicID  歌曲ID
+     * @param musicListID  歌单ID
+     * @return 状态码
+     */
     @PostMapping(value = "/song/{musicListID}/{musicID}")
     @ResponseBody
     public String addMusicToList(@PathVariable(name="musicID") String musicID,
                                  @PathVariable(name = "musicListID" )String musicListID){
         return musicService.addMusicToList(musicID,musicListID);
     }
-
 }

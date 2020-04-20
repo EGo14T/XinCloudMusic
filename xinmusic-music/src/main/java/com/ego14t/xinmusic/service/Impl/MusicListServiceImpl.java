@@ -61,9 +61,7 @@ public class MusicListServiceImpl implements MusicListService {
                     .singer(music.getSinger())
                     .album(music.getAlbum())
                     .length(music.getLength())
-                    .img(music.getImgurl())
-                    .lrc(music.getLrcurl())
-                    .url("http://source.ego1st.cn/song/id="+music.getId()+".mp3")
+                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
                     .build();
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {

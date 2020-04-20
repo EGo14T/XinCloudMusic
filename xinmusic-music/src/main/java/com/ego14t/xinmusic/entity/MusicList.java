@@ -23,8 +23,6 @@ public class MusicList implements Serializable {
     private String album;
     private String length;
     private String url;
-    private String lrc;
-    private String img;
     private int collection;
 
     @Tolerate
