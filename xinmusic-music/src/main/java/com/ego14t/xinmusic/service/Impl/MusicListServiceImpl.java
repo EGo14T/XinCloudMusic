@@ -4,13 +4,11 @@ import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.mapper.MusicMapper;
+import com.ego14t.xinmusic.mapper.MusiclistCollectMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
 
-import com.ego14t.xinmusic.pojo.Music;
-import com.ego14t.xinmusic.pojo.MusiclistMusicKey;
-import com.ego14t.xinmusic.pojo.MusiclistUser;
-import com.ego14t.xinmusic.pojo.MusiclistUserKey;
+import com.ego14t.xinmusic.pojo.*;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
@@ -40,6 +38,9 @@ public class MusicListServiceImpl implements MusicListService {
     
     @Resource
     private MusiclistMusicMapper musiclistMusicMapper;
+
+    @Resource
+    private MusiclistCollectMapper musiclistCollectMapper;
 
 
     /**
@@ -113,6 +114,17 @@ public class MusicListServiceImpl implements MusicListService {
         return musiclistUserMapper.getCreateMusicListInfo(userId);
     }
 
+    @Override
+    public Integer collectMusicList(String userId, String musicListID) {
+
+        MusiclistCollect musiclistCollect = new MusiclistCollect();
+        musiclistCollect.setCollectingtime(LocalDateTime.now());
+        musiclistCollect.setUserid(userId);
+        musiclistCollect.setMusiclistid(musicListID);
+
+        return musiclistCollectMapper.insertSelective(musiclistCollect);
+
+    }
 
 
     @Override
@@ -163,7 +175,7 @@ public class MusicListServiceImpl implements MusicListService {
     @Override
     public String addMusicList(MusiclistUser musiclistUser) {
         musiclistUser.setCreateTime(LocalDateTime.now());
-        musiclistUser.setMusiclistImg("ego");
+        musiclistUser.setMusiclistImg("http://cdn.ego1st.cn/xinmusic/musiclistIMG/default.jpg");
         musiclistUser.setMusiclistid(new IDworker(0,0).nextId());
         musiclistUserMapper.insertSelective(musiclistUser);
         return musiclistUser.getMusiclistid();

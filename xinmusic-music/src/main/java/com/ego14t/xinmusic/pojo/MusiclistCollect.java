@@ -1,7 +1,10 @@
 package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +20,7 @@ public class MusiclistCollect extends MusiclistCollectKey implements Serializabl
      */
     @Getter
     @Setter
-    private Date collectingtime;
+    private LocalDateTime collectingtime;
 
     private static final long serialVersionUID = 1L;
 }

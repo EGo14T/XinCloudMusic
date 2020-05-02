@@ -31,12 +31,18 @@ public class MusicListController {
 
     /**
      * 根据歌单ID获取歌单列表
-     * @param id 歌单ID
+     * @param userId 用户ID
      * @return 歌单列表
      */
-    @GetMapping(value = "/collect/musiclist/{musicListID}")
-    public ResponseEntity<?> getCollectMusicList(@PathVariable(value="musicListID") String id){
-        return ResponseJsonResult.OK(musicListService.getCollectMusicList(id),"获取收藏歌单成功");
+    @GetMapping(value = "/collect/musiclist/{userID}")
+    public ResponseEntity<?> getCollectMusicList(@PathVariable(value="userID") String userId){
+        return ResponseJsonResult.OK(musicListService.getCollectMusicList(userId),"获取收藏歌单成功");
+    }
+
+    @PostMapping(value = "/collect/musiclist/{userID}/{musicListID}")
+    public ResponseEntity<?> collectMusicList(@PathVariable(value="userID") String userId,
+                                              @PathVariable(name="musicListID") String musicListID){
+        return ResponseJsonResult.OK(musicListService.collectMusicList(userId,musicListID),"收藏歌单成功");
     }
 
 

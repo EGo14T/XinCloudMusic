@@ -32,6 +32,10 @@ public interface MusicListService {
     @GetMapping(value = "/my/music/collect/musiclist/{userID}")
     List<Object> getCollectMusicList(@PathVariable(value="userID") String id);
 
+    @PostMapping(value = "/my/music/collect/musiclist/{userID}/{musicListID}")
+    int collectMusicList(@PathVariable(value="userID") String userId,
+                             @PathVariable(name="musicListID") String musicListID);
+
     @GetMapping(value = "/my/music/musiclist/{userID}/{musicListID}")
     List<Object> getUserMusicList(@PathVariable(value="userID") String userId,
                               @PathVariable(name="musicListID") String musicListID);

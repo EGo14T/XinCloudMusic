@@ -22,6 +22,8 @@ public interface MusicListService {
     List<UserMusicListInfo> getCreateMusicListInfo(String userID);
     //获取用户歌单（用户收藏）
     List<UserMusicListInfo> getCollectMusicListInfo(String userID);
+    //收藏歌单
+    Integer collectMusicList(String userId, String musicListID);
     //获取歌单信息
     MusicListInfo getMusicListInfo(String musicListID);
     //删除歌单
@@ -30,6 +32,5 @@ public interface MusicListService {
     String addMusicList(MusiclistUser musiclistUser);
     //修改歌单
     String updateMusicList(String musicListID, MusiclistUser musiclistUser);
-
 
 }

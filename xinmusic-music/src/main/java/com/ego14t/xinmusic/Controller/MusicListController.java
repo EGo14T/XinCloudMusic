@@ -61,6 +61,20 @@ public class MusicListController {
 
     }
 
+    @PostMapping(value = "/collect/musiclist/{userID}/{musicListID}")
+    @ResponseBody
+    @ApiOperation(value="用户收藏歌单",notes="歌单列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
+            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
+    })
+    public Integer collectMusicList(@PathVariable(value="userID") String userId,
+                                   @PathVariable(name="musicListID") String musicListID){
+
+        return musicListService.collectMusicList(userId,musicListID);
+    }
+
+
     /**
      * 检索歌单中的歌曲
      * @param musicListID 歌单ID
@@ -74,8 +88,8 @@ public class MusicListController {
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     })
-    public List<MusicList> getUserMusicList(@PathVariable(name="musicListID") String musicListID ,
-                                        @PathVariable(value="userID") String userId){
+    public List<MusicList> getUserMusicList(@PathVariable(value="userID") String userId,
+                                            @PathVariable(name="musicListID") String musicListID){
 
         return musicListService.getUserMusicList(musicListID,userId);
 
