@@ -69,7 +69,7 @@ public class MusicListController {
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     })
     public Integer collectMusicList(@PathVariable(value="userID") String userId,
-                                   @PathVariable(name="musicListID") String musicListID){
+                                    @PathVariable(name="musicListID") String musicListID){
 
         return musicListService.collectMusicList(userId,musicListID);
     }

@@ -28,6 +28,7 @@
   <resultMap id="CollectMusicListResultMap" type="com.ego14t.xinmusic.entity.UserMusicListInfo">
     <id column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
     <result column="musicList_name" jdbcType="VARCHAR" property="musiclistName" />
+    <result column="musiclist_img" jdbcType="VARCHAR" property="musiclistImg" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
 
@@ -309,6 +310,7 @@ WHERE
     SELECT
 	a.musicListID,
 	a.musicList_name,
+	a.musiclist_img,
 	a.`status`
 FROM
 	musiclist_user a

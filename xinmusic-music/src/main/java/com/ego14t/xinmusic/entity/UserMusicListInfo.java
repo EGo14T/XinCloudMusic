@@ -12,5 +12,6 @@ import lombok.Data;
 public class UserMusicListInfo {
     private String musiclistid;
     private String musiclistName;
+    private String musiclistImg;
     private Integer status;
 }
