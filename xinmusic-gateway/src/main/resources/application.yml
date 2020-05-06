@@ -27,6 +27,11 @@ spring:
       predicates:
         - Path=/comments/**
 
+    - id: music-user
+      uri: lb://XinMusic-Feign/
+      predicates:
+        - Path=/users/**
+
     - id: music-oauth
       uri: lb://xinmusic-oauth/
       predicates:

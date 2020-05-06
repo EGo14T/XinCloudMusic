@@ -9,10 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="xinmusic-feign" />
         <module name="xinmusic-gateway" />
-        <module name="xinmusic-eureka" />
+        <module name="xinmusic-user" />
         <module name="xinmusic-comments" />
         <module name="xinmusic-oauth2" />
         <module name="xinmusic-music" />
+        <module name="xinmusic-eureka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,6 +24,7 @@
       <module name="xinmusic-gateway" target="1.8" />
       <module name="xinmusic-music" target="1.8" />
       <module name="xinmusic-oauth2" target="1.8" />
+      <module name="xinmusic-user" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -34,6 +36,7 @@
       <module name="xinmusic-gateway" options="-parameters" />
       <module name="xinmusic-music" options="-parameters" />
       <module name="xinmusic-oauth2" options="-parameters" />
+      <module name="xinmusic-user" options="-parameters" />
     </option>
   </component>
 </project>

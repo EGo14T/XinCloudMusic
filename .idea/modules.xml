@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/xinmusic-gateway/xinmusic-gateway.iml" filepath="$PROJECT_DIR$/xinmusic-gateway/xinmusic-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-music/xinmusic-music.iml" filepath="$PROJECT_DIR$/xinmusic-music/xinmusic-music.iml" />
       <module fileurl="file://$PROJECT_DIR$/xinmusic-oauth2/xinmusic-oauth2.iml" filepath="$PROJECT_DIR$/xinmusic-oauth2/xinmusic-oauth2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xinmusic-user/xinmusic-user.iml" filepath="$PROJECT_DIR$/xinmusic-user/xinmusic-user.iml" />
     </modules>
   </component>
 </project>

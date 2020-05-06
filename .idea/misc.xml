@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/xinmusic-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/xinmusic-oauth2/pom.xml" />
         <option value="$PROJECT_DIR$/xinmusic-music/pom.xml" />
+        <option value="$PROJECT_DIR$/xinmusic-user/pom.xml" />
       </list>
     </option>
   </component>
