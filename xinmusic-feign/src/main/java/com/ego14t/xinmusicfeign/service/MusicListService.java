@@ -54,6 +54,6 @@ public interface MusicListService {
                         @PathVariable(value="musicListID") String musicListID);
 
     @PatchMapping(value = "/my/music/musiclist/{musicListID}")
-    int updateMusicList(@PathVariable(value = "musicListID")String musicListID
+    String updateMusicList(@PathVariable(value = "musicListID")String musicListID
             ,@RequestBody MusiclistUser musiclistUser);
 }

@@ -24,4 +24,15 @@ public class UserServiceImpl implements UserService {
     public UserInfo getUserInfo(String userId) {
         return userInfoMapper.selectByPrimaryKey(userId);
     }
+
+    @Override
+    public UserInfo updateUserInfo(UserInfo userInfo) {
+        int res = userInfoMapper.updateByPrimaryKeySelective(userInfo);
+        System.out.println(res);
+        if (res == 1){
+            return userInfoMapper.selectByPrimaryKey(userInfo.getId());
+        }else {
+            return null;
+        }
+    }
 }

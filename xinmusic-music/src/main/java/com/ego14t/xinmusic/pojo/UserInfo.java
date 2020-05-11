@@ -1,7 +1,11 @@
 package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -33,7 +37,8 @@ public class UserInfo implements Serializable {
     /**
      * 用户的生日
      */
-    private Date birth;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birth;
 
     /**
      * 用户所在地区

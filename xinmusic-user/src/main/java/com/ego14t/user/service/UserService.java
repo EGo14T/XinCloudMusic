@@ -14,4 +14,6 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     //根据Id获取用户信息
     UserInfo getUserInfo(String userId);
+
+    UserInfo updateUserInfo(UserInfo userInfo);
 }
