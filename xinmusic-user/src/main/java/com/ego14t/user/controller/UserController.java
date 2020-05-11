@@ -2,10 +2,7 @@ package com.ego14t.user.controller;
 
 import com.ego14t.user.pojo.UserInfo;
 import com.ego14t.user.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,9 +21,15 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping(value = "/getUserInfo/{userID}")
+    @GetMapping(value = "/UserInfo/{userID}")
     public UserInfo getUserInfo(@PathVariable(value = "userID")String userId){
         return userService.getUserInfo(userId);
+
+    }
+
+    @PatchMapping(value = "/UserInfo")
+    public UserInfo updateUserInfo(@RequestBody UserInfo userInfo){
+        return userService.updateUserInfo(userInfo);
 
     }
 
