@@ -3,7 +3,7 @@
 <mapper namespace="com.ego14t.user.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.ego14t.user.pojo.User">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <id column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, username, `password`
   </sql>
-  <select id="selectByExample" parameterType="com.ego14t.user.pojo.example.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.ego14t.user.pojo.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -89,17 +89,19 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="com.ego14t.user.pojo.UserKey" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
     where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="com.ego14t.user.pojo.UserKey">
     delete from user
     where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ego14t.user.pojo.example.UserExample">
+  <delete id="deleteByExample" parameterType="com.ego14t.user.pojo.UserExample">
     delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -136,7 +138,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.ego14t.user.pojo.example.UserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.ego14t.user.pojo.UserExample" resultType="java.lang.Long">
     select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -171,19 +173,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.ego14t.user.pojo.User">
     update user
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
       <if test="password != null">
         `password` = #{password,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ego14t.user.pojo.User">
     update user
-    set username = #{username,jdbcType=VARCHAR},
-      `password` = #{password,jdbcType=VARCHAR}
+    set `password` = #{password,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
+      and username = #{username,jdbcType=VARCHAR}
   </update>
 </mapper>

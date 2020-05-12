@@ -8,8 +8,10 @@ import lombok.Data;
  * @author 
  */
 @Data
-public class User extends UserKey implements Serializable {
-    private String password;
+public class UserKey implements Serializable {
+    private String id;
+
+    private String username;
 
     private static final long serialVersionUID = 1L;
 }

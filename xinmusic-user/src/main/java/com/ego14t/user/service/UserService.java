@@ -1,5 +1,7 @@
 package com.ego14t.user.service;
 
+import com.ego14t.user.entity.RegisterUser;
+import com.ego14t.user.pojo.User;
 import com.ego14t.user.pojo.UserInfo;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +18,6 @@ public interface UserService {
     UserInfo getUserInfo(String userId);
 
     UserInfo updateUserInfo(UserInfo userInfo);
+
+    String register(RegisterUser user);
 }

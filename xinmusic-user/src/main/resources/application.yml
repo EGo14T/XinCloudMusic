@@ -39,3 +39,9 @@ mybatis:
 logging:
   level:
     com.ego14t.user.mapper: debug
+
+workid:
+  user: 0
+  music: 1
+  musiclist: 2
+  comments: 3

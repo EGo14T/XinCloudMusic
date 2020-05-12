@@ -112,6 +112,12 @@
             <scope>true</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Swagger2 Api插件 -->
         <dependency>
             <groupId>io.springfox</groupId>

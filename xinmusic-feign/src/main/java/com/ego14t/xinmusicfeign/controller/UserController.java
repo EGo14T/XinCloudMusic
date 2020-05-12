@@ -1,6 +1,8 @@
 package com.ego14t.xinmusicfeign.controller;
 
+import com.ego14t.xinmusicfeign.pojo.RegisterUser;
 import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
+import com.ego14t.xinmusicfeign.pojo.User;
 import com.ego14t.xinmusicfeign.pojo.UserInfo;
 import com.ego14t.xinmusicfeign.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +38,20 @@ public class UserController {
         }else  {
             return ResponseJsonResult.OK(null,"更新失败");
         }
+    }
+
+    @PostMapping(value = "/register")
+    public ResponseEntity<?> register(@RequestBody RegisterUser user){
+        String res = userService.register(user);
+
+        if (res.equals("206")){
+            return ResponseJsonResult.METHOD_NOT_ALLOWED(null,"账号重复，请重新填写账号");
+        }
+
+        if (res.equals("208")){
+            return ResponseJsonResult.METHOD_NOT_ALLOWED(null,"初始化数据失败");
+        }
+
+        return ResponseJsonResult.OK(null,"创建成功，立刻登录吧！");
     }
 }

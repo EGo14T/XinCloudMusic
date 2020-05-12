@@ -9,7 +9,7 @@ import com.ego14t.comments.pojo.Comments;
 import com.ego14t.comments.pojo.UserInfo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.utils.BeanCopyUtils;
-import com.ego14t.comments.utils.UidUtils;
+import com.ego14t.comments.utils.IDworker;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,7 +37,7 @@ public class CommentsServiceImpl implements CommentsService {
     public CommentsResponseResult saveComments(Comments comments) {
 
         //设置基础值 全局唯一ID  创建时间  状态
-        comments.setId(UidUtils.genUniqueKey());
+        comments.setId(new IDworker(0,0).nextId());
         comments.setCreateTime(LocalDateTime.now());
         comments.setState(1);
         commentsMapper.insertSelective(comments);

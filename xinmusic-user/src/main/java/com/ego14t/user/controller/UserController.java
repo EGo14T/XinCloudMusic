@@ -1,5 +1,7 @@
 package com.ego14t.user.controller;
 
+import com.ego14t.user.entity.RegisterUser;
+import com.ego14t.user.pojo.User;
 import com.ego14t.user.pojo.UserInfo;
 import com.ego14t.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,11 @@ public class UserController {
     public UserInfo updateUserInfo(@RequestBody UserInfo userInfo){
         return userService.updateUserInfo(userInfo);
 
+    }
+
+    @PostMapping(value = "/register")
+    public String register(@RequestBody RegisterUser user){
+        return userService.register(user);
     }
 
 

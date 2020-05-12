@@ -20,7 +20,8 @@ public class ResourceServerConfigurer {
     private final String[] ALLOW_REQUEST = {"/comments/**",
                                             "/my/musiclist/*",
                                             "/my/musiclistinfo/**",
-                                            "/oauth/**"};
+                                            "/oauth/**",
+                                            "/users/register"};
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
