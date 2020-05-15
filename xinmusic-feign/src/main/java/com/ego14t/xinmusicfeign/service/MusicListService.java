@@ -32,6 +32,9 @@ public interface MusicListService {
     @GetMapping(value = "/my/music/collect/musiclist/{userID}")
     List<Object> getCollectMusicList(@PathVariable(value="userID") String id);
 
+    @GetMapping(value = "/my/music/discover/musiclist")
+    List<Object> getDiscoverMusicList();
+
     @PostMapping(value = "/my/music/collect/musiclist/{userID}/{musicListID}")
     int collectMusicList(@PathVariable(value="userID") String userId,
                              @PathVariable(name="musicListID") String musicListID);
@@ -43,8 +46,9 @@ public interface MusicListService {
     @GetMapping(value = "/my/music/musiclist/{musicListID}")
     List<Object> getMusicList(@PathVariable(name="musicListID") String musicListID);
 
-    @GetMapping(value = "/my/music/musiclistinfo//{musicListID}")
+    @GetMapping(value = "/my/music/musiclistinfo/{musicListID}")
     Object getMusicListInfo(@PathVariable(value = "musicListID")String musicListID);
+
 
     @PostMapping(value = "my/music/musiclist")
     String addMusicList(@RequestBody MusiclistUser musiclistUser);
@@ -56,4 +60,5 @@ public interface MusicListService {
     @PatchMapping(value = "/my/music/musiclist/{musicListID}")
     String updateMusicList(@PathVariable(value = "musicListID")String musicListID
             ,@RequestBody MusiclistUser musiclistUser);
+
 }

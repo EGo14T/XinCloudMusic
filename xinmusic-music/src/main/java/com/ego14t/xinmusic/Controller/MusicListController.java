@@ -61,6 +61,18 @@ public class MusicListController {
 
     }
 
+    /**
+     * 推荐歌单
+     * @return 返回歌单列表
+     */
+    @GetMapping(value = "/discover/musiclist")
+    @ResponseBody
+    @ApiOperation(value="返回推荐歌单",notes="歌单列表")
+    public List<UserMusicListInfo> getDiscoverMusicListInfo(){
+
+        return musicListService.getDiscoverMusicListInfo();
+    }
+
     @PostMapping(value = "/collect/musiclist/{userID}/{musicListID}")
     @ResponseBody
     @ApiOperation(value="用户收藏歌单",notes="歌单列表")

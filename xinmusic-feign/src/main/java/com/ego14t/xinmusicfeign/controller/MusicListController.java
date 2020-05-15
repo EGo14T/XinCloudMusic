@@ -39,6 +39,15 @@ public class MusicListController {
         return ResponseJsonResult.OK(musicListService.getCollectMusicList(userId),"获取收藏歌单成功");
     }
 
+    /**
+     * 获取推荐歌单
+     * @return 歌单列表
+     */
+    @GetMapping(value = "/discover/musiclist")
+    public ResponseEntity<?> getDiscoverMusicList(){
+        return ResponseJsonResult.OK(musicListService.getDiscoverMusicList(),"获取推荐歌单成功");
+    }
+
     @PostMapping(value = "/collect/musiclist/{userID}/{musicListID}")
     public ResponseEntity<?> collectMusicList(@PathVariable(value="userID") String userId,
                                               @PathVariable(name="musicListID") String musicListID){

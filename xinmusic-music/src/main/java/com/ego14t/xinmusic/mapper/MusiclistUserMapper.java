@@ -37,5 +37,7 @@ public interface MusiclistUserMapper {
 
     List<UserMusicListInfo> getCreateMusicListInfo(String userId);
 
+    List<UserMusicListInfo> getDiscoverMusicListInfo();
+
 
 }

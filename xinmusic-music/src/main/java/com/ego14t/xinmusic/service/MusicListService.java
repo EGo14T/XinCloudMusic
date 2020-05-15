@@ -22,6 +22,8 @@ public interface MusicListService {
     List<UserMusicListInfo> getCreateMusicListInfo(String userID);
     //获取用户歌单（用户收藏）
     List<UserMusicListInfo> getCollectMusicListInfo(String userID);
+    //获取推荐歌单
+    List<UserMusicListInfo> getDiscoverMusicListInfo();
     //收藏歌单
     Integer collectMusicList(String userId, String musicListID);
     //获取歌单信息

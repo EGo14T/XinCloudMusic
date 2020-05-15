@@ -115,6 +115,11 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     @Override
+    public List<UserMusicListInfo> getDiscoverMusicListInfo() {
+        return musiclistUserMapper.getDiscoverMusicListInfo();
+    }
+
+    @Override
     public Integer collectMusicList(String userId, String musicListID) {
 
         MusiclistCollect musiclistCollect = new MusiclistCollect();

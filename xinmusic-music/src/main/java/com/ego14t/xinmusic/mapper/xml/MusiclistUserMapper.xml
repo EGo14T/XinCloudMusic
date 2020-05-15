@@ -317,4 +317,20 @@ FROM
 WHERE
 	a.musicListID IN ( SELECT musiclistID FROM musiclist_collect WHERE userID = #{userId,jdbcType=VARCHAR});
   </select>
+
+  <!-- 获取推荐歌单 -->
+  <select id="getDiscoverMusicListInfo" resultMap="CollectMusicListResultMap">
+    SELECT
+	a.musicListID,
+	a.musicList_name,
+    a.musiclist_img,
+	a.`status`
+FROM
+	musiclist_user a
+
+	WHERE a.status = 1
+ORDER BY
+	a.create_time DESC
+	LIMIT 10;
+  </select>
 </mapper>
