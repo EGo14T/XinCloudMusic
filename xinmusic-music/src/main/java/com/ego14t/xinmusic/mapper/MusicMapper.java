@@ -36,6 +36,8 @@ public interface MusicMapper {
 
     List<Music> searchCollection(String userId);
 
+    List<Music> searchUserMusic(String userId, String keyword);
+
     List<Music> searchUserNumList(String musicListID,String userId);
 
     List<Music> searchNumList(String musicListID);

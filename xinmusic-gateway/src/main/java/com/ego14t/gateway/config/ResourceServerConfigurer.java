@@ -21,6 +21,7 @@ public class ResourceServerConfigurer {
                                             "/my/musiclist/*",
                                             "/my/musiclistinfo/**",
                                             "/my/discover/musiclist",
+                                            "/search/musiclist",
                                             "/oauth/**",
                                             "/users/register"};
 

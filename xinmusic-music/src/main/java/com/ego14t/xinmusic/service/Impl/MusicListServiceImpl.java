@@ -81,8 +81,21 @@ public class MusicListServiceImpl implements MusicListService {
      * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<Music> getMusicList(String musicListID) {
-        return musicMapper.searchNumList(musicListID);
+    public List<MusicList> getMusicList(String musicListID) {
+        List<Music> musics = musicMapper.searchNumList(musicListID);
+        List<MusicList> musicLists = new ArrayList<>();
+        for (Music music : musics) {
+            MusicList musicList = MusicList.builder()
+                    .id(music.getId())
+                    .name(music.getName())
+                    .singer(music.getSinger())
+                    .album(music.getAlbum())
+                    .length(music.getLength())
+                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
+                    .build();
+            musicLists.add(musicList);
+        }
+        return musicLists;
     }
 
     @Override
@@ -197,9 +210,11 @@ public class MusicListServiceImpl implements MusicListService {
             //创建查询条件
             MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
             musiclistUserExample.createCriteria().andMusiclistidEqualTo(id);
-
             //根据Id修改歌单信息
             musiclistUserMapper.updateByExampleSelective(musiclistUser,musiclistUserExample);
             return id;
     }
+
+
+
 }

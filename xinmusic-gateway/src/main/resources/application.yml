@@ -22,6 +22,11 @@ spring:
         - StripPrefix=1
         - PrefixPath=/resource
 
+    - id: music-search
+      uri: lb://XinMusic-Feign/
+      predicates:
+        - Path=/search/**
+
     - id: music-comments
       uri: lb://XinMusic-Feign/
       predicates:

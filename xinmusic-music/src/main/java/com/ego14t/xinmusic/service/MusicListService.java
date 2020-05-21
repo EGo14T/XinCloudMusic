@@ -17,7 +17,7 @@ public interface MusicListService {
     //获取歌单中的歌曲（用户）
     List<MusicList> getUserMusicList(String musicListID,String userID);
     //获取歌单中的歌曲
-    List<Music> getMusicList(String musicListID);
+    List<MusicList> getMusicList(String musicListID);
     //获取用户歌单（创建&默认）
     List<UserMusicListInfo> getCreateMusicListInfo(String userID);
     //获取用户歌单（用户收藏）

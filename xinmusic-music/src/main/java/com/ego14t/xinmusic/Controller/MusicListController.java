@@ -116,7 +116,7 @@ public class MusicListController {
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲",notes="根据歌单id查询歌曲列表")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
-    public List<Music> getMusicList(@PathVariable(name="musicListID") String musicListID){
+    public List<MusicList> getMusicList(@PathVariable(name="musicListID") String musicListID){
 
         return musicListService.getMusicList(musicListID);
 
