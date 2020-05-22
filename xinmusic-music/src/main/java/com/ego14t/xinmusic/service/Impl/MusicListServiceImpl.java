@@ -168,7 +168,11 @@ public class MusicListServiceImpl implements MusicListService {
         //System.out.println(musiclistMusics.get(0).getMusicid());
 
         if (musiclistUser==null){
-            return "404";
+            MusiclistCollect musiclistCollect = new MusiclistCollect();
+            musiclistCollect.setUserid(userID);
+            musiclistCollect.setMusiclistid(musicListID);
+            musiclistCollectMapper.deleteByPrimaryKey(musiclistCollect);
+            return "204";
         }else{
             if (musiclistUser.getStatus()==0){
                 return "401";
