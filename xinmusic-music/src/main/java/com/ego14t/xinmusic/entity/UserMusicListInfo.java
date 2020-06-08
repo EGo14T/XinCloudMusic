@@ -14,4 +14,5 @@ public class UserMusicListInfo {
     private String musiclistName;
     private String musiclistImg;
     private Integer status;
+    private Integer sumMusic;
 }

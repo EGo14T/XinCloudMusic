@@ -35,7 +35,7 @@ public class MusicListServiceImpl implements MusicListService {
 
     @Resource
     private MusiclistUserMapper musiclistUserMapper;
-    
+
     @Resource
     private MusiclistMusicMapper musiclistMusicMapper;
 
@@ -44,16 +44,15 @@ public class MusicListServiceImpl implements MusicListService {
 
 
     /**
-     *
      * @param musicListID 歌单ID
-     * @param userId  用户ID
+     * @param userId      用户ID
      * @return MusicList
      * 自定义sql语句进行联表查询
      * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<MusicList> getUserMusicList(String musicListID,String userId) {
-        List<Music> musics = musicMapper.searchUserNumList(musicListID,userId);
+    public List<MusicList> getUserMusicList(String musicListID, String userId) {
+        List<Music> musics = musicMapper.searchUserNumList(musicListID, userId);
         List<MusicList> musicLists = new ArrayList<>();
         for (Music music : musics) {
             MusicList musicList = MusicList.builder()
@@ -62,7 +61,7 @@ public class MusicListServiceImpl implements MusicListService {
                     .singer(music.getSinger())
                     .album(music.getAlbum())
                     .length(music.getLength())
-                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
+                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3")
                     .build();
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
@@ -74,7 +73,6 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     /**
-     *
      * @param musicListID 歌单ID
      * @return MusicList
      * 自定义sql语句进行联表查询
@@ -91,7 +89,7 @@ public class MusicListServiceImpl implements MusicListService {
                     .singer(music.getSinger())
                     .album(music.getAlbum())
                     .length(music.getLength())
-                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
+                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3")
                     .build();
             musicLists.add(musicList);
         }
@@ -100,20 +98,18 @@ public class MusicListServiceImpl implements MusicListService {
 
     @Override
     public List<UserMusicListInfo> getCreateMusicListInfo(String userId) {
-        MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
-        musiclistUserExample.createCriteria().andUseridEqualTo(userId);
-        musiclistUserExample.setOrderByClause("create_time");
-        List<MusiclistUser> musiclistUsers = musiclistUserMapper.selectByExample(musiclistUserExample);
+
+        List<UserMusicListInfo> userMusicListInfos = musiclistUserMapper.getCreateMusicListInfo(userId);
 
         List<UserMusicListInfo> musicListInfos = new ArrayList<>();
 
-        for (MusiclistUser musiclistUser : musiclistUsers) {
+        for (UserMusicListInfo musiclistUser : userMusicListInfos) {
             UserMusicListInfo musicListInfo = new UserMusicListInfo();
-            BeanUtils.copyProperties(musiclistUser,musicListInfo);
-            BeanCopyUtils.copy(musiclistUser,musicListInfo);
-            if (musiclistUser.getStatus()==0){
-                musicListInfos.add(0,musicListInfo);
-            }else{
+            BeanUtils.copyProperties(musiclistUser, musicListInfo);
+            BeanCopyUtils.copy(musiclistUser, musicListInfo);
+            if (musiclistUser.getStatus() == 0) {
+                musicListInfos.add(0, musicListInfo);
+            } else {
                 musicListInfos.add(musicListInfo);
             }
         }
@@ -124,7 +120,7 @@ public class MusicListServiceImpl implements MusicListService {
     @Override
     public List<UserMusicListInfo> getCollectMusicListInfo(String userId) {
 
-        return musiclistUserMapper.getCreateMusicListInfo(userId);
+        return musiclistUserMapper.getCollectMusicListInfo(userId);
     }
 
     @Override
@@ -151,15 +147,15 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     /**
-     * @param userID 用户ID
+     * @param userID      用户ID
      * @param musicListID 歌单ID
      * @return ResponseJsonResult
      * Description：删除歌单
      */
     @Override
-    public String delMusicList(String userID,String musicListID) {
+    public String delMusicList(String userID, String musicListID) {
 
-        MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(new MusiclistUserKey(userID,musicListID));
+        MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(new MusiclistUserKey(userID, musicListID));
 
         MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
         musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID);
@@ -167,20 +163,20 @@ public class MusicListServiceImpl implements MusicListService {
         List<MusiclistMusicKey> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
         //System.out.println(musiclistMusics.get(0).getMusicid());
 
-        if (musiclistUser==null){
+        if (musiclistUser == null) {
             MusiclistCollect musiclistCollect = new MusiclistCollect();
             musiclistCollect.setUserid(userID);
             musiclistCollect.setMusiclistid(musicListID);
             musiclistCollectMapper.deleteByPrimaryKey(musiclistCollect);
             return "204";
-        }else{
-            if (musiclistUser.getStatus()==0){
+        } else {
+            if (musiclistUser.getStatus() == 0) {
                 return "401";
-            }else if(musiclistMusics.size() == 0){
-                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey(userID,musicListID));
+            } else if (musiclistMusics.size() == 0) {
+                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey(userID, musicListID));
                 return "204";
 
-            }else {
+            } else {
                 musicMapper.delMusicListById(musicListID);
                 return "204";
             }
@@ -189,7 +185,6 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     /**
-     *
      * @param musiclistUser 歌单其他信息
      * @return 状态码和信息  返回主键id
      * Description：添加歌单
@@ -198,27 +193,23 @@ public class MusicListServiceImpl implements MusicListService {
     public String addMusicList(MusiclistUser musiclistUser) {
         musiclistUser.setCreateTime(LocalDateTime.now());
         musiclistUser.setMusiclistImg("http://cdn.ego1st.cn/xinmusic/musiclistIMG/default.jpg");
-        musiclistUser.setMusiclistid(new IDworker(0,0).nextId());
+        musiclistUser.setMusiclistid(new IDworker(0, 0).nextId());
         musiclistUserMapper.insertSelective(musiclistUser);
         return musiclistUser.getMusiclistid();
     }
 
-        /**
-         *
-         * @param id 歌单ID
-         * @param musiclistUser 修改的实体
-         * @return 歌单ID
-         */
-        @Override
-        public String updateMusicList(String id, MusiclistUser musiclistUser) {
-            //创建查询条件
-            MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
-            musiclistUserExample.createCriteria().andMusiclistidEqualTo(id);
-            //根据Id修改歌单信息
-            musiclistUserMapper.updateByExampleSelective(musiclistUser,musiclistUserExample);
-            return id;
+    /**
+     * @param id            歌单ID
+     * @param musiclistUser 修改的实体
+     * @return 歌单ID
+     */
+    @Override
+    public String updateMusicList(String id, MusiclistUser musiclistUser) {
+        //创建查询条件
+        MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
+        musiclistUserExample.createCriteria().andMusiclistidEqualTo(id);
+        //根据Id修改歌单信息
+        musiclistUserMapper.updateByExampleSelective(musiclistUser, musiclistUserExample);
+        return id;
     }
-
-
-
 }

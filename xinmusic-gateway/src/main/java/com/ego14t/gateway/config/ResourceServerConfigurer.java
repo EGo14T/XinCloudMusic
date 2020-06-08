@@ -17,12 +17,15 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class ResourceServerConfigurer {
 
-    private final String[] ALLOW_REQUEST = {"/comments/**",
+    private final String[] ALLOW_REQUEST = {"/oauth/**",
+                                            "/comments/**",
+                                            "/my/song/**",
                                             "/my/musiclist/*",
                                             "/my/musiclistinfo/**",
+                                            "/my/collect/musiclist/**",
+                                            "/my/create/musiclist/**",
                                             "/my/discover/musiclist",
                                             "/search/musiclist",
-                                            "/oauth/**",
                                             "/users/register"};
 
     @Bean

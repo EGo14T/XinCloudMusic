@@ -25,11 +25,12 @@
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
   </resultMap>
 
-  <resultMap id="CollectMusicListResultMap" type="com.ego14t.xinmusic.entity.UserMusicListInfo">
+  <resultMap id="MusicListResultMap" type="com.ego14t.xinmusic.entity.UserMusicListInfo">
     <id column="musicListID" jdbcType="VARCHAR" property="musiclistid" />
     <result column="musicList_name" jdbcType="VARCHAR" property="musiclistName" />
     <result column="musiclist_img" jdbcType="VARCHAR" property="musiclistImg" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sumMusic" jdbcType="INTEGER" property="sumMusic" />
   </resultMap>
 
   <sql id="Example_Where_Clause">
@@ -306,20 +307,43 @@ WHERE
 
 
   <!-- 查询收藏的歌单 -->
-  <select id="getCreateMusicListInfo" resultMap="CollectMusicListResultMap">
-    SELECT
+  <select id="getCollectMusicListInfo" resultMap="MusicListResultMap">
+	SELECT
 	a.musicListID,
 	a.musicList_name,
 	a.musiclist_img,
-	a.`status`
+	a.`status`,
+	IFNULL( c.sum, 0 ) AS sumMusic
 FROM
-	musiclist_user a
+	musiclist_user a,
+	( SELECT musiclistID FROM musiclist_collect WHERE userID = #{userId,jdbcType=VARCHAR} ) b
+	LEFT JOIN ( SELECT musicListID, count( musicListID ) sum FROM musiclist_music GROUP BY musicListID ) c ON c.musicListID = b.musicListID
 WHERE
-	a.musicListID IN ( SELECT musiclistID FROM musiclist_collect WHERE userID = #{userId,jdbcType=VARCHAR});
+	a.musicListID = b.musiclistID;
   </select>
 
+
+  <!-- 查询创建的歌单 -->
+  <select id="getCreateMusicListInfo" resultMap="MusicListResultMap">
+	SELECT
+	a.musicListID,
+	a.musicList_name,
+	a.musiclist_img,
+	a.`status`,
+	IFNULL( c.sum, 0 ) AS sumMusic
+FROM
+	musiclist_user a,
+	( SELECT musiclistID FROM musiclist_user WHERE userID = #{userId,jdbcType=VARCHAR} ) b
+	LEFT JOIN ( SELECT musicListID, count( musicListID ) sum FROM musiclist_music GROUP BY musicListID ) c ON c.musicListID = b.musicListID
+WHERE
+	a.musicListID = b.musiclistID;
+  </select>
+
+
+
+
   <!-- 获取推荐歌单 -->
-  <select id="getDiscoverMusicListInfo" resultMap="CollectMusicListResultMap">
+  <select id="getDiscoverMusicListInfo" resultMap="MusicListResultMap">
     SELECT
 	a.musicListID,
 	a.musicList_name,

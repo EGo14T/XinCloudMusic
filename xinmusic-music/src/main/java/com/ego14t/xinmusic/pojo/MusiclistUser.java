@@ -57,6 +57,13 @@ public class MusiclistUser extends MusiclistUserKey implements Serializable {
     @Setter
     private Integer status;
 
+    /**
+     * 歌单歌曲数
+     */
+    @Getter
+    @Setter
+    private Integer sumMusic;
+
 
     private static final long serialVersionUID = 1L;
 
