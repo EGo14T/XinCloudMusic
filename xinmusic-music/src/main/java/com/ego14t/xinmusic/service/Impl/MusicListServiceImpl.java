@@ -142,8 +142,22 @@ public class MusicListServiceImpl implements MusicListService {
 
 
     @Override
-    public MusicListInfo getMusicListInfo(String musicListID) {
-        return musiclistUserMapper.searchMusicListInfo(musicListID);
+    public MusicListInfo getMusicListInfo(String userID, String musicListID) {
+        MusicListInfo musicListInfo = musiclistUserMapper.searchMusicListInfo(musicListID);
+
+        MusiclistCollect musiclistCollect = new MusiclistCollect();
+        musiclistCollect.setUserid(userID);
+        musiclistCollect.setMusiclistid(musicListID);
+
+        MusiclistCollect res = musiclistCollectMapper.selectByPrimaryKey(musiclistCollect);
+
+        if (res != null){
+            musicListInfo.setIsCollected(1);
+        }else{
+            musicListInfo.setIsCollected(0);
+        }
+
+        return musicListInfo;
     }
 
     /**

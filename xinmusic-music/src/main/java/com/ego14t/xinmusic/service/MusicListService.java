@@ -3,7 +3,6 @@ package com.ego14t.xinmusic.service;
 import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
-import com.ego14t.xinmusic.pojo.Music;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public interface MusicListService {
     //收藏歌单
     Integer collectMusicList(String userId, String musicListID);
     //获取歌单信息
-    MusicListInfo getMusicListInfo(String musicListID);
+    MusicListInfo getMusicListInfo(String userID,String musicListID);
     //删除歌单
     String delMusicList(String userID,String musicListID);
     //添加歌单

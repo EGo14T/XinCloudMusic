@@ -14,6 +14,10 @@ public class MusicListInfo extends MusiclistUser {
     @Setter
     private String avatar;
 
+    @Getter
+    @Setter
+    private Integer isCollected;
+
     public MusicListInfo(String userid, String musiclistid) {
         super(userid, musiclistid);
     }

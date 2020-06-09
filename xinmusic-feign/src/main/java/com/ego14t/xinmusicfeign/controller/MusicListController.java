@@ -77,10 +77,11 @@ public class MusicListController {
         return ResponseJsonResult.OK(musicListService.getMusicList(musicListID),"获取成功");
     }
 
-    @GetMapping(value = "/musiclistinfo/{musicListID}")
-    public ResponseEntity<?>getMusicListInfo(@PathVariable(value = "musicListID")String musiclistID){
+    @GetMapping(value = "/musiclistinfo/{userID}/{musicListID}")
+    public ResponseEntity<?>getMusicListInfo(@PathVariable(value = "userID")String userID,
+                                             @PathVariable(value = "musicListID")String musiclistID){
 
-        return ResponseJsonResult.OK(musicListService.getMusicListInfo(musiclistID),"获取成功");
+        return ResponseJsonResult.OK(musicListService.getMusicListInfo(userID,musiclistID),"获取成功");
     }
 
 

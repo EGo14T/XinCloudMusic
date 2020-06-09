@@ -123,15 +123,17 @@ public class MusicListController {
     }
 
 
-    @GetMapping(value = "/musiclistinfo/{musicListID}")
+    @GetMapping(value = "/musiclistinfo/{userID}/{musicListID}")
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     })
-    public MusicListInfo getMusicListInfo(@PathVariable(name = "musicListID") String musicListID){
+    public MusicListInfo getMusicListInfo(@PathVariable(name = "userID") String userID,
+                                          @PathVariable(name = "musicListID") String musicListID){
 
-        return musicListService.getMusicListInfo(musicListID);
+        return musicListService.getMusicListInfo(userID,musicListID);
     }
 
 
