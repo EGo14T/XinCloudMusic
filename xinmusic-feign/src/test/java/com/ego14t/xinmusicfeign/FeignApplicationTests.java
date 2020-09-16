@@ -1,4 +1,4 @@
-package com.ego14t.eureka;
+package com.ego14t.xinmusicfeign;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class XinmusicEurekaApplicationTests {
+public class FeignApplicationTests {
 
     @Test
     public void contextLoads() {

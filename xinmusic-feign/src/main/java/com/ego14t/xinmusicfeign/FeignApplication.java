@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
-public class XinmusicFeignApplication {
+public class FeignApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(XinmusicFeignApplication.class, args);
+        SpringApplication.run(FeignApplication.class, args);
     }
 
 }
