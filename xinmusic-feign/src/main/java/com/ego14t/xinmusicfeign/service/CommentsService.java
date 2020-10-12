@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.service;
 
+import com.ego14t.xinmusicfeign.config.FeignConfig;
 import com.ego14t.xinmusicfeign.pojo.Comments;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import java.util.List;
  * Date：Created in 2020/3/24
  * Description: 调用评论模块
  */
-@FeignClient(value = "xinmusic-comments")
+@FeignClient(value = "xinmusic-comments",configuration = FeignConfig.class)
 public interface CommentsService {
     /**
      * @param showId 资源ID

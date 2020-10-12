@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.service;
 
+import com.ego14t.xinmusicfeign.config.FeignConfig;
 import com.ego14t.xinmusicfeign.pojo.MusiclistUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * 调用xinmusic项目的接口
  */
-@FeignClient(value = "xinmusic-music")
+@FeignClient(value = "xinmusic-music",configuration = FeignConfig.class)
 public interface MusicListService {
     /**
      * 根据歌单ID查询歌单 创建&默认

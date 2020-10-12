@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.service;
 
+import com.ego14t.xinmusicfeign.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,7 @@ import java.util.List;
  * Description:
  */
 
-@FeignClient(value = "xinmusic-music")
+@FeignClient(value = "xinmusic-music",configuration = FeignConfig.class)
 public interface SearchService {
 
     @GetMapping(value = "/search/musiclist")

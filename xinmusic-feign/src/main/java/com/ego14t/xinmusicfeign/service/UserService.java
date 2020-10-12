@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.service;
 
+import com.ego14t.xinmusicfeign.config.FeignConfig;
 import com.ego14t.xinmusicfeign.pojo.RegisterUser;
 import com.ego14t.xinmusicfeign.pojo.User;
 import com.ego14t.xinmusicfeign.pojo.UserInfo;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Description:
  */
 
-@FeignClient(value = "xinmusic-user")
+@FeignClient(value = "xinmusic-user",configuration = FeignConfig.class)
 public interface UserService {
 
     //获取用户信息
