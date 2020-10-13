@@ -2,7 +2,6 @@ package com.ego14t.oauth2.controller;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
-import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -17,7 +16,6 @@ import java.util.Map;
  * Description:
  */
 @RestController
-@AllArgsConstructor
 public class Oauth2Controller {
 
     @Resource

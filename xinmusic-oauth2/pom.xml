@@ -70,12 +70,6 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
         <!--添加插件HikariCP连接池-->
         <dependency>
             <groupId>com.zaxxer</groupId>

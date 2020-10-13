@@ -1,5 +1,6 @@
 package com.ego14t.xinmusicfeign.controller;
 
+import com.ego14t.xinmusicfeign.pojo.MusicList;
 import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
 import com.ego14t.xinmusicfeign.service.MusicService;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,11 @@ public class MusicController {
     @GetMapping(value = "/song/{musicID}")
     @ResponseBody
     public ResponseEntity<?> getMusicList(@PathVariable(name="musicID") String musicID ){
-        if (musicService.getMusic(musicID)==null){
+        MusicList music = musicService.getMusic(musicID);
+        if (music == null){
             return new ResponseEntity<>("资源不存在",HttpStatus.NOT_FOUND);
         }else{
-            return new ResponseEntity<>(musicService.getMusic(musicID), HttpStatus.OK);
+            return new ResponseEntity<>(music, HttpStatus.OK);
         }
     }
 

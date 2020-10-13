@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +29,9 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         final Map<String, Object> additionalInfo = new HashMap<>();
         //获取登录成功用户的id
         String id = userMapper.selectByUserName(authentication.getName()).getId();
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(id);
         //把用户信息放到授权返回信息中
-        additionalInfo.put("user",userInfoMapper.selectByPrimaryKey(id));
+        additionalInfo.put("user",userInfo);
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         return accessToken;
     }

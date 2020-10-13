@@ -1,13 +1,11 @@
 package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
-import lombok.Data;
 
 /**
  * musiclist_collect
  * @author 
  */
-@Data
 public class MusiclistCollectKey implements Serializable {
     /**
      * 歌单ID
@@ -18,6 +16,22 @@ public class MusiclistCollectKey implements Serializable {
      * 用户ID
      */
     private String userid;
+
+    public String getMusiclistid() {
+        return musiclistid;
+    }
+
+    public void setMusiclistid(String musiclistid) {
+        this.musiclistid = musiclistid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
     private static final long serialVersionUID = 1L;
 }

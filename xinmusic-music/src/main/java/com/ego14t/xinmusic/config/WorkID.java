@@ -1,6 +1,5 @@
 package com.ego14t.xinmusic.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
  * Date：Created in 2020/5/12
  * Description:
  */
-@Data
 @Component
 @ConfigurationProperties(prefix = "workid")
 public class WorkID {
@@ -18,4 +16,36 @@ public class WorkID {
     private int music;
     private int musiclist;
     private int comments;
+
+    public int getUser() {
+        return user;
+    }
+
+    public void setUser(int user) {
+        this.user = user;
+    }
+
+    public int getMusic() {
+        return music;
+    }
+
+    public void setMusic(int music) {
+        this.music = music;
+    }
+
+    public int getMusiclist() {
+        return musiclist;
+    }
+
+    public void setMusiclist(int musiclist) {
+        this.musiclist = musiclist;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
 }

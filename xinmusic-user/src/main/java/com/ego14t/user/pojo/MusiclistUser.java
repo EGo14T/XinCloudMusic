@@ -2,16 +2,13 @@ package com.ego14t.user.pojo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 
 /**
  * musiclist_user
  * @author 
  */
-@Data
 public class MusiclistUser extends MusiclistUserKey implements Serializable {
     /**
      * 歌单名称
@@ -43,6 +40,54 @@ public class MusiclistUser extends MusiclistUserKey implements Serializable {
      * 状态0：默认歌单（不能删除） 1：正常歌单 2：隐私歌单
      */
     private Integer status;
+
+    public String getMusiclistName() {
+        return musiclistName;
+    }
+
+    public void setMusiclistName(String musiclistName) {
+        this.musiclistName = musiclistName;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getMusiclistImg() {
+        return musiclistImg;
+    }
+
+    public void setMusiclistImg(String musiclistImg) {
+        this.musiclistImg = musiclistImg;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     private static final long serialVersionUID = 1L;
 }

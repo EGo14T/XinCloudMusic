@@ -1,17 +1,12 @@
 package com.ego14t.oauth2.pojo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
 
 /**
  * user_info
  * @author 
  */
-@Data
+
 public class UserInfo implements Serializable {
     /**
      * 用户的唯一ID标识
@@ -33,11 +28,66 @@ public class UserInfo implements Serializable {
      */
     private String introduce;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     /**
      * 用户的生日
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birth;
+    private String birth;
 
     /**
      * 用户所在地区

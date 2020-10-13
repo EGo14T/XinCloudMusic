@@ -55,14 +55,13 @@ public class MusicListServiceImpl implements MusicListService {
         List<Music> musics = musicMapper.searchUserNumList(musicListID, userId);
         List<MusicList> musicLists = new ArrayList<>();
         for (Music music : musics) {
-            MusicList musicList = MusicList.builder()
-                    .id(music.getId())
-                    .name(music.getName())
-                    .singer(music.getSinger())
-                    .album(music.getAlbum())
-                    .length(music.getLength())
-                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3")
-                    .build();
+            MusicList musicList = new MusicList();
+            musicList.setId(music.getId());
+            musicList.setName(music.getName());
+            musicList.setSinger(music.getSinger());
+            musicList.setAlbum(music.getAlbum());
+            musicList.setLength(music.getLength());
+            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3");
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
                 musicList.setCollection(1);
@@ -83,14 +82,13 @@ public class MusicListServiceImpl implements MusicListService {
         List<Music> musics = musicMapper.searchNumList(musicListID);
         List<MusicList> musicLists = new ArrayList<>();
         for (Music music : musics) {
-            MusicList musicList = MusicList.builder()
-                    .id(music.getId())
-                    .name(music.getName())
-                    .singer(music.getSinger())
-                    .album(music.getAlbum())
-                    .length(music.getLength())
-                    .url("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3")
-                    .build();
+            MusicList musicList = new MusicList();
+            musicList.setId(music.getId());
+            musicList.setName(music.getName());
+            musicList.setSinger(music.getSinger());
+            musicList.setAlbum(music.getAlbum());
+            musicList.setLength(music.getLength());
+            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3");
             musicLists.add(musicList);
         }
         return musicLists;

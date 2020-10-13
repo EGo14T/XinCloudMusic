@@ -54,9 +54,9 @@ public class CommentsServiceImpl implements CommentsService {
 
         //判断是否是回复别人的评论
         if (comments.getToId().isEmpty()){
-            return CommentsResponseResult.builder()
-                    .replyComments(replyComments)
-                    .build();
+            CommentsResponseResult commentsResponseResult = new CommentsResponseResult();
+            commentsResponseResult.setReplyComments(replyComments);
+            return commentsResponseResult;
         }else{
             CommentsEntity originCommentsEntity = new CommentsEntity();
             Comments originComments = commentsMapper.selectByPrimaryKey(comments.getToId());
@@ -68,10 +68,10 @@ public class CommentsServiceImpl implements CommentsService {
             originCommentsEntity.setAvatar(toAvatar);
 
             BeanCopyUtils.copy(originComments,originCommentsEntity);
-            return CommentsResponseResult.builder()
-                    .replyComments(replyComments)
-                    .originComments(originCommentsEntity)
-                    .build();
+            CommentsResponseResult commentsResponseResult = new CommentsResponseResult();
+            commentsResponseResult.setReplyComments(replyComments);
+            commentsResponseResult.setOriginComments(originCommentsEntity);
+            return commentsResponseResult;
         }
 
     }

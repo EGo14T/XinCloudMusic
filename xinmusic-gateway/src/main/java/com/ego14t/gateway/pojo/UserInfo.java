@@ -28,8 +28,7 @@ public class UserInfo {
     /**
      * 用户的生日
      */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birth;
+    private String birth;
 
     /**
      * 用户所在地区
@@ -73,11 +72,11 @@ public class UserInfo {
         this.introduce = introduce;
     }
 
-    public LocalDate getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(LocalDate birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 

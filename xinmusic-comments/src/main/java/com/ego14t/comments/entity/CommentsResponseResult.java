@@ -1,11 +1,5 @@
 package com.ego14t.comments.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.Tolerate;
-
-@Data
-@Builder
 public class CommentsResponseResult {
 
     /**
@@ -18,6 +12,21 @@ public class CommentsResponseResult {
      */
     private CommentsEntity originComments;
 
-    @Tolerate
+    public CommentsEntity getReplyComments() {
+        return replyComments;
+    }
+
+    public void setReplyComments(CommentsEntity replyComments) {
+        this.replyComments = replyComments;
+    }
+
+    public CommentsEntity getOriginComments() {
+        return originComments;
+    }
+
+    public void setOriginComments(CommentsEntity originComments) {
+        this.originComments = originComments;
+    }
+
     public CommentsResponseResult(){}
 }

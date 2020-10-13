@@ -45,13 +45,13 @@ public class MusicServiceImpl implements MusicService {
             if (music==null){
                 return null;
             }else{
-                MusicList musicList = MusicList.builder()
-                        .id(music.getId())
-                        .name(music.getName())
-                        .singer(music.getSinger())
-                        .album(music.getAlbum())
-                        .url("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3")
-                        .build();
+                MusicList musicList = new MusicList();
+                musicList.setId(music.getId());
+                musicList.setName(music.getName());
+                musicList.setSinger(music.getSinger());
+                musicList.setAlbum(music.getAlbum());
+                musicList.setLength(music.getLength());
+                musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3");
 
                 redisUtil.set("musicList::"+id,musicList,60);
                 return musicList;

@@ -1,13 +1,11 @@
 package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
-import lombok.Data;
 
 /**
  * music
  * @author 
  */
-@Data
 public class Music implements Serializable {
 
     private String musicID;
@@ -36,6 +34,53 @@ public class Music implements Serializable {
      */
     private String length;
 
+    public String getMusicID() {
+        return musicID;
+    }
+
+    public void setMusicID(String musicID) {
+        this.musicID = musicID;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSinger() {
+        return singer;
+    }
+
+    public void setSinger(String singer) {
+        this.singer = singer;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
 
     private static final long serialVersionUID = 1L;
 }

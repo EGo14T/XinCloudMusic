@@ -1,7 +1,5 @@
 package com.ego14t.oauth2.entity;
 
-import lombok.Data;
-import lombok.ToString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -10,12 +8,26 @@ import org.springframework.http.ResponseEntity;
  * 说明： 封装的返回值静态方法
  */
 
-@Data
-@ToString
 public class ResponseJsonResult<T> {
 
     private String msg;
     private T data;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     public static <T> ResponseEntity<?> OK(T data, String msg){
         return result(data,HttpStatus.OK,msg);

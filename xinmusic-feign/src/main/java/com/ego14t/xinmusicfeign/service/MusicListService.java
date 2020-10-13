@@ -40,9 +40,8 @@ public interface MusicListService {
     int collectMusicList(@PathVariable(value="userID") String userId,
                              @PathVariable(name="musicListID") String musicListID);
 
-    @GetMapping(value = "/my/music/musiclist/{userID}/{musicListID}")
-    List<Object> getUserMusicList(@PathVariable(value="userID") String userId,
-                              @PathVariable(name="musicListID") String musicListID);
+    @GetMapping(value = "/my/music/musiclist/{musicListID}")
+    List<Object> getUserMusicList(@PathVariable(name="musicListID") String musicListID);
 
     @GetMapping(value = "/my/music/musiclist/{musicListID}")
     List<Object> getMusicList(@PathVariable(name="musicListID") String musicListID);

@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ego14t.gateway.pojo.UserInfo;
+import com.google.gson.Gson;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -26,12 +27,12 @@ public class HeaderFilter implements GlobalFilter, Ordered {
         //UserInfo user = DeCodeJWT(headers.getFirst("Authorization"));
         String jwt = headers.getFirst("Authorization");
 
-        if (jwt.isEmpty()){
+        if (jwt == null){
             return chain.filter(exchange.mutate().request(request).build());
         }
 
         Consumer<HttpHeaders> httpHeaders = httpHeader -> {
-            httpHeader.set("userInfo", DeCodeJWT(jwt));
+            httpHeader.set("userId", DeCodeJWT(jwt));
         };
 
         ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
@@ -44,14 +45,14 @@ public class HeaderFilter implements GlobalFilter, Ordered {
         return -200;
     }
 
-    private<T> T DeCodeJWT(String jwt) {
+    private String DeCodeJWT(String jwt) {
+        //取出jwt
         jwt = jwt.replace("Bearer ","");
-
+        //解析jwt
         DecodedJWT decodedJWT = JWT.decode(jwt);
+        //映射jwt中的信息为UserInfo对象
         Claim user = decodedJWT.getClaim("user");
-        Map<String, Object> stringObjectMap = user.asMap();
-        System.out.println(stringObjectMap.get("name"));
-
-        return (T)"123";
+        UserInfo userInfo = user.as(UserInfo.class);
+        return userInfo.getId();
     }
 }

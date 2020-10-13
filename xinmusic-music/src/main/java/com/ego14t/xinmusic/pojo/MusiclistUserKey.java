@@ -2,15 +2,10 @@ package com.ego14t.xinmusic.pojo;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
  * musiclist_user
  * @author 
  */
-@Data
-@AllArgsConstructor
 public class MusiclistUserKey implements Serializable {
     /**
      * 用户的唯一标识ID
@@ -22,5 +17,24 @@ public class MusiclistUserKey implements Serializable {
      */
     private String musiclistid;
 
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getMusiclistid() {
+        return musiclistid;
+    }
+
+    public void setMusiclistid(String musiclistid) {
+        this.musiclistid = musiclistid;
+    }
+
     private static final long serialVersionUID = 1L;
+
+    public MusiclistUserKey(String userid, String musiclistid) {
+    }
 }

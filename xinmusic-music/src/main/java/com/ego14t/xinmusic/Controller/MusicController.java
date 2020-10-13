@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 王富昕
@@ -20,9 +21,12 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/music")
 @Api(value = "歌曲Controller",tags = {"歌曲操作类接口"})
-public class MusicController {
+public class MusicController extends AbstractController{
     @Resource
     private MusicService musicService;
+
+    @Resource
+    private HttpServletRequest request;
 
     /**
      * 检索歌曲，适用于用户点击单曲显示的信息
@@ -33,7 +37,7 @@ public class MusicController {
     @ResponseBody
     @ApiOperation(value="根据歌曲id返回歌曲信息",notes="注意问题点")
     @ApiImplicitParam(name = "musicID", value = "单曲ID", required = true, dataType = "String")
-    public MusicList getMusicList(@PathVariable(name="musicID") String musicID ){
+    public MusicList getMusicList(@PathVariable(name="musicID") String musicID){
         return musicService.getMusic(musicID);
     }
 
@@ -47,7 +51,7 @@ public class MusicController {
     @ApiOperation(value="根据歌曲id删除歌曲",notes="从歌单中删除歌曲")
     @ApiImplicitParams({
       @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String"),
-      @ApiImplicitParam(name = "musicID", value = "用户ID", required = true, dataType = "String")
+      @ApiImplicitParam(name = "musicID", value = "歌曲ID", required = true, dataType = "String")
     })
     public String delMusic(@PathVariable(name="musicID") String musicID,
                            @PathVariable(name = "musicListID" )String musicListID){
