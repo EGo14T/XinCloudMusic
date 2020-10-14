@@ -1,5 +1,7 @@
 package com.ego14t.xinmusic.service.Impl;
 
+import com.ego14t.xinmusic.common.CdnConsts;
+import com.ego14t.xinmusic.common.TypePath;
 import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.pojo.Music;
@@ -37,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
             musicList.setSinger(music.getSinger());
             musicList.setAlbum(music.getAlbum());
             musicList.setLength(music.getLength());
-            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3");
+            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId()+".mp3");
             musicLists.add(musicList);
         }
 
@@ -55,7 +57,7 @@ public class SearchServiceImpl implements SearchService {
             musicList.setSinger(music.getSinger());
             musicList.setAlbum(music.getAlbum());
             musicList.setLength(music.getLength());
-            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3");
+            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE+music.getId()+".mp3");
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
                 musicList.setCollection(1);

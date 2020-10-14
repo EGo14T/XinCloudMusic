@@ -67,7 +67,6 @@ public class MusicListController {
 
     /**
      * 根据歌单ID查询歌单歌曲列表
-     * @param musicListID 歌单ID
      * @return  歌单的详细信息
      */
 //    @GetMapping(value = "/musiclist/{musicListID}")

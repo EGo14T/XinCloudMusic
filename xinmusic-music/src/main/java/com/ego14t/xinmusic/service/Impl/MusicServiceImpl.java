@@ -1,5 +1,7 @@
 package com.ego14t.xinmusic.service.Impl;
 
+import com.ego14t.xinmusic.common.CdnConsts;
+import com.ego14t.xinmusic.common.TypePath;
 import com.ego14t.xinmusic.entity.MusicList;
 
 import com.ego14t.xinmusic.mapper.MusicMapper;
@@ -51,7 +53,7 @@ public class MusicServiceImpl implements MusicService {
                 musicList.setSinger(music.getSinger());
                 musicList.setAlbum(music.getAlbum());
                 musicList.setLength(music.getLength());
-                musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/"+music.getId()+".mp3");
+                musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE+music.getId()+".mp3");
 
                 redisUtil.set("musicList::"+id,musicList,60);
                 return musicList;

@@ -1,5 +1,7 @@
 package com.ego14t.user.service.impl;
 
+import com.ego14t.user.common.CdnConsts;
+import com.ego14t.user.common.TypePath;
 import com.ego14t.user.config.WorkID;
 import com.ego14t.user.entity.RegisterUser;
 import com.ego14t.user.mapper.MusiclistUserMapper;
@@ -79,7 +81,7 @@ public class UserServiceImpl implements UserService {
         musiclistUser.setMusiclistName("我喜欢的音乐");
         musiclistUser.setStatus(0);
         musiclistUser.setCreateTime(LocalDateTime.now());
-        musiclistUser.setMusiclistImg("http://cdn.ego1st.cn/xinmusic/musiclistIMG/default.jpg");
+        musiclistUser.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG + "/default.jpg");
 
         if (isRepeat(user.getUsername())){
             int res = userMapper.insert(user);

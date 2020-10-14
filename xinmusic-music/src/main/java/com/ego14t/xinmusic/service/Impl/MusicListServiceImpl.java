@@ -1,5 +1,7 @@
 package com.ego14t.xinmusic.service.Impl;
 
+import com.ego14t.xinmusic.common.CdnConsts;
+import com.ego14t.xinmusic.common.TypePath;
 import com.ego14t.xinmusic.entity.MusicList;
 import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
@@ -61,7 +63,7 @@ public class MusicListServiceImpl implements MusicListService {
             musicList.setSinger(music.getSinger());
             musicList.setAlbum(music.getAlbum());
             musicList.setLength(music.getLength());
-            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3");
+            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
                 musicList.setCollection(1);
@@ -88,7 +90,7 @@ public class MusicListServiceImpl implements MusicListService {
             musicList.setSinger(music.getSinger());
             musicList.setAlbum(music.getAlbum());
             musicList.setLength(music.getLength());
-            musicList.setUrl("http://cdn.ego1st.cn/xinmusic/musicFile/" + music.getId() + ".mp3");
+            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
             musicLists.add(musicList);
         }
         return musicLists;
@@ -204,7 +206,7 @@ public class MusicListServiceImpl implements MusicListService {
     @Override
     public String addMusicList(MusiclistUser musiclistUser) {
         musiclistUser.setCreateTime(LocalDateTime.now());
-        musiclistUser.setMusiclistImg("http://cdn.ego1st.cn/xinmusic/musiclistIMG/default.jpg");
+        musiclistUser.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG + "/default.jpg");
         musiclistUser.setMusiclistid(new IDworker(0, 0).nextId());
         musiclistUserMapper.insertSelective(musiclistUser);
         return musiclistUser.getMusiclistid();
