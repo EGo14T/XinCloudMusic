@@ -40,7 +40,6 @@
 		<module>../xinmusic-oauth2</module>
 		<module>../xinmusic-music</module>
 		<module>../xinmusic-comments</module>
-		<module>../xinmusic-user</module>
 	</modules>
 
 	<dependencies>
