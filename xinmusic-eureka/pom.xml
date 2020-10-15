@@ -12,15 +12,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>eureka</name>
     <description>Eureka</description>
-    <packaging>jar</packaging>
+
     <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
