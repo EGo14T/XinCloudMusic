@@ -6,6 +6,7 @@
         <groupId>com.ego14t</groupId>
         <artifactId>common</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../xinmusic-common/pom.xml</relativePath>
     </parent>
 
     <artifactId>eureka</artifactId>
@@ -28,6 +29,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
         </dependency>
     </dependencies>
 
