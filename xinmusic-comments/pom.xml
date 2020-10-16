@@ -75,20 +75,7 @@
         </plugins>
         <resources>
             <resource>
-                <!--解决idea不把xml文件加入target的问题-->
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-
-            <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.yml</include>
-                </includes>
             </resource>
         </resources>
     </build>

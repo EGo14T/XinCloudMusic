@@ -10,7 +10,7 @@ eureka:
     #enabled: true
 #  instance:
 #    prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
-#    instance-id: 49.232.14.91:8083 # 线上地址
+#    instance-id: # 线上地址
 
 spring:
   application:
@@ -32,8 +32,8 @@ spring:
       connection-test-query: SELECT 1
 
 mybatis:
-  mapper-locations: classpath:com/ego14t/comments/mapper/xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
-  type-aliases-package: classpath:com/ego14t/comments/pojo/  # 注意：对应实体类的路径
+  mapper-locations: classpath:mapper.xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: classpath:com.ego14t.comments.pojo  # 注意：对应实体类的路径
 
 
 logging:
