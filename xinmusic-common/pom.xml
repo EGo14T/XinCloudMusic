@@ -18,6 +18,8 @@
 	<modules>
 		<module>../xinmusic-eureka</module>
 		<module>../xinmusic-comments</module>
+		<module>../xinmusic-user</module>
+		<module>../xinmusic-oauth2</module>
 	</modules>
 
 	<packaging>pom</packaging>
