@@ -12,7 +12,7 @@
     <artifactId>oauth2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>oauth2</name>
-    <description>Demo project for Spring Boot</description>
+    <description>OAuth2</description>
 
     <dependencies>
 
@@ -56,13 +56,11 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.61</version>
         </dependency>
 
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>8.2</version>
         </dependency>
 
         <dependency>

@@ -32,6 +32,10 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
 
+  redis:
+    port: 6381
+    password: admin
+
 mybatis:
   mapper-locations: classpath:mapper.xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: classpath:com.ego14t.oauth2.pojo  # 注意：对应实体类的路径

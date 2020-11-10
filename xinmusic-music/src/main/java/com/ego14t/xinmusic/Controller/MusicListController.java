@@ -103,10 +103,7 @@ public class MusicListController extends AbstractController{
     @GetMapping(value = "/musiclist/{musicListID}")
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userID", value = "用户ID", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
-    })
+    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true, dataType = "String")
     public List<MusicList> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
 
         return musicListService.getUserMusicList(musicListID,getUserId(request));
@@ -171,9 +168,7 @@ public class MusicListController extends AbstractController{
     @PostMapping(value = "/musiclist")
     @ResponseBody
     @ApiOperation(value = "新建歌单",notes="注意问题点")
-    public String addMusicList(
-            @RequestBody MusiclistUser musiclistUser)
-    {
+    public String addMusicList(@RequestBody MusiclistUser musiclistUser) {
         return musicListService.addMusicList(musiclistUser);
     }
 
