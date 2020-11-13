@@ -38,6 +38,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper.xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: classpath:com.ego14t.xinmusic.pojo  # 注意：对应实体类的路径
+  configuration:
+    map-underscore-to-camel-case: true
+
 
 #pagehelper
 pagehelper:
@@ -57,3 +60,7 @@ workid:
   musiclist: 2
   comments: 3
 
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true

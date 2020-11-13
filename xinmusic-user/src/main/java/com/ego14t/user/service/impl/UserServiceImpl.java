@@ -8,7 +8,6 @@ import com.ego14t.user.mapper.MusiclistUserMapper;
 import com.ego14t.user.mapper.UserInfoMapper;
 import com.ego14t.user.mapper.UserMapper;
 import com.ego14t.user.pojo.MusiclistUser;
-import com.ego14t.user.pojo.User;
 import com.ego14t.user.pojo.UserExample;
 import com.ego14t.user.pojo.UserInfo;
 import com.ego14t.user.service.UserService;

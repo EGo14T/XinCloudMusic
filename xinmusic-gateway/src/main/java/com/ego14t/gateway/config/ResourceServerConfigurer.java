@@ -19,12 +19,12 @@ public class ResourceServerConfigurer {
 
     private final String[] ALLOW_REQUEST = {"/oauth/**",
                                             "/comments/**",
-                                            "/my/song/**",
-                                            "/my/musiclist/*",
-                                            "/my/musiclistinfo/**",
-                                            "/my/collect/musiclist/**",
-                                            "/my/create/musiclist/**",
-                                            "/my/discover/musiclist",
+                                            "/music/song/**",
+                                            "/music/musiclist/*",
+                                            "/music/musiclistinfo/**",
+                                            "/music/collect/musiclist/**",
+                                            "/music/create/musiclist/**",
+                                            "/music/discover/musiclist",
                                             "/search/musiclist",
                                             "/users/register"};
 

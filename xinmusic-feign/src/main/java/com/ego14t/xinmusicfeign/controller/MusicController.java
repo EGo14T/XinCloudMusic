@@ -17,15 +17,15 @@ import javax.annotation.Resource;
  */
 
 @RestController
-@RequestMapping(value = "/resource")
+@RequestMapping(value = "/music")
 public class MusicController {
     @Resource
     private MusicService musicService;
 
     @GetMapping(value = "/song/{musicID}")
     @ResponseBody
-    public ResponseEntity<?> getMusicList(@PathVariable(name="musicID") String musicID ){
-        MusicList music = musicService.getMusic(musicID);
+    public ResponseEntity<?> getMusicInfo(@PathVariable(name="musicID") String musicID ){
+        MusicList music = musicService.getMusicInfo(musicID);
         if (music == null){
             return new ResponseEntity<>("资源不存在",HttpStatus.NOT_FOUND);
         }else{
@@ -35,8 +35,8 @@ public class MusicController {
 
     @PostMapping(value = "/song/{musicListID}/{musicID}")
     @ResponseBody
-    public ResponseEntity<?> addMusicToList(@PathVariable(name="musicID") String musicID,
-                                            @PathVariable(name = "musicListID" )String musicListID){
+    public ResponseEntity<?> addMusicToList(@PathVariable(name = "musicListID" )String musicListID,
+                                            @PathVariable(name="musicID") String musicID){
 
         String result = musicService.addMusicToList(musicID,musicListID);
 
@@ -49,8 +49,8 @@ public class MusicController {
 
     @DeleteMapping(value = "/song/{musicListID}/{musicID}")
     @ResponseBody
-    public ResponseEntity<?> delMusicFromList(@PathVariable(name="musicID") String musicID,
-                                            @PathVariable(name = "musicListID" )String musicListID){
+    public ResponseEntity<?> delMusicFromList(@PathVariable(name = "musicListID" )String musicListID,
+                                              @PathVariable(name="musicID") String musicID){
 
         String result = musicService.delMusicFromList(musicID,musicListID);
 
@@ -59,5 +59,16 @@ public class MusicController {
         }else{
             return ResponseJsonResult.OK(null,result);
         }
+    }
+
+    /**
+     * 歌曲查询功能(登录&&未登录)
+     * @return
+     */
+    @GetMapping(value = "/musiclist")
+    @ResponseBody
+    public ResponseEntity<?> getSearchList(@RequestParam(value = "keyword")String keyword){
+
+        return ResponseJsonResult.OK(musicService.getSearchList(keyword),"获取成功");
     }
 }

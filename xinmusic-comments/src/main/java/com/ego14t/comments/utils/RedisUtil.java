@@ -1,4 +1,4 @@
-package com.ego14t.common.utils;
+package com.ego14t.comments.utils;
 
 /**
  * @author 王富昕

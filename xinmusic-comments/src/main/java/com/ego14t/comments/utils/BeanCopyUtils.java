@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BeanCopyUtils {
     /**
      * beanCopier缓存
-     * (S拷贝到T,确定一个beanCopier)
+     * (A拷贝到B,确定一个beanCopier)
      */
     private static Map<Class<?>,Map<Class<?>,BeanCopier>> beanCopierMap = new ConcurrentHashMap<>();
 

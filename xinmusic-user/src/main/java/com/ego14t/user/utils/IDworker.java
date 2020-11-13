@@ -19,10 +19,10 @@ public class IDworker {
     private final long twepoch = 1584028800000L;
 
     /** 机器id所占的位数 */
-    private final long workerIdBits = 2L;
+    private final long workerIdBits = 5L;
 
     /** 数据标识id所占的位数 */
-    private final long datacenterIdBits = 2L;
+    private final long datacenterIdBits = 5L;
 
     /** 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数) */
     private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
@@ -31,7 +31,7 @@ public class IDworker {
     private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
 
     /** 序列在id中占的位数 */
-    private final long sequenceBits = 2L;
+    private final long sequenceBits = 12L;
 
     /** 机器ID向左移12位 */
     private final long workerIdShift = sequenceBits;
@@ -137,12 +137,12 @@ public class IDworker {
 
     //==============================Test=============================================
     /** 测试 */
-    public static void main(String[] args) {
-        IDworker idWorker = new IDworker(0, 0);
-        for (int i = 0; i < 10; i++) {
-            String id = idWorker.nextId();
-            //System.out.println(Long.toBinaryString(id));
-            System.out.println(id);
-        }
-    }
+//    public static void main(String[] args) {
+//        IDworker idWorker = new IDworker(0, 0);
+//        for (int i = 0; i < 10; i++) {
+//            long id = idWorker.nextId();
+//            //System.out.println(Long.toBinaryString(id));
+//            System.out.println(id);
+//        }
+//    }
 }

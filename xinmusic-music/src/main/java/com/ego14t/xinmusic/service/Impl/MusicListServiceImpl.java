@@ -1,8 +1,9 @@
 package com.ego14t.xinmusic.service.Impl;
 
+
 import com.ego14t.xinmusic.common.CdnConsts;
 import com.ego14t.xinmusic.common.TypePath;
-import com.ego14t.xinmusic.entity.MusicList;
+import com.ego14t.xinmusic.entity.MusicInfo;
 import com.ego14t.xinmusic.entity.MusicListInfo;
 import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.mapper.MusicMapper;
@@ -14,8 +15,8 @@ import com.ego14t.xinmusic.pojo.*;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
-import com.ego14t.xinmusic.util.BeanCopyUtils;
 
+import com.ego14t.xinmusic.util.BeanCopyUtils;
 import com.ego14t.xinmusic.util.IDworker;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 @Service
 public class MusicListServiceImpl implements MusicListService {
+
     @Resource
     private MusicMapper musicMapper;
 
@@ -48,52 +50,29 @@ public class MusicListServiceImpl implements MusicListService {
     /**
      * @param musicListID 歌单ID
      * @param userId      用户ID
-     * @return MusicList
+     * @return MusicInfo
      * 自定义sql语句进行联表查询
      * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<MusicList> getUserMusicList(String musicListID, String userId) {
+    public List<MusicInfo> getUserMusicList(String musicListID, String userId) {
         List<Music> musics = musicMapper.searchUserNumList(musicListID, userId);
-        List<MusicList> musicLists = new ArrayList<>();
+        List<MusicInfo> musicInfos = new ArrayList<>();
         for (Music music : musics) {
-            MusicList musicList = new MusicList();
-            musicList.setId(music.getId());
-            musicList.setName(music.getName());
-            musicList.setSinger(music.getSinger());
-            musicList.setAlbum(music.getAlbum());
-            musicList.setLength(music.getLength());
-            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
+            MusicInfo musicInfo = new MusicInfo();
+            musicInfo.setId(music.getId());
+            musicInfo.setName(music.getName());
+            musicInfo.setSinger(music.getSinger());
+            musicInfo.setAlbum(music.getAlbum());
+            musicInfo.setLength(music.getLength());
+            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
-                musicList.setCollection(1);
+                musicInfo.setCollection(1);
             }
-            musicLists.add(musicList);
+            musicInfos.add(musicInfo);
         }
-        return musicLists;
-    }
-
-    /**
-     * @param musicListID 歌单ID
-     * @return MusicList
-     * 自定义sql语句进行联表查询
-     * Description：查询歌单 中的 所有歌曲
-     */
-    @Override
-    public List<MusicList> getMusicList(String musicListID) {
-        List<Music> musics = musicMapper.searchNumList(musicListID);
-        List<MusicList> musicLists = new ArrayList<>();
-        for (Music music : musics) {
-            MusicList musicList = new MusicList();
-            musicList.setId(music.getId());
-            musicList.setName(music.getName());
-            musicList.setSinger(music.getSinger());
-            musicList.setAlbum(music.getAlbum());
-            musicList.setLength(music.getLength());
-            musicList.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
-            musicLists.add(musicList);
-        }
-        return musicLists;
+        return musicInfos;
     }
 
     @Override
@@ -175,7 +154,6 @@ public class MusicListServiceImpl implements MusicListService {
         musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID);
 
         List<MusiclistMusicKey> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
-        //System.out.println(musiclistMusics.get(0).getMusicid());
 
         if (musiclistUser == null) {
             MusiclistCollect musiclistCollect = new MusiclistCollect();

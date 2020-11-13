@@ -5,10 +5,10 @@ import java.io.Serializable;
 /**
  * Create By EGo1ST
  * Date ：Created in 2019/8/2 14:36
- * Description：音乐列表的实体类
+ * Description：歌曲实体类
  */
 
-public class MusicList implements Serializable {
+public class MusicInfo implements Serializable {
     private static final long serialVersionUID = 716387502575184309L;
 
     public String getId() {
@@ -59,11 +59,11 @@ public class MusicList implements Serializable {
         this.url = url;
     }
 
-    public int getCollection() {
+    public Integer getCollection() {
         return collection;
     }
 
-    public void setCollection(int collection) {
+    public void setCollection(Integer collection) {
         this.collection = collection;
     }
 
@@ -73,6 +73,6 @@ public class MusicList implements Serializable {
     private String album;
     private String length;
     private String url;
-    private int collection;
+    private Integer collection;
 
 }

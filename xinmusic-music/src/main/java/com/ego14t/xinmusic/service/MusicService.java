@@ -1,7 +1,10 @@
 package com.ego14t.xinmusic.service;
 
-import com.ego14t.xinmusic.entity.MusicList;
-import org.springframework.http.ResponseEntity;
+import com.ego14t.xinmusic.entity.MusicInfo;
+import com.ego14t.xinmusic.newentity.MusicEntity;
+import com.ego14t.xinmusic.vo.MusicInfoVo;
+
+import java.util.List;
 
 /**
  * @author 王富昕
@@ -11,10 +14,14 @@ import org.springframework.http.ResponseEntity;
  */
 public interface MusicService {
     //根据歌曲id返回歌曲信息
-    MusicList getMusic(String id);
+    MusicInfoVo getMusicInfo(String musicId);
     //根据歌曲id删除歌曲（从歌单中删除）
-    String delMusic(String musicID, String musicListID);
+    String delMusicFromList(String musiclistId, String musicId);
     //把歌曲添加到歌单中
     String addMusicToList(String musicID, String musicListID);
+    //检索歌曲(未登录)
+    List<MusicInfo> getSearchList(String keyword);
+    //检索歌曲(登录)
+    List<MusicInfo> getSearchUserList(String userID, String keyword);
 
 }

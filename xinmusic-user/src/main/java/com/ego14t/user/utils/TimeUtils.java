@@ -1,4 +1,4 @@
-package com.ego14t.common.utils;
+package com.ego14t.user.utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;

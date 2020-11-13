@@ -14,15 +14,7 @@ spring:
     - id: music-resource
       uri: lb://XinMusic-Feign/
       predicates:
-        - Path=/my/**
-      filters:
-        - StripPrefix=1
-        - PrefixPath=/resource
-
-    - id: music-search
-      uri: lb://XinMusic-Feign/
-      predicates:
-        - Path=/search/**
+        - Path=/music/**
 
     - id: music-comments
       uri: lb://XinMusic-Feign/

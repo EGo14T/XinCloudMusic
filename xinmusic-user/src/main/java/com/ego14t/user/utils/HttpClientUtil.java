@@ -1,4 +1,4 @@
-package com.ego14t.common.utils;
+package com.ego14t.user.utils;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

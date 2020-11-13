@@ -18,17 +18,17 @@ public enum TypePath {
     USER_AVATAR("/useravatar");
 
 
-    private String paht;
+    private String path;
 
-    public String getPaht() {
-        return paht;
+    public String getPath() {
+        return path;
     }
 
-    public void setPaht(String paht) {
-        this.paht = paht;
+    public void setPaht(String path) {
+        this.path = path;
     }
 
-    TypePath(String paht) {
-        this.paht = paht;
+    TypePath(String path) {
+        this.path = path;
     }
 }

@@ -14,19 +14,19 @@ import javax.annotation.Resource;
  * Description：
  */
 @RestController
-@RequestMapping(value = "/resource")
+@RequestMapping(value = "/music")
 public class MusicListController {
     @Resource
     private MusicListService musicListService;
 
     /**
-     * 根据歌单ID获取歌单列表
-     * @param id 歌单ID
-     * @return 歌单列表
+     * 检索用户的歌单列表(创建&默认)
+     * @param userID
+     * @return
      */
-    @GetMapping(value = "/create/musiclist/{musicListID}")
-    public ResponseEntity<?> getCreateMusicList(@PathVariable(value="musicListID") String id){
-        return ResponseJsonResult.OK(musicListService.getCreateMusicList(id),"获取创建歌单成功");
+    @GetMapping(value = "/musiclist/created/{userID}")
+    public ResponseEntity<?> getCreateMusicList(@PathVariable(value="userID") String userID){
+        return ResponseJsonResult.OK(musicListService.getCreateMusicList(userID),"获取创建歌单成功");
     }
 
     /**
@@ -34,7 +34,7 @@ public class MusicListController {
      * @param userId 用户ID
      * @return 歌单列表
      */
-    @GetMapping(value = "/collect/musiclist/{userID}")
+    @GetMapping(value = "/musiclist/collected/{userID}")
     public ResponseEntity<?> getCollectMusicList(@PathVariable(value="userID") String userId){
         return ResponseJsonResult.OK(musicListService.getCollectMusicList(userId),"获取收藏歌单成功");
     }
@@ -43,20 +43,23 @@ public class MusicListController {
      * 获取推荐歌单
      * @return 歌单列表
      */
-    @GetMapping(value = "/discover/musiclist")
+    @GetMapping(value = "/musiclist/discover")
     public ResponseEntity<?> getDiscoverMusicList(){
         return ResponseJsonResult.OK(musicListService.getDiscoverMusicList(),"获取推荐歌单成功");
     }
 
-    @PostMapping(value = "/collect/musiclist/{userID}/{musicListID}")
-    public ResponseEntity<?> collectMusicList(@PathVariable(value="userID") String userId,
-                                              @PathVariable(name="musicListID") String musicListID){
-        return ResponseJsonResult.OK(musicListService.collectMusicList(userId,musicListID),"收藏歌单成功");
+    /**
+     * 收藏歌单操作
+     * @param musicListID
+     * @return
+     */
+    @PostMapping(value = "/musiclist/collect/{musicListID}")
+    public ResponseEntity<?> collectMusicList(@PathVariable(name="musicListID") String musicListID){
+        return ResponseJsonResult.OK(musicListService.collectMusicList(musicListID),"收藏歌单成功");
     }
 
-
     /**
-     * 根据歌单ID 和 用户ID 查询带状态的歌单歌曲列表
+     * 根据歌单ID查询带状态的歌单歌曲列表
      * @param musicListID 歌单ID
      * @return  歌单的详细信息
      */
@@ -66,24 +69,20 @@ public class MusicListController {
     }
 
     /**
-     * 根据歌单ID查询歌单歌曲列表
-     * @return  歌单的详细信息
+     * 根据歌单id返回歌单详细信息
+     * @param userID
+     * @param musicListID
+     * @return
      */
-//    @GetMapping(value = "/musiclist/{musicListID}")
-//    public ResponseEntity<?> getMusicList(@PathVariable(name="musicListID") String musicListID){
-//        return ResponseJsonResult.OK(musicListService.getMusicList(musicListID),"获取成功");
-//    }
-
-    @GetMapping(value = "/musiclistinfo/{userID}/{musicListID}")
+    @GetMapping(value = "/musiclist/getinfo/{userID}/{musicListID}")
     public ResponseEntity<?>getMusicListInfo(@PathVariable(value = "userID")String userID,
-                                             @PathVariable(value = "musicListID")String musiclistID){
-
-        return ResponseJsonResult.OK(musicListService.getMusicListInfo(userID,musiclistID),"获取成功");
+                                             @PathVariable(value = "musicListID")String musicListID){
+        return ResponseJsonResult.OK(musicListService.getMusicListInfo(userID,musicListID),"获取成功");
     }
 
 
     /**
-     * 添加歌单
+     * 新建歌单
      * @param musiclistUser 歌单信息实体
      * @return 新建的歌单的主键ID
      */
@@ -94,14 +93,12 @@ public class MusicListController {
 
     /**
      * 删除歌单
-     * @param userID 用户ID
      * @param musicListID  歌单ID
      * @return 无 状态码
      */
-    @DeleteMapping(value = "/musiclist/{userID}/{musicListID}")
-    public ResponseEntity<?> deleteMusicList(@PathVariable(value="userID")String userID,
-                                             @PathVariable(value="musicListID") String musicListID){
-        String result = musicListService.delMusicList(userID,musicListID);
+    @DeleteMapping(value = "/musiclist/{musicListID}")
+    public ResponseEntity<?> deleteMusicList(@PathVariable(value="musicListID") String musicListID){
+        String result = musicListService.delMusicList(musicListID);
         if ("404".equals(result)){
             return ResponseJsonResult.NOT_FOUND(null,"资源未找到！");
         }
@@ -120,10 +117,9 @@ public class MusicListController {
      * @param musiclistUser 歌单信息实体
      * @return  修改的歌单ID
      */
-    @PatchMapping(value = "/musiclist/{musicListID}")
-    public ResponseEntity<?> updateMusicList(@PathVariable(value = "musicListID")String musicListID
-                                            ,@RequestBody MusiclistUser musiclistUser)
-    {
+    @PatchMapping(value = "/musiclist/update/{musicListID}")
+    public ResponseEntity<?> updateMusicList(@PathVariable(value = "musicListID")String musicListID,
+                                             @RequestBody MusiclistUser musiclistUser) {
         return ResponseJsonResult.OK(musicListService.updateMusicList(musicListID,musiclistUser),"修改成功");
     }
 }
