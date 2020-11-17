@@ -65,7 +65,7 @@ public class MusicListServiceImpl implements MusicListService {
             musicInfo.setSinger(music.getSinger());
             musicInfo.setAlbum(music.getAlbum());
             musicInfo.setLength(music.getLength());
-            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId() + ".mp3");
+            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + music.getId() + ".mp3");
             //musicID不为null时，为收藏的歌曲，collection值为1
             if (music.getMusicID() != null) {
                 musicInfo.setCollection(1);

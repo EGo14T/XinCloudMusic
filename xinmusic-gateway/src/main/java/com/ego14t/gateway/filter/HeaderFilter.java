@@ -45,6 +45,9 @@ public class HeaderFilter implements GlobalFilter, Ordered {
     private String DeCodeJWT(String jwt) {
         //取出jwt
         jwt = jwt.replace("Bearer ","");
+        if (jwt.equals("")){
+            return null;
+        }
         //解析jwt
         DecodedJWT decodedJWT = JWT.decode(jwt);
         //映射jwt中的信息为UserInfo对象

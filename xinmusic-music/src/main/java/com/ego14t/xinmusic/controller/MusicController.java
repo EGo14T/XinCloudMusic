@@ -86,11 +86,7 @@ public class MusicController extends AbstractController{
     @ResponseBody
     @ApiOperation(value="搜索歌曲",notes="根据关键字")
     @ApiModelProperty(name = "keyword", value = "关键字", required = true)
-    public List<MusicInfo> getSearchList(@RequestParam(value = "keyword")String keyword){
-        String userId = getUserId(request);
-        if (userId != null){
-            return musicService.getSearchUserList(userId,keyword);
-        }
-        return musicService.getSearchList(keyword);
+    public List<MusicInfoVo> getSearchList(@RequestParam(value = "keyword")String keyword){
+        return musicService.getSearchUserList("2",keyword);
     }
 }

@@ -2,11 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ego14t.xinmusic.newmapper.MusicMapper1">
 
+    <!-- 查询歌曲的基本信息 -->
     <select id="getMusicInfo" resultType="com.ego14t.xinmusic.newentity.MusicEntity">
         SELECT * FROM xinmusic_music t WHERE t.music_id = #{musicId}
+    </select>
+
+    <!-- 搜索歌曲带收藏状态 -->
+    <select id="searchUserList" resultType="com.ego14t.xinmusic.newpojo.SearchUserList">
+        SELECT
+            a.*
+            <if test="musiclistId != null and musiclistId != ''">
+            ,b.music_id AS collect
+            </if>
+        FROM
+            xinmusic_music a
+            <if test="musiclistId != null and musiclistId != ''">
+            LEFT JOIN xinmusic_musiclist_music b ON  a.music_id = b.music_id
+            and b.musiclist_id = #{musiclistId}
+            </if>
+        WHERE
+            a.music_name LIKE CONCAT('%',#{keyword},'%')
+    </select>
+
+    <!-- 搜索用户的默认歌单 -->
+    <select id="getDefaultList" resultType="com.ego14t.xinmusic.newentity.MusicListEntity">
+        SELECT
+            a.*
+        FROM
+            xinmusic_musiclist a
+        WHERE
+            a.create_user_id = #{createUserId}
+            AND a.`status` = 0
+    </select>
+
+    <select id="getMusiclistMusic" resultType="com.ego14t.xinmusic.newentity.MusicListMusicEntity">
+        SELECT
+            a.*
+        FROM
+            xinmusic_musiclist_music a
+        WHERE
+            a.musiclist_id = #{musiclistId}
+            AND a.music_id = #{musicId}
     </select>
 
     <delete id="delMusicFromList">
         DELETE FROM xinmusic_musiclist_music t WHERE t.musiclist_id = #{musiclistId} AND t.music_id = #{musicId}
     </delete>
+
+
+
 </mapper>

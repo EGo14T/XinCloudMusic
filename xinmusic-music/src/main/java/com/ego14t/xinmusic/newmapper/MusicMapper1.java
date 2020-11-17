@@ -1,7 +1,11 @@
 package com.ego14t.xinmusic.newmapper;
 
-import com.ego14t.xinmusic.newentity.MusicEntity;
+import com.ego14t.xinmusic.newentity.*;
+import com.ego14t.xinmusic.newpojo.SearchUserList;
+import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MusicMapper1 {
@@ -20,5 +24,30 @@ public interface MusicMapper1 {
      */
     int delMusicFromList(String musiclistId, String musicId);
 
+    /**
+     * 检索歌曲，带用户收藏状态
+     * @param musiclistId 默认歌单ID
+     * @param keyword 关键字
+     * @return 检索结果
+     */
+    List<SearchUserList> searchUserList(@Param("musiclistId") String musiclistId, @Param("keyword") String keyword);
 
+    /**
+     * 获取用户默认歌单
+     * @param createUserId 歌单创建者ID
+     * @return 默认歌单信息
+     */
+    MusicListEntity getDefaultList(String createUserId);
+
+    /**
+     * 获取歌单歌曲表信息
+     * @return 歌单歌曲信息
+     */
+    MusicListMusicEntity getMusiclistMusic(@Param("musiclistId") String musiclistId, @Param("musicId") String musicId);
+
+    /**
+     * 将歌曲添加到歌单中
+     * @param addEntity 添加实体
+     */
+    void addMusicToList(MusicListMusicEntity addEntity);
 }

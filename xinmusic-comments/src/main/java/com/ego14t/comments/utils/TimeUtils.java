@@ -39,4 +39,11 @@ public class TimeUtils {
         return myformat.format(date);
     }
 
+    public static void main(String[] args) {
+        DateFormat myformat = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+        Date date = new Date(1605517053000L);
+        //System.out.println(date.getTime());
+        System.out.println(myformat.format(date));
+    }
+
 }
