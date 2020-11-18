@@ -3,22 +3,25 @@ package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.common.CdnConsts;
 import com.ego14t.xinmusic.common.TypePath;
-import com.ego14t.xinmusic.entity.MusicInfo;
-import com.ego14t.xinmusic.entity.MusicListInfo;
-import com.ego14t.xinmusic.entity.UserMusicListInfo;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistCollectMapper;
 import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
 import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
 
+import com.ego14t.xinmusic.newentity.MusicListCollectEntity;
+import com.ego14t.xinmusic.newentity.MusicListEntity;
+import com.ego14t.xinmusic.newmapper.MusicListMapper;
+import com.ego14t.xinmusic.newmapper.MusicMapper1;
+import com.ego14t.xinmusic.newpojo.MusicListInfo;
+import com.ego14t.xinmusic.newpojo.SearchUserList;
+import com.ego14t.xinmusic.newpojo.UserMusicList;
 import com.ego14t.xinmusic.pojo.*;
 import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
 import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
 
-import com.ego14t.xinmusic.util.BeanCopyUtils;
 import com.ego14t.xinmusic.util.IDworker;
-import org.springframework.beans.BeanUtils;
+import com.ego14t.xinmusic.vo.MusicInfoVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +41,12 @@ public class MusicListServiceImpl implements MusicListService {
     private MusicMapper musicMapper;
 
     @Resource
+    private MusicMapper1 mapper;
+
+    @Resource
+    private MusicListMapper musicListMapper;
+
+    @Resource
     private MusiclistUserMapper musiclistUserMapper;
 
     @Resource
@@ -51,92 +60,73 @@ public class MusicListServiceImpl implements MusicListService {
      * @param musicListID 歌单ID
      * @param userId      用户ID
      * @return MusicInfo
-     * 自定义sql语句进行联表查询
      * Description：查询歌单 中的 所有歌曲
      */
     @Override
-    public List<MusicInfo> getUserMusicList(String musicListID, String userId) {
-        List<Music> musics = musicMapper.searchUserNumList(musicListID, userId);
-        List<MusicInfo> musicInfos = new ArrayList<>();
-        for (Music music : musics) {
-            MusicInfo musicInfo = new MusicInfo();
-            musicInfo.setId(music.getId());
-            musicInfo.setName(music.getName());
-            musicInfo.setSinger(music.getSinger());
-            musicInfo.setAlbum(music.getAlbum());
-            musicInfo.setLength(music.getLength());
-            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + music.getId() + ".mp3");
-            //musicID不为null时，为收藏的歌曲，collection值为1
-            if (music.getMusicID() != null) {
-                musicInfo.setCollection(1);
-            }
-            musicInfos.add(musicInfo);
-        }
-        return musicInfos;
-    }
-
-    @Override
-    public List<UserMusicListInfo> getCreateMusicListInfo(String userId) {
-
-        List<UserMusicListInfo> userMusicListInfos = musiclistUserMapper.getCreateMusicListInfo(userId);
-
-        List<UserMusicListInfo> musicListInfos = new ArrayList<>();
-
-        for (UserMusicListInfo musiclistUser : userMusicListInfos) {
-            UserMusicListInfo musicListInfo = new UserMusicListInfo();
-            BeanUtils.copyProperties(musiclistUser, musicListInfo);
-            BeanCopyUtils.copy(musiclistUser, musicListInfo);
-            if (musiclistUser.getStatus() == 0) {
-                musicListInfos.add(0, musicListInfo);
-            } else {
-                musicListInfos.add(musicListInfo);
-            }
+    public List<MusicInfoVo> getUserMusicList(String musicListID, String userId) {
+        String defaultId = "";
+        if (userId != null){
+            MusicListEntity defaultList = mapper.getDefaultList(userId);
+            defaultId = defaultList.getMusiclistId();
         }
 
-        return musicListInfos;
+        List<SearchUserList> searchUserLists = mapper.getUserList(defaultId, musicListID);
+        List<MusicInfoVo> musicInfoVos = new ArrayList<>();
+        for (SearchUserList s : searchUserLists) {
+            MusicInfoVo musicInfoVo = new MusicInfoVo();
+            musicInfoVo.setMusicId(s.getMusicId());
+            musicInfoVo.setMusicName(s.getMusicName());
+            musicInfoVo.setSinger(s.getSinger());
+            musicInfoVo.setAlbum(s.getAlbum());
+            musicInfoVo.setLength(s.getLength());
+            musicInfoVo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + s.getMusicId()+".mp3");
+            if (s.getCollect() != null) {
+                musicInfoVo.setCollection(1);
+            }
+            musicInfoVos.add(musicInfoVo);
+        }
+        return musicInfoVos;
     }
 
     @Override
-    public List<UserMusicListInfo> getCollectMusicListInfo(String userId) {
+    public List<UserMusicList> getCreateMusicListInfo(String userId) {
+        List<UserMusicList> userCreateMusicList = musicListMapper.getUserCreateMusicList(userId);
+        UserMusicList remove = new UserMusicList();
+        for (int i = 0; i < userCreateMusicList.size(); i++) {
+            if (userCreateMusicList.get(i).getStatus() == 0){
+                remove = userCreateMusicList.remove(i);
+            }
+        }
+        userCreateMusicList.add(0,remove);
+        return userCreateMusicList;
+    }
 
-        return musiclistUserMapper.getCollectMusicListInfo(userId);
+
+
+    @Override
+    public List<UserMusicList> getCollectMusicListInfo(String userId) {
+        return musicListMapper.getUserCollectMusicList(userId);
     }
 
     @Override
-    public List<UserMusicListInfo> getDiscoverMusicListInfo() {
-        return musiclistUserMapper.getDiscoverMusicListInfo();
+    public List<UserMusicList> getDiscoverMusicListInfo() {
+        //todo 推荐逻辑
+        return musicListMapper.getDiscoverMusicList();
     }
 
     @Override
     public Integer collectMusicList(String userId, String musicListID) {
-
-        MusiclistCollect musiclistCollect = new MusiclistCollect();
-        musiclistCollect.setCollectingtime(LocalDateTime.now());
-        musiclistCollect.setUserid(userId);
-        musiclistCollect.setMusiclistid(musicListID);
-
-        return musiclistCollectMapper.insertSelective(musiclistCollect);
-
+        MusicListCollectEntity addEntity = new MusicListCollectEntity();
+        addEntity.setMusiclistId(musicListID);
+        addEntity.setUserid(userId);
+        addEntity.setCreateTime(LocalDateTime.now());
+        return musicListMapper.addMusicToList(addEntity);
     }
 
 
     @Override
     public MusicListInfo getMusicListInfo(String userID, String musicListID) {
-        MusicListInfo musicListInfo = musiclistUserMapper.searchMusicListInfo(musicListID);
-
-        MusiclistCollect musiclistCollect = new MusiclistCollect();
-        musiclistCollect.setUserid(userID);
-        musiclistCollect.setMusiclistid(musicListID);
-
-        MusiclistCollect res = musiclistCollectMapper.selectByPrimaryKey(musiclistCollect);
-
-        if (res != null){
-            musicListInfo.setIsCollected(1);
-        }else{
-            musicListInfo.setIsCollected(0);
-        }
-
-        return musicListInfo;
+        return musicListMapper.getMusicListInfo(userID, musicListID);
     }
 
     /**

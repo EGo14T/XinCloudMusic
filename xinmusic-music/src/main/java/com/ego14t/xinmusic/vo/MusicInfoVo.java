@@ -43,7 +43,7 @@ public class MusicInfoVo implements Serializable {
     /**
      * 是否收藏
      */
-    private String collection;
+    private Integer collection;
 
     public String getMusicId() {
         return musicId;
@@ -93,11 +93,11 @@ public class MusicInfoVo implements Serializable {
         this.url = url;
     }
 
-    public String getCollection() {
+    public Integer getCollection() {
         return collection;
     }
 
-    public void setCollection(String collection) {
+    public void setCollection(Integer collection) {
         this.collection = collection;
     }
 }

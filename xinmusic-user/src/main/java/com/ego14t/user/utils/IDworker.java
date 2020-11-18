@@ -139,10 +139,10 @@ public class IDworker {
     /** 测试 */
 //    public static void main(String[] args) {
 //        IDworker idWorker = new IDworker(0, 0);
-//        for (int i = 0; i < 10; i++) {
-//            long id = idWorker.nextId();
+//        for (int i = 0; i < 4; i++) {
+//            String nextId = idWorker.nextId();
 //            //System.out.println(Long.toBinaryString(id));
-//            System.out.println(id);
+//            System.out.println(nextId);
 //        }
 //    }
 }

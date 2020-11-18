@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego14t.xinmusic.newmapper.MusicListMapper">
+
+    <!-- 查询用户收藏的歌单信息 带歌曲总数 -->
+    <select id="getUserCollectMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+        SELECT
+            a.*,
+            count( c.musiclist_id ) AS music_sum
+        FROM
+            xinmusic_musiclist a
+            LEFT JOIN xinmusic_collect b ON b.userid = #{userid}
+            LEFT JOIN xinmusic_musiclist_music c ON c.musiclist_id = b.musiclist_id
+        WHERE
+            a.musiclist_id = b.musiclist_id
+        GROUP BY
+            a.musiclist_id
+        ORDER BY
+	        a.create_time
+    </select>
+
+    <!-- 查询用户创建的歌单信息 带歌曲总数 -->
+    <select id="getUserCreateMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+        SELECT
+            a.*,
+            count( c.musiclist_id ) AS music_sum
+        FROM
+            xinmusic_musiclist a
+            LEFT JOIN xinmusic_musiclist_music c ON c.musiclist_id = a.musiclist_id
+        WHERE
+            a.create_user_id = #{userid}
+        GROUP BY
+            a.musiclist_id
+        ORDER BY
+	        a.create_time
+    </select>
+
+    <select id="getDiscoverMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+        SELECT
+            a.*,
+            count( c.musiclist_id ) AS music_sum
+        FROM
+            xinmusic_musiclist a
+            LEFT JOIN xinmusic_musiclist_music c ON c.musiclist_id = a.musiclist_id
+        WHERE
+            a.status = 1
+        GROUP BY
+            a.musiclist_id
+        ORDER BY
+            a.create_time
+        LIMIT 10
+    </select>
+
+    <insert id="addMusicToList" parameterType="com.ego14t.xinmusic.newentity.MusicListCollectEntity">
+        INSERT INTO xinmusic_collect
+        (userid,
+        musiclist_id,
+        create_time)
+        VALUES
+         (#{userid},
+         #{musiclistId},
+         #{createTime})
+    </insert>
+
+    <select id="getMusicListInfo" parameterType="com.ego14t.xinmusic.newpojo.MusicListInfo">
+        SELECT
+            a.*,
+            b.nickname,
+            b.avatar,
+            c.userid AS collect
+        FROM
+            xinmusic_musiclist a,
+            xinmusic_base_user b
+            LEFT JOIN xinmusic_collect c ON c.userid = #{userid}
+            AND c.musiclist_id = #{musiclistId}
+        WHERE
+            a.musiclist_id = #{musiclistId}
+            AND a.create_user_id = b.userid;
+    </select>
+
+</mapper>

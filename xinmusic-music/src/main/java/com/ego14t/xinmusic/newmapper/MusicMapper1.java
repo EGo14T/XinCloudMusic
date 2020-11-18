@@ -26,11 +26,19 @@ public interface MusicMapper1 {
 
     /**
      * 检索歌曲，带用户收藏状态
-     * @param musiclistId 默认歌单ID
+     * @param defaultId 默认歌单ID
      * @param keyword 关键字
      * @return 检索结果
      */
-    List<SearchUserList> searchUserList(@Param("musiclistId") String musiclistId, @Param("keyword") String keyword);
+    List<SearchUserList> searchUserList(@Param("defaultId") String defaultId, @Param("keyword") String keyword);
+
+    /**
+     *
+     * @param defaultId
+     * @param musiclistId
+     * @return
+     */
+    List<SearchUserList> getUserList(@Param("defaultId") String defaultId, @Param("musiclistId") String musiclistId);
 
     /**
      * 获取用户默认歌单

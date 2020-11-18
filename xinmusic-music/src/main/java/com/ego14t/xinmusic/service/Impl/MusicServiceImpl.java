@@ -2,22 +2,17 @@ package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.xinmusic.common.CdnConsts;
 import com.ego14t.xinmusic.common.TypePath;
-import com.ego14t.xinmusic.entity.MusicInfo;
 
-import com.ego14t.xinmusic.mapper.MusicMapper;
-import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
-import com.ego14t.xinmusic.newentity.MusicEntity;
+import com.ego14t.xinmusic.newentity.*;
 import com.ego14t.xinmusic.newmapper.MusicMapper1;
-import com.ego14t.xinmusic.pojo.Music;
-import com.ego14t.xinmusic.pojo.MusiclistMusicKey;
-import com.ego14t.xinmusic.pojo.example.MusicExample;
+import com.ego14t.xinmusic.newpojo.SearchUserList;
 import com.ego14t.xinmusic.service.MusicService;
-import com.ego14t.xinmusic.util.BeanCopyUtils;
-import com.ego14t.xinmusic.util.RedisUtil;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,18 +25,9 @@ import java.util.List;
  */
 @Service
 public class MusicServiceImpl implements MusicService {
-    @Resource
-    private MusicMapper musicMapper;
-
-    @Resource
-    private MusiclistMusicMapper musiclistMusicMapper;
 
     @Resource
     private MusicMapper1 mapper;
-
-    @Resource
-    private RedisUtil redisUtil;
-
 
     /**
      * 根据歌曲id返回歌曲信息
@@ -50,25 +36,6 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public MusicInfoVo getMusicInfo(String musicId) {
-//        if (redisUtil.get("musicList::"+id)==null){
-//            Music music = musicMapper.selectByPrimaryKey(id);
-//            if (music==null){
-//                return null;
-//            }else{
-//                MusicInfo musicInfo = new MusicInfo();
-//                musicInfo.setId(music.getId());
-//                musicInfo.setName(music.getName());
-//                musicInfo.setSinger(music.getSinger());
-//                musicInfo.setAlbum(music.getAlbum());
-//                musicInfo.setLength(music.getLength());
-//                musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE+ "/" +music.getId()+".mp3");
-//                redisUtil.set("musicInfo::"+id, musicInfo,60);
-//                return musicInfo;
-//            }
-//        }else {
-//            return (MusicInfo)redisUtil.get("musicList::"+id);
-//        }
-
         MusicInfoVo musicInfo = new MusicInfoVo();
         MusicEntity musicEntity = mapper.getMusicInfo(musicId);
 
@@ -94,6 +61,7 @@ public class MusicServiceImpl implements MusicService {
      * @return 删除信息报文
      */
     @Override
+    @Transactional
     public String delMusicFromList(String musiclistId, String musicId) {
         //int res = musiclistMusicMapper.deleteByPrimaryKey(new MusiclistMusicKey(musicListID,musicID));
         int res = mapper.delMusicFromList(musiclistId,musicId);
@@ -106,55 +74,43 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
+    @Transactional
     public String addMusicToList(String musicListID, String musicID) {
-        MusiclistMusicKey ans = new MusiclistMusicKey(musicListID,musicID);
-        MusiclistMusicKey musiclistMusicKey = musiclistMusicMapper.selectByPrimaryKey(ans);
-        if (musiclistMusicKey==null){
-            musiclistMusicMapper.insert(ans);
+        MusicListMusicEntity musiclistMusic = mapper.getMusiclistMusic(musicListID, musicID);
+        if (musiclistMusic == null){
+            MusicListMusicEntity addEntity = new MusicListMusicEntity();
+            addEntity.setMusicId(musicListID);
+            addEntity.setMusicId(musicID);
+            addEntity.setCreateTime(LocalDateTime.now());
+            mapper.addMusicToList(addEntity);
             return "200";
-        }else{
-            return "歌曲已存在！";
         }
+        return "歌曲已存在";
     }
 
     @Override
-    public List<MusicInfo> getSearchList(String keyword) {
-        MusicExample musicExample = new MusicExample();
-        musicExample.createCriteria().andNameLike("%"+keyword+"%");
-        List<Music> musics = musicMapper.selectByExample(musicExample);
-        List<MusicInfo> musicInfos = new ArrayList<>();
-        for (Music music : musics) {
-            MusicInfo musicInfo = new MusicInfo();
-            musicInfo.setId(music.getId());
-            musicInfo.setName(music.getName());
-            musicInfo.setSinger(music.getSinger());
-            musicInfo.setAlbum(music.getAlbum());
-            musicInfo.setLength(music.getLength());
-            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + music.getId()+".mp3");
-            musicInfos.add(musicInfo);
+    public List<MusicInfoVo> getSearchUserList(String userID, String keyword) {
+        String defaultId = "";
+        if (userID != null){
+            MusicListEntity defaultList = mapper.getDefaultList(userID);
+            defaultId = defaultList.getMusiclistId();
         }
 
-        return musicInfos;
-    }
-
-    @Override
-    public List<MusicInfo> getSearchUserList(String userID, String keyword) {
-        List<Music> musics = musicMapper.searchUserMusic(userID,'%'+keyword+'%');
-        List<MusicInfo> musicInfos = new ArrayList<>();
-        for (Music music : musics) {
-            MusicInfo musicInfo = new MusicInfo();
-            musicInfo.setId(music.getId());
-            musicInfo.setName(music.getName());
-            musicInfo.setSinger(music.getSinger());
-            musicInfo.setAlbum(music.getAlbum());
-            musicInfo.setLength(music.getLength());
-            musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE+music.getId()+".mp3");
-            //musicID不为null时，为收藏的歌曲，collection值为1
-            if (music.getMusicID() != null) {
-                musicInfo.setCollection(1);
+        List<SearchUserList> searchUserLists = mapper.searchUserList(defaultId, keyword);
+        List<MusicInfoVo> musicInfoVos = new ArrayList<>();
+        for (SearchUserList s : searchUserLists) {
+            MusicInfoVo musicInfoVo = new MusicInfoVo();
+            musicInfoVo.setMusicId(s.getMusicId());
+            musicInfoVo.setMusicName(s.getMusicName());
+            musicInfoVo.setSinger(s.getSinger());
+            musicInfoVo.setAlbum(s.getAlbum());
+            musicInfoVo.setLength(s.getLength());
+            musicInfoVo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + s.getMusicId()+".mp3");
+            if (s.getCollect() != null) {
+                musicInfoVo.setCollection(1);
             }
-            musicInfos.add(musicInfo);
+            musicInfoVos.add(musicInfoVo);
         }
-        return musicInfos;
+        return musicInfoVos;
     }
 }

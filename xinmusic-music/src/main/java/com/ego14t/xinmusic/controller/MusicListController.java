@@ -1,11 +1,10 @@
 package com.ego14t.xinmusic.controller;
 
-
-import com.ego14t.xinmusic.entity.MusicInfo;
-import com.ego14t.xinmusic.entity.MusicListInfo;
-import com.ego14t.xinmusic.entity.UserMusicListInfo;
+import com.ego14t.xinmusic.newpojo.MusicListInfo;
+import com.ego14t.xinmusic.newpojo.UserMusicList;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
+import com.ego14t.xinmusic.vo.MusicInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -40,7 +39,7 @@ public class MusicListController extends AbstractController{
     @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
 
-    public List<UserMusicListInfo> getCreateMusicListInfo(@PathVariable(value="userID") String userId){
+    public List<UserMusicList> getCreateMusicListInfo(@PathVariable(value="userID") String userId){
         return musicListService.getCreateMusicListInfo(userId);
     }
 
@@ -52,13 +51,9 @@ public class MusicListController extends AbstractController{
     @GetMapping(value = "/collected/{userID}")
     @ResponseBody
     @ApiOperation(value="根据歌单id返回用户的歌单列表（用户收藏的歌单）",notes="歌单列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
-    })
-    public List<UserMusicListInfo> getCollectMusicListInfo(@PathVariable(value="userID") String userId){
-
+    @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
+    public List<UserMusicList> getCollectMusicListInfo(@PathVariable(value="userID") String userId){
         return musicListService.getCollectMusicListInfo(userId);
-
     }
 
     /**
@@ -68,8 +63,7 @@ public class MusicListController extends AbstractController{
     @GetMapping(value = "/discover")
     @ResponseBody
     @ApiOperation(value="返回推荐歌单",notes="歌单列表")
-    public List<UserMusicListInfo> getDiscoverMusicListInfo(){
-
+    public List<UserMusicList> getDiscoverMusicListInfo(){
         return musicListService.getDiscoverMusicListInfo();
     }
 
@@ -97,7 +91,7 @@ public class MusicListController extends AbstractController{
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
-    public List<MusicInfo> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
+    public List<MusicInfoVo> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
         String userId = getUserId(request);
         return musicListService.getUserMusicList(musicListID,userId);
     }

@@ -11,14 +11,14 @@
     <select id="searchUserList" resultType="com.ego14t.xinmusic.newpojo.SearchUserList">
         SELECT
             a.*
-            <if test="musiclistId != null and musiclistId != ''">
+            <if test="defaultId != null and defaultId != ''">
             ,b.music_id AS collect
             </if>
         FROM
             xinmusic_music a
-            <if test="musiclistId != null and musiclistId != ''">
+            <if test="defaultId != null and defaultId != ''">
             LEFT JOIN xinmusic_musiclist_music b ON  a.music_id = b.music_id
-            and b.musiclist_id = #{musiclistId}
+            and b.musiclist_id = #{defaultId}
             </if>
         WHERE
             a.music_name LIKE CONCAT('%',#{keyword},'%')
@@ -48,6 +48,18 @@
     <delete id="delMusicFromList">
         DELETE FROM xinmusic_musiclist_music t WHERE t.musiclist_id = #{musiclistId} AND t.music_id = #{musicId}
     </delete>
+
+    <select id="getUserList" resultType="com.ego14t.xinmusic.newpojo.SearchUserList">
+        SELECT
+            a.*,
+            b.music_id AS collect
+        FROM
+            xinmusic_music a
+            LEFT JOIN xinmusic_musiclist_music b ON b.music_id = a.music_id
+            AND b.musiclist_id = #{defaultId}
+            INNER JOIN xinmusic_musiclist_music c ON c.musiclist_id = #{musiclistId}
+            AND c.music_id = a.music_id;
+    </select>
 
 
 

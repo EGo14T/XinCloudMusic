@@ -344,19 +344,19 @@ WHERE
 
   <!-- 获取推荐歌单 -->
   <select id="getDiscoverMusicListInfo" resultMap="MusicListResultMap">
-SELECT
-	a.musicListID,
-	a.musicList_name,
-	a.musiclist_img,
-	a.`status`,
-	IFNULL( c.sum, 0 ) AS sumMusic
-FROM
-	musiclist_user a
-	LEFT JOIN ( SELECT musicListID, count( musicListID ) sum FROM musiclist_music GROUP BY musicListID ) c ON c.musicListID = a.musicListID
-WHERE
-	a.STATUS = 1
-ORDER BY
-	a.create_time DESC
-	LIMIT 10;
+      SELECT
+          a.musicListID,
+          a.musicList_name,
+          a.musiclist_img,
+          a.`status`,
+          IFNULL( c.sum, 0 ) AS sumMusic
+      FROM
+          musiclist_user a
+          LEFT JOIN ( SELECT musicListID, count( musicListID ) sum FROM musiclist_music GROUP BY musicListID ) c ON c.musicListID = a.musicListID
+      WHERE
+          a.STATUS = 1
+      ORDER BY
+          a.create_time DESC
+          LIMIT 10;
   </select>
 </mapper>

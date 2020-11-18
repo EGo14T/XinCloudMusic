@@ -1,7 +1,5 @@
 package com.ego14t.xinmusic.controller;
 
-import com.ego14t.xinmusic.entity.MusicInfo;
-import com.ego14t.xinmusic.newentity.MusicEntity;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import io.swagger.annotations.*;
@@ -87,6 +85,7 @@ public class MusicController extends AbstractController{
     @ApiOperation(value="搜索歌曲",notes="根据关键字")
     @ApiModelProperty(name = "keyword", value = "关键字", required = true)
     public List<MusicInfoVo> getSearchList(@RequestParam(value = "keyword")String keyword){
-        return musicService.getSearchUserList("2",keyword);
+        String userId = getUserId(request);
+        return musicService.getSearchUserList(userId, keyword);
     }
 }
