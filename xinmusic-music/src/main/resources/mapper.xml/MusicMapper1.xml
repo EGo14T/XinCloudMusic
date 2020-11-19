@@ -61,6 +61,8 @@
             AND c.music_id = a.music_id;
     </select>
 
-
+    <insert id="addMusicToList" parameterType="com.ego14t.xinmusic.newentity.MusicListMusicEntity">
+        INSERT INTO xinmusic_musiclist_music (musiclist_id,music_id,create_time) VALUES (#{musiclistId},#{musicId},#{createTime})
+    </insert>
 
 </mapper>

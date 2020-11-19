@@ -55,7 +55,7 @@ public class MusicController extends AbstractController{
     })
     public String addMusicToList(@PathVariable(name = "musicListID" )String musicListID,
                                  @PathVariable(name="musicID") String musicID){
-        return musicService.addMusicToList(musicID,musicListID);
+        return musicService.addMusicToList(musicListID, musicID);
     }
 
     /**

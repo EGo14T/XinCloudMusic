@@ -4,6 +4,7 @@ import com.ego14t.xinmusic.common.CdnConsts;
 import com.ego14t.xinmusic.common.TypePath;
 
 import com.ego14t.xinmusic.newentity.*;
+import com.ego14t.xinmusic.newmapper.MusicListMapper;
 import com.ego14t.xinmusic.newmapper.MusicMapper1;
 import com.ego14t.xinmusic.newpojo.SearchUserList;
 import com.ego14t.xinmusic.service.MusicService;
@@ -28,6 +29,9 @@ public class MusicServiceImpl implements MusicService {
 
     @Resource
     private MusicMapper1 mapper;
+
+    @Resource
+    private MusicListMapper musicListMapper;
 
     /**
      * 根据歌曲id返回歌曲信息
@@ -79,11 +83,10 @@ public class MusicServiceImpl implements MusicService {
         MusicListMusicEntity musiclistMusic = mapper.getMusiclistMusic(musicListID, musicID);
         if (musiclistMusic == null){
             MusicListMusicEntity addEntity = new MusicListMusicEntity();
-            addEntity.setMusicId(musicListID);
             addEntity.setMusicId(musicID);
+            addEntity.setMusiclistId(musicListID);
             addEntity.setCreateTime(LocalDateTime.now());
-            mapper.addMusicToList(addEntity);
-            return "200";
+            return mapper.addMusicToList(addEntity).toString();
         }
         return "歌曲已存在";
     }

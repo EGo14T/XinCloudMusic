@@ -4,16 +4,20 @@ import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
+import com.ego14t.xinmusic.vo.CreateMusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vaildator.group.AddGroup;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -98,33 +102,31 @@ public class MusicListController extends AbstractController{
 
     /**
      * 根据歌单id返回歌单详细信息
-     * @param userID
      * @param musicListID
      * @return
      */
-    @GetMapping(value = "/getinfo/{userID}/{musicListID}")
+    @GetMapping(value = "/getinfo/{musicListID}")
     @ResponseBody
     @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true),
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     })
-    public MusicListInfo getMusicListInfo(@PathVariable(name = "userID") String userID,
-                                          @PathVariable(name = "musicListID") String musicListID){
-
-        return musicListService.getMusicListInfo(userID,musicListID);
+    public MusicListInfo getMusicListInfo(@PathVariable(name = "musicListID") String musicListID){
+        String userId = getUserId(request);
+        return musicListService.getMusicListInfo(userId,musicListID);
     }
 
     /**
      * 新建歌单
-     * @param musiclistUser 歌单信息实体
+     * @param createMusicListVo 歌单信息实体
      * @return 添加歌单的主键
      */
     @PostMapping(value = "/created")
     @ResponseBody
     @ApiOperation(value = "新建歌单",notes="注意问题点")
-    public String addMusicList(@RequestBody MusiclistUser musiclistUser) {
-        return musicListService.addMusicList(musiclistUser);
+    public String addMusicList(@RequestBody @Validated({AddGroup.class}) CreateMusicListVo createMusicListVo) {
+        return musicListService.createMusicList(createMusicListVo);
     }
 
     /**

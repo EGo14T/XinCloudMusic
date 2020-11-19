@@ -1,6 +1,7 @@
 package com.ego14t.xinmusic.newmapper;
 
 import com.ego14t.xinmusic.newentity.MusicListCollectEntity;
+import com.ego14t.xinmusic.newentity.MusicListEntity;
 import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
 import org.mapstruct.Mapper;
@@ -37,7 +38,15 @@ public interface MusicListMapper {
      * @param musicListCollectEntity 实体
      * @return 主键ID
      */
-    Integer addMusicToList(MusicListCollectEntity musicListCollectEntity);
+    Integer collectMusicList(MusicListCollectEntity musicListCollectEntity);
 
+    /**
+     * 查询歌单信息
+     * @param userid 用户ID
+     * @param musiclistId 歌单ID
+     * @return 歌单信息
+     */
     MusicListInfo getMusicListInfo(String userid, String musiclistId);
+
+    void createMusicList(MusicListEntity createEntity);
 }

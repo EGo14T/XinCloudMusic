@@ -51,7 +51,7 @@
         LIMIT 10
     </select>
 
-    <insert id="addMusicToList" parameterType="com.ego14t.xinmusic.newentity.MusicListCollectEntity">
+    <insert id="collectMusicList" parameterType="com.ego14t.xinmusic.newentity.MusicListCollectEntity">
         INSERT INTO xinmusic_collect
         (userid,
         musiclist_id,
@@ -62,7 +62,7 @@
          #{createTime})
     </insert>
 
-    <select id="getMusicListInfo" parameterType="com.ego14t.xinmusic.newpojo.MusicListInfo">
+    <select id="getMusicListInfo" resultType="com.ego14t.xinmusic.newpojo.MusicListInfo">
         SELECT
             a.*,
             b.nickname,
@@ -77,5 +77,9 @@
             a.musiclist_id = #{musiclistId}
             AND a.create_user_id = b.userid;
     </select>
+
+    <insert id="createMusicList" parameterType="com.ego14t.xinmusic.newentity.MusicListEntity">
+        INSERT INTO xinmusic_musiclist (id,)
+    </insert>
 
 </mapper>

@@ -57,5 +57,5 @@ public interface MusicMapper1 {
      * 将歌曲添加到歌单中
      * @param addEntity 添加实体
      */
-    void addMusicToList(MusicListMusicEntity addEntity);
+    Integer addMusicToList(MusicListMusicEntity addEntity);
 }
