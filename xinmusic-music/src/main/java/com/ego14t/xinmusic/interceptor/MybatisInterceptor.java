@@ -34,6 +34,9 @@ public class MybatisInterceptor implements Interceptor {
             if (sqlCommandType == SqlCommandType.INSERT){
                 if (StringUtils.isBlank(entity.getId())){
                     entity.setId(new IDworker(0,0).nextId());
+
+
+
                 }
                 if (entity.getCreateTime() == null){
                     entity.setCreateTime(LocalDateTime.now());

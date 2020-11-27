@@ -172,6 +172,9 @@ public class MusicListServiceImpl implements MusicListService {
     @Override
     public String createMusicList(CreateMusicListVo createMusicListVo) {
         MusicListEntity createEntity = new MusicListEntity();
+
+        //createEntity.set
+
         musicListMapper.createMusicList(createEntity);
         return null;
     }

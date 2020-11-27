@@ -10,18 +10,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vaildator.group.AddGroup;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping(value = "/musiclist")
 @CrossOrigin
 @Api(value = "歌单Controller",tags = {"歌单操作类接口"})
@@ -39,7 +37,6 @@ public class MusicListController extends AbstractController{
      * @return 返回歌单列表
      */
     @GetMapping(value = "/created/{userID}")
-    @ResponseBody
     @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
 
@@ -53,7 +50,6 @@ public class MusicListController extends AbstractController{
      * @return 返回歌单列表
      */
     @GetMapping(value = "/collected/{userID}")
-    @ResponseBody
     @ApiOperation(value="根据歌单id返回用户的歌单列表（用户收藏的歌单）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
     public List<UserMusicList> getCollectMusicListInfo(@PathVariable(value="userID") String userId){
@@ -65,7 +61,6 @@ public class MusicListController extends AbstractController{
      * @return 返回歌单列表
      */
     @GetMapping(value = "/discover")
-    @ResponseBody
     @ApiOperation(value="返回推荐歌单",notes="歌单列表")
     public List<UserMusicList> getDiscoverMusicListInfo(){
         return musicListService.getDiscoverMusicListInfo();
@@ -77,7 +72,6 @@ public class MusicListController extends AbstractController{
      * @return
      */
     @PostMapping(value = "/collect/{musicListID}")
-    @ResponseBody
     @ApiOperation(value="用户收藏歌单",notes="歌单列表")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public Integer collectMusicList(@PathVariable(name="musicListID") String musicListID){
@@ -92,7 +86,6 @@ public class MusicListController extends AbstractController{
      * @return  歌单的详细信息
      */
     @GetMapping(value = "/{musicListID}")
-    @ResponseBody
     @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public List<MusicInfoVo> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
@@ -106,7 +99,6 @@ public class MusicListController extends AbstractController{
      * @return
      */
     @GetMapping(value = "/getinfo/{musicListID}")
-    @ResponseBody
     @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true),
@@ -123,7 +115,6 @@ public class MusicListController extends AbstractController{
      * @return 添加歌单的主键
      */
     @PostMapping(value = "/created")
-    @ResponseBody
     @ApiOperation(value = "新建歌单",notes="注意问题点")
     public String addMusicList(@RequestBody @Validated({AddGroup.class}) CreateMusicListVo createMusicListVo) {
         return musicListService.createMusicList(createMusicListVo);
@@ -135,7 +126,6 @@ public class MusicListController extends AbstractController{
      * @return 状态
      */
     @DeleteMapping(value = "/{musicListID}")
-    @ResponseBody
     @ApiOperation(value = "根据歌单id删除歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public String delMusicList(@PathVariable(value = "musicListID")String musicListID){
@@ -150,12 +140,10 @@ public class MusicListController extends AbstractController{
      * @return 修改结果
      */
     @PatchMapping(value = "/update/{musicListID}")
-    @ResponseBody
     @ApiOperation(value = "修改歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public String updateMusicList(@PathVariable(value = "musicListID")String musicListID,
                                   @RequestBody MusiclistUser musiclistUser) {
         return musicListService.updateMusicList(musicListID,musiclistUser);
     }
-
 }
