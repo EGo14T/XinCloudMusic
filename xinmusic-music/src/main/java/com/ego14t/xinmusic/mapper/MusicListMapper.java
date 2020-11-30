@@ -1,7 +1,7 @@
-package com.ego14t.xinmusic.newmapper;
+package com.ego14t.xinmusic.mapper;
 
-import com.ego14t.xinmusic.newentity.MusicListCollectEntity;
-import com.ego14t.xinmusic.newentity.MusicListEntity;
+import com.ego14t.xinmusic.entity.MusicListCollectEntity;
+import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
 import org.mapstruct.Mapper;
@@ -48,5 +48,15 @@ public interface MusicListMapper {
      */
     MusicListInfo getMusicListInfo(String userid, String musiclistId);
 
-    void createMusicList(MusicListEntity createEntity);
+    Integer createMusicList(MusicListEntity createEntity);
+
+    Integer update(MusicListEntity updateEntity);
+
+    MusicListEntity queryObject(String userid, String musiclistId);
+
+    Integer delCollect(String userid, String musiclistId);
+
+    Integer delCreatedList(String userID, String musiclistId);
+
+    void delMusicFromList(String musiclistId);
 }

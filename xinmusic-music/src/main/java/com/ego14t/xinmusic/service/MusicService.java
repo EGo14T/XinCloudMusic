@@ -1,9 +1,6 @@
 package com.ego14t.xinmusic.service;
 
-import com.ego14t.xinmusic.entity.MusicInfo;
-import com.ego14t.xinmusic.newentity.MusicEntity;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
-
 import java.util.List;
 
 /**

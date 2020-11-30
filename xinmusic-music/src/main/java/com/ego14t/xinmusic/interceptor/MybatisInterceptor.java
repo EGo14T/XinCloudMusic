@@ -1,6 +1,6 @@
 package com.ego14t.xinmusic.interceptor;
 
-import com.ego14t.xinmusic.newentity.BaseEntity;
+import com.ego14t.xinmusic.entity.BaseEntity;
 import com.ego14t.xinmusic.util.IDworker;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
@@ -27,16 +27,12 @@ public class MybatisInterceptor implements Interceptor {
         MappedStatement ms = (MappedStatement) args[0];
         Object parameter = args[1];
         SqlCommandType sqlCommandType = ms.getSqlCommandType(); //执行的sql类型 update insert
-
+        String nextId = new IDworker(0, 0).nextId();
         if (parameter instanceof BaseEntity){
             BaseEntity entity = (BaseEntity) parameter;
-
             if (sqlCommandType == SqlCommandType.INSERT){
                 if (StringUtils.isBlank(entity.getId())){
-                    entity.setId(new IDworker(0,0).nextId());
-
-
-
+                    entity.setId(nextId);
                 }
                 if (entity.getCreateTime() == null){
                     entity.setCreateTime(LocalDateTime.now());
@@ -47,7 +43,6 @@ public class MybatisInterceptor implements Interceptor {
                 }
             }
         }
-
         return invocation.proceed();
     }
 }

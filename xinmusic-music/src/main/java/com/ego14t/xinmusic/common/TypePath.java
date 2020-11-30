@@ -5,17 +5,17 @@ public enum TypePath {
     /**
      * 歌单封面
      */
-    MUSICLIST_IMG("/musiclistIMG"),
+    MUSICLIST_IMG("/musiclistIMG/"),
 
     /**
      * 歌曲文件
      */
-    MUSIC_FILE("/musicFile"),
+    MUSIC_FILE("/musicFile/"),
 
     /**
      * 用户头像
      */
-    USER_AVATAR("/useravatar");
+    USER_AVATAR("/useravatar/");
 
 
     private String path;

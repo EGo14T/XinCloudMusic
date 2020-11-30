@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author wangfx
  * @date 2020/11/19 9:54
  */
-public class CreateMusicListVo implements Serializable {
+public class MusicListVo implements Serializable {
 
     private static final long serialVersionUID = -929999814792133673L;
 

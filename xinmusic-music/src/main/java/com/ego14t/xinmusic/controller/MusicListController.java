@@ -2,9 +2,8 @@ package com.ego14t.xinmusic.controller;
 
 import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
-import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.service.MusicListService;
-import com.ego14t.xinmusic.vo.CreateMusicListVo;
+import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -111,13 +110,13 @@ public class MusicListController extends AbstractController{
 
     /**
      * 新建歌单
-     * @param createMusicListVo 歌单信息实体
+     * @param musicListVo 歌单信息实体
      * @return 添加歌单的主键
      */
     @PostMapping(value = "/created")
     @ApiOperation(value = "新建歌单",notes="注意问题点")
-    public String addMusicList(@RequestBody @Validated({AddGroup.class}) CreateMusicListVo createMusicListVo) {
-        return musicListService.createMusicList(createMusicListVo);
+    public String addMusicList(@RequestBody @Validated({AddGroup.class}) MusicListVo musicListVo) {
+        return musicListService.createMusicList(musicListVo);
     }
 
     /**
@@ -135,15 +134,13 @@ public class MusicListController extends AbstractController{
 
     /**
      *
-     * @param musicListID 歌单ID
-     * @param musiclistUser 修改的参数
+     * @param musicListVo 修改的参数
      * @return 修改结果
      */
-    @PatchMapping(value = "/update/{musicListID}")
+    @PatchMapping(value = "/update")
     @ApiOperation(value = "修改歌单",notes="注意问题点")
-    @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
-    public String updateMusicList(@PathVariable(value = "musicListID")String musicListID,
-                                  @RequestBody MusiclistUser musiclistUser) {
-        return musicListService.updateMusicList(musicListID,musiclistUser);
+    @ApiImplicitParam(name = "musicListVo", value = "歌单修改实体", required = true)
+    public String updateMusicList(@Validated @RequestBody MusicListVo musicListVo) {
+        return musicListService.updateMusicList(musicListVo);
     }
 }

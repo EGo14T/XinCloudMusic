@@ -1,46 +1,63 @@
 package com.ego14t.xinmusic.mapper;
 
-import com.ego14t.xinmusic.pojo.Music;
-import com.ego14t.xinmusic.pojo.example.MusicExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
+import com.ego14t.xinmusic.entity.MusicEntity;
+import com.ego14t.xinmusic.entity.MusicListEntity;
+import com.ego14t.xinmusic.entity.MusicListMusicEntity;
+import com.ego14t.xinmusic.newpojo.SearchUserList;
 import org.apache.ibatis.annotations.Param;
+import org.mapstruct.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MusicMapper {
-    long countByExample(MusicExample example);
+    /**
+     * 查询歌曲基本信息
+     * @param musicId 歌曲ID
+     * @return 歌曲基本信息
+     */
+    MusicEntity getMusicInfo(String musicId);
 
-    int deleteByExample(MusicExample example);
+    /**
+     * 将歌曲从歌单中删除
+     * @param musiclistId 歌单ID
+     * @param musicId 歌曲ID
+     * @return 删除条数
+     */
+    int delMusicFromList(String musiclistId, String musicId);
 
-    int deleteByPrimaryKey(String id);
+    /**
+     * 检索歌曲，带用户收藏状态
+     * @param defaultId 默认歌单ID
+     * @param keyword 关键字
+     * @return 检索结果
+     */
+    List<SearchUserList> searchUserList(@Param("defaultId") String defaultId, @Param("keyword") String keyword);
 
-    int insert(Music record);
+    /**
+     *
+     * @param defaultId
+     * @param musiclistId
+     * @return
+     */
+    List<SearchUserList> getUserList(@Param("defaultId") String defaultId, @Param("musiclistId") String musiclistId);
 
-    int insertSelective(Music record);
+    /**
+     * 获取用户默认歌单
+     * @param createUserId 歌单创建者ID
+     * @return 默认歌单信息
+     */
+    MusicListEntity getDefaultList(String createUserId);
 
-    List<Music> selectByExample(MusicExample example);
+    /**
+     * 获取歌单歌曲表信息
+     * @return 歌单歌曲信息
+     */
+    MusicListMusicEntity getMusiclistMusic(@Param("musiclistId") String musiclistId, @Param("musicId") String musicId);
 
-    Music selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") Music record, @Param("example") MusicExample example);
-
-    int updateByExample(@Param("record") Music record, @Param("example") MusicExample example);
-
-    int updateByPrimaryKeySelective(Music record);
-
-    int updateByPrimaryKey(Music record);
-
-
-    //自定义
-    List<Music> searchMusicList(String id);
-
-    List<Music> searchCollection(String userId);
-
-    List<Music> searchUserMusic(String userId, String keyword);
-
-    List<Music> searchUserNumList(String musicListID,String userId);
-
-    List<Music> searchNumList(String musicListID);
-
-    void delMusicListById(String id);
+    /**
+     * 将歌曲添加到歌单中
+     * @param addEntity 添加实体
+     */
+    Integer addMusicToList(MusicListMusicEntity addEntity);
 }

@@ -3,9 +3,11 @@ package com.ego14t.xinmusic.service.Impl;
 import com.ego14t.xinmusic.common.CdnConsts;
 import com.ego14t.xinmusic.common.TypePath;
 
-import com.ego14t.xinmusic.newentity.*;
-import com.ego14t.xinmusic.newmapper.MusicListMapper;
-import com.ego14t.xinmusic.newmapper.MusicMapper1;
+import com.ego14t.xinmusic.entity.MusicEntity;
+import com.ego14t.xinmusic.entity.MusicListEntity;
+import com.ego14t.xinmusic.entity.MusicListMusicEntity;
+import com.ego14t.xinmusic.mapper.MusicListMapper;
+import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.newpojo.SearchUserList;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
@@ -28,7 +30,7 @@ import java.util.List;
 public class MusicServiceImpl implements MusicService {
 
     @Resource
-    private MusicMapper1 mapper;
+    private MusicMapper mapper;
 
     @Resource
     private MusicListMapper musicListMapper;

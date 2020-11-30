@@ -1,6 +1,6 @@
 package com.ego14t.xinmusic.newpojo;
 
-import com.ego14t.xinmusic.newentity.MusicEntity;
+import com.ego14t.xinmusic.entity.MusicEntity;
 
 /**
  * @author wangfx

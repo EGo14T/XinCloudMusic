@@ -3,7 +3,7 @@ package com.ego14t.xinmusic.service;
 import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
-import com.ego14t.xinmusic.vo.CreateMusicListVo;
+import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 
 import java.util.List;
@@ -27,10 +27,10 @@ public interface MusicListService {
     //获取歌单信息
     MusicListInfo getMusicListInfo(String userID, String musicListID);
     //新建歌单
-    String createMusicList(CreateMusicListVo musiclistUser);
+    String createMusicList(MusicListVo musiclistUser);
     //删除歌单
     String delMusicList(String userID,String musicListID);
     //修改歌单
-    String updateMusicList(String musicListID, MusiclistUser musiclistUser);
+    String updateMusicList(MusicListVo musicListVo);
 
 }

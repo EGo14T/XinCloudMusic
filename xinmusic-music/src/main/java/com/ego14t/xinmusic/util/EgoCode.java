@@ -13,7 +13,7 @@ import java.util.Map;
  * Bilibili新启用了BV号代替av号， 本类可以将二者进行互相转换，也可以对xor、add、changeArray、dictionary进行自定义后作为自己的加解密工具类。
  * 注意要求，加密后的字符串长度要与changeArray进行匹配。
  */
-public class BvCode {
+public class EgoCode {
     /**
      * 异或用的数，可变
      */
@@ -37,7 +37,7 @@ public class BvCode {
     /**
      * 加密过程中用到的前缀符，长度要求与changeArray最小元素值一致。
      */
-    public static final String preFix = "XM";
+    public static final String preFix = "EGo";
 
     /**
      * 建立字典中字符与字典值之间的对应关系。
@@ -70,7 +70,7 @@ public class BvCode {
 
     /**
      * 解码 BV号转到AV号
-     * @param BV号
+     * @param bv
      * @return av号
      */
     public static long decode(String bv) {

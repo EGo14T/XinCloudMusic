@@ -1,4 +1,4 @@
-package com.ego14t.xinmusic.newentity;
+package com.ego14t.xinmusic.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

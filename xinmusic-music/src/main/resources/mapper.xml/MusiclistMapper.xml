@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ego14t.xinmusic.newmapper.MusicListMapper">
-
+<mapper namespace="com.ego14t.xinmusic.mapper.MusicListMapper">
     <!-- 查询用户收藏的歌单信息 带歌曲总数 -->
     <select id="getUserCollectMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
         SELECT
@@ -51,7 +50,7 @@
         LIMIT 10
     </select>
 
-    <insert id="collectMusicList" parameterType="com.ego14t.xinmusic.newentity.MusicListCollectEntity">
+    <insert id="collectMusicList" parameterType="com.ego14t.xinmusic.entity.MusicListCollectEntity">
         INSERT INTO xinmusic_collect
         (userid,
         musiclist_id,
@@ -78,8 +77,69 @@
             AND a.create_user_id = b.userid;
     </select>
 
-    <insert id="createMusicList" parameterType="com.ego14t.xinmusic.newentity.MusicListEntity">
-        INSERT INTO xinmusic_musiclist (id,)
+    <select id="queryObject" resultType="com.ego14t.xinmusic.entity.MusicListEntity">
+        SELECT * FROM xinmusic_musiclist t WHERE t.create_user_id = #{userid} AND t.musiclist_id = #{musiclistId}
+    </select>
+
+    <insert id="createMusicList" parameterType="com.ego14t.xinmusic.entity.MusicListEntity">
+        INSERT INTO xinmusic_musiclist
+        ( id,
+        musiclist_id,
+        create_user_id,
+        musiclist_name,
+        tags,
+        description,
+        musiclist_img,
+        `status`,
+        create_time,
+        update_time )
+        VALUES
+        (#{id},
+        #{musiclistId},
+        #{createUserId},
+        #{musiclistName},
+        #{tags},
+        #{description},
+        #{musiclistImg},
+        #{status},
+        #{createTime},
+        #{updateTime})
     </insert>
+
+    <update id="update" parameterType="com.ego14t.xinmusic.entity.MusicListEntity">
+        UPDATE xinmusic_musiclist
+        SET
+        <if test="musiclistName != null and musiclistName != ''">
+            musiclist_name = #{musiclistName},
+        </if>
+        <if test="tags != null and tags != ''">
+            tags = #{tags},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        <if test="status != null">
+            `status` = #{status},
+        </if>
+        <if test="musiclistImg != null and musiclistImg != ''">
+            musiclist_img = #{musiclistImg},
+        </if>
+        update_time = #{updateTime}
+        WHERE
+        musiclist_id = #{musiclistId}
+    </update>
+
+    <delete id="delCollect">
+        DELETE FROM xinmusic_collect t WHERE t.userid = #{userid} AND t.musiclist_id = #{musiclistId}
+    </delete>
+
+    <delete id="delCreatedList">
+        DELETE FROM xinmusic_musiclist t WHERE t.create_user_id = #{userid} AND t.musiclist_id = #{musiclistId}
+    </delete>
+
+    <delete id="delMusicFromList">
+        DELETE FROM xinmusic_musiclist_music t WHERE t.musiclist_id = #{musiclistId}
+    </delete>
+
 
 </mapper>

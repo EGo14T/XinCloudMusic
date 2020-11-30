@@ -2,31 +2,27 @@ package com.ego14t.xinmusic.service.Impl;
 
 
 import com.ego14t.xinmusic.common.CdnConsts;
+import com.ego14t.xinmusic.common.DataConsts;
 import com.ego14t.xinmusic.common.TypePath;
-import com.ego14t.xinmusic.mapper.MusicMapper;
-import com.ego14t.xinmusic.mapper.MusiclistCollectMapper;
-import com.ego14t.xinmusic.mapper.MusiclistMusicMapper;
-import com.ego14t.xinmusic.mapper.MusiclistUserMapper;
+import com.ego14t.xinmusic.config.WorkID;
 
-import com.ego14t.xinmusic.newentity.MusicListCollectEntity;
-import com.ego14t.xinmusic.newentity.MusicListEntity;
-import com.ego14t.xinmusic.newmapper.MusicListMapper;
-import com.ego14t.xinmusic.newmapper.MusicMapper1;
+import com.ego14t.xinmusic.entity.MusicListCollectEntity;
+import com.ego14t.xinmusic.entity.MusicListEntity;
+import com.ego14t.xinmusic.mapper.MusicListMapper;
+import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.newpojo.MusicListInfo;
 import com.ego14t.xinmusic.newpojo.SearchUserList;
 import com.ego14t.xinmusic.newpojo.UserMusicList;
-import com.ego14t.xinmusic.pojo.*;
-import com.ego14t.xinmusic.pojo.example.MusiclistMusicExample;
-import com.ego14t.xinmusic.pojo.example.MusiclistUserExample;
 import com.ego14t.xinmusic.service.MusicListService;
 
+import com.ego14t.xinmusic.util.EgoCode;
 import com.ego14t.xinmusic.util.IDworker;
-import com.ego14t.xinmusic.vo.CreateMusicListVo;
+import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,23 +34,15 @@ import java.util.List;
 @Service
 public class MusicListServiceImpl implements MusicListService {
 
-    @Resource
-    private MusicMapper musicMapper;
 
     @Resource
-    private MusicMapper1 mapper;
+    private MusicMapper mapper;
 
     @Resource
     private MusicListMapper musicListMapper;
 
     @Resource
-    private MusiclistUserMapper musiclistUserMapper;
-
-    @Resource
-    private MusiclistMusicMapper musiclistMusicMapper;
-
-    @Resource
-    private MusiclistCollectMapper musiclistCollectMapper;
+    private WorkID workID;
 
     @Override
     public List<UserMusicList> getCreateMusicListInfo(String userId) {
@@ -129,68 +117,75 @@ public class MusicListServiceImpl implements MusicListService {
     
     /**
      * @param userID      用户ID
-     * @param musicListID 歌单ID
+     * @param musiclistId 歌单ID
      * @return ResponseJsonResult
      * Description：删除歌单
      */
     @Override
-    public String delMusicList(String userID, String musicListID) {
-
-        MusiclistUser musiclistUser = musiclistUserMapper.selectByPrimaryKey(new MusiclistUserKey(userID, musicListID));
-
-        MusiclistMusicExample musiclistMusicExample = new MusiclistMusicExample();
-        musiclistMusicExample.createCriteria().andMusiclistidEqualTo(musicListID);
-
-        List<MusiclistMusicKey> musiclistMusics = musiclistMusicMapper.selectByExample(musiclistMusicExample);
-
-        if (musiclistUser == null) {
-            MusiclistCollect musiclistCollect = new MusiclistCollect();
-            musiclistCollect.setUserid(userID);
-            musiclistCollect.setMusiclistid(musicListID);
-            musiclistCollectMapper.deleteByPrimaryKey(musiclistCollect);
-            return "204";
+    @Transactional
+    public String delMusicList(String userID, String musiclistId) {
+        MusicListEntity musicListEntity = musicListMapper.queryObject(userID, musiclistId);
+        Integer res;
+        //不是该用户创建的
+        if (musicListEntity == null) {
+            //删除收藏表
+            res = musicListMapper.delCollect(userID, musiclistId);
         } else {
-            if (musiclistUser.getStatus() == 0) {
+            if (musicListEntity.getStatus() != 0) {
+                res = musicListMapper.delCreatedList(userID, musiclistId);
+            }else {
                 return "401";
-            } else if (musiclistMusics.size() == 0) {
-                musiclistUserMapper.deleteByPrimaryKey(new MusiclistUserKey(userID, musicListID));
-                return "204";
-
-            } else {
-                musicMapper.delMusicListById(musicListID);
-                return "204";
             }
         }
+
+        if (res == 1) {
+            musicListMapper.delMusicFromList(musiclistId);
+        }
+
+        return "204";
 
     }
 
     /**
-     * @param createMusicListVo 歌单信息
+     * @param musicListVo 歌单信息
      * @return 状态码和信息  返回主键id
      * Description：添加歌单
      */
     @Override
-    public String createMusicList(CreateMusicListVo createMusicListVo) {
+    @Transactional
+    public String createMusicList(MusicListVo musicListVo) {
         MusicListEntity createEntity = new MusicListEntity();
 
-        //createEntity.set
+        String nextId = new IDworker(workID.getMusiclist(), 0).nextId();
+        String musiclistId = EgoCode.encode(Long.parseLong(nextId));
 
-        musicListMapper.createMusicList(createEntity);
-        return null;
+        createEntity.setId(nextId);
+        createEntity.setMusiclistId(musiclistId);
+        createEntity.setCreateUserId("1");
+        createEntity.setMusiclistName(musicListVo.getMusiclistName());
+        createEntity.setTags(musicListVo.getTags());
+        createEntity.setDescription(musicListVo.getDescription());
+        createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + musiclistId + ".jpg");
+        createEntity.setStatus(DataConsts.NORMAL_STATUS);
+        Integer res = musicListMapper.createMusicList(createEntity);
+        return res.toString();
     }
 
     /**
-     * @param id            歌单ID
-     * @param musiclistUser 修改的实体
+     * @param updateMusicListVo 修改的实体
      * @return 歌单ID
      */
     @Override
-    public String updateMusicList(String id, MusiclistUser musiclistUser) {
-        //创建查询条件
-        MusiclistUserExample musiclistUserExample = new MusiclistUserExample();
-        musiclistUserExample.createCriteria().andMusiclistidEqualTo(id);
-        //根据Id修改歌单信息
-        musiclistUserMapper.updateByExampleSelective(musiclistUser, musiclistUserExample);
-        return id;
+    @Transactional
+    public String updateMusicList(MusicListVo updateMusicListVo) {
+        MusicListEntity updateEntity = new MusicListEntity();
+        updateEntity.setMusiclistId(updateMusicListVo.getMusiclistId());
+        updateEntity.setMusiclistName(updateMusicListVo.getMusiclistName());
+        updateEntity.setTags(updateMusicListVo.getTags());
+        updateEntity.setDescription(updateMusicListVo.getDescription());
+        updateEntity.setStatus(DataConsts.NORMAL_STATUS);
+        updateEntity.setMusiclistImg(updateMusicListVo.getMusiclistImg());
+        Integer res = musicListMapper.update(updateEntity);
+        return res.toString();
     }
 }
