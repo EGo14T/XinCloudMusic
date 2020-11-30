@@ -2,8 +2,8 @@ package com.ego14t.xinmusic.mapper;
 
 import com.ego14t.xinmusic.entity.MusicListCollectEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
-import com.ego14t.xinmusic.newpojo.MusicListInfo;
-import com.ego14t.xinmusic.newpojo.UserMusicList;
+import com.ego14t.xinmusic.pojo.MusicListInfo;
+import com.ego14t.xinmusic.pojo.UserMusicList;
 import org.mapstruct.Mapper;
 
 import java.util.List;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ego14t.xinmusic.mapper.MusicListMapper">
     <!-- 查询用户收藏的歌单信息 带歌曲总数 -->
-    <select id="getUserCollectMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+    <select id="getUserCollectMusicList" resultType="com.ego14t.xinmusic.pojo.UserMusicList">
         SELECT
             a.*,
             count( c.musiclist_id ) AS music_sum
@@ -19,7 +19,7 @@
     </select>
 
     <!-- 查询用户创建的歌单信息 带歌曲总数 -->
-    <select id="getUserCreateMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+    <select id="getUserCreateMusicList" resultType="com.ego14t.xinmusic.pojo.UserMusicList">
         SELECT
             a.*,
             count( c.musiclist_id ) AS music_sum
@@ -34,7 +34,7 @@
 	        a.create_time
     </select>
 
-    <select id="getDiscoverMusicList" resultType="com.ego14t.xinmusic.newpojo.UserMusicList">
+    <select id="getDiscoverMusicList" resultType="com.ego14t.xinmusic.pojo.UserMusicList">
         SELECT
             a.*,
             count( c.musiclist_id ) AS music_sum
@@ -61,7 +61,7 @@
          #{createTime})
     </insert>
 
-    <select id="getMusicListInfo" resultType="com.ego14t.xinmusic.newpojo.MusicListInfo">
+    <select id="getMusicListInfo" resultType="com.ego14t.xinmusic.pojo.MusicListInfo">
         SELECT
             a.*,
             b.nickname,

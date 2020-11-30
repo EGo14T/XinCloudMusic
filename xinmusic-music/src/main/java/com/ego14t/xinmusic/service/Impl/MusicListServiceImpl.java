@@ -10,9 +10,9 @@ import com.ego14t.xinmusic.entity.MusicListCollectEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.mapper.MusicListMapper;
 import com.ego14t.xinmusic.mapper.MusicMapper;
-import com.ego14t.xinmusic.newpojo.MusicListInfo;
-import com.ego14t.xinmusic.newpojo.SearchUserList;
-import com.ego14t.xinmusic.newpojo.UserMusicList;
+import com.ego14t.xinmusic.pojo.MusicListInfo;
+import com.ego14t.xinmusic.pojo.SearchUserList;
+import com.ego14t.xinmusic.pojo.UserMusicList;
 import com.ego14t.xinmusic.service.MusicListService;
 
 import com.ego14t.xinmusic.util.EgoCode;

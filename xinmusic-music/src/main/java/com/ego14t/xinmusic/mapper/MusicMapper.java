@@ -3,7 +3,7 @@ package com.ego14t.xinmusic.mapper;
 import com.ego14t.xinmusic.entity.MusicEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.entity.MusicListMusicEntity;
-import com.ego14t.xinmusic.newpojo.SearchUserList;
+import com.ego14t.xinmusic.pojo.SearchUserList;
 import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 

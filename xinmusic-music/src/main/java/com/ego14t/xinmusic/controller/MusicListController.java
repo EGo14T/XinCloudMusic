@@ -1,7 +1,7 @@
 package com.ego14t.xinmusic.controller;
 
-import com.ego14t.xinmusic.newpojo.MusicListInfo;
-import com.ego14t.xinmusic.newpojo.UserMusicList;
+import com.ego14t.xinmusic.pojo.MusicListInfo;
+import com.ego14t.xinmusic.pojo.UserMusicList;
 import com.ego14t.xinmusic.service.MusicListService;
 import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import vaildator.group.AddGroup;
+import com.ego14t.xinmusic.common.vaildator.group.AddGroup;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package com.ego14t.xinmusic.vo;
 
-import vaildator.group.AddGroup;
-import vaildator.group.UpdateGroup;
+import com.ego14t.xinmusic.common.vaildator.group.AddGroup;
+import com.ego14t.xinmusic.common.vaildator.group.UpdateGroup;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;

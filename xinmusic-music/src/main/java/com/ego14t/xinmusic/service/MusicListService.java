@@ -1,7 +1,7 @@
 package com.ego14t.xinmusic.service;
 
-import com.ego14t.xinmusic.newpojo.MusicListInfo;
-import com.ego14t.xinmusic.newpojo.UserMusicList;
+import com.ego14t.xinmusic.pojo.MusicListInfo;
+import com.ego14t.xinmusic.pojo.UserMusicList;
 import com.ego14t.xinmusic.pojo.MusiclistUser;
 import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;

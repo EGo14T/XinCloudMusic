@@ -8,7 +8,7 @@ import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.entity.MusicListMusicEntity;
 import com.ego14t.xinmusic.mapper.MusicListMapper;
 import com.ego14t.xinmusic.mapper.MusicMapper;
-import com.ego14t.xinmusic.newpojo.SearchUserList;
+import com.ego14t.xinmusic.pojo.SearchUserList;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import org.springframework.stereotype.Service;

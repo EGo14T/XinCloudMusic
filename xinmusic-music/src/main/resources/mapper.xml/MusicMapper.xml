@@ -8,7 +8,7 @@
     </select>
 
     <!-- 搜索歌曲带收藏状态 -->
-    <select id="searchUserList" resultType="com.ego14t.xinmusic.newpojo.SearchUserList">
+    <select id="searchUserList" resultType="com.ego14t.xinmusic.pojo.SearchUserList">
         SELECT
             a.*
             <if test="defaultId != null and defaultId != ''">
@@ -49,7 +49,7 @@
         DELETE FROM xinmusic_musiclist_music t WHERE t.musiclist_id = #{musiclistId} AND t.music_id = #{musicId}
     </delete>
 
-    <select id="getUserList" resultType="com.ego14t.xinmusic.newpojo.SearchUserList">
+    <select id="getUserList" resultType="com.ego14t.xinmusic.pojo.SearchUserList">
         SELECT
             a.*,
             b.music_id AS collect

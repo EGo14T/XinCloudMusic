@@ -1,4 +1,4 @@
-package com.ego14t.xinmusic.newpojo;
+package com.ego14t.xinmusic.pojo;
 
 import com.ego14t.xinmusic.entity.MusicListEntity;
 
