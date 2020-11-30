@@ -18,7 +18,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xinmusic?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/xinmusic_new?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: admin
     hikari:
@@ -40,15 +40,6 @@ mybatis:
   type-aliases-package: classpath:com.ego14t.xinmusic.pojo  # 注意：对应实体类的路径
   configuration:
     map-underscore-to-camel-case: true
-
-
-#pagehelper
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
-  returnPageInfo: check
 
 logging:
   level:

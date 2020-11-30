@@ -77,12 +77,6 @@
             <artifactId>jackson-module-parameter-names</artifactId>
         </dependency>
 
-        <!-- 分页插件 -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>
-
         <!--添加插件HikariCP连接池-->
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -118,11 +112,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
         </dependency>
 
         <dependency>
