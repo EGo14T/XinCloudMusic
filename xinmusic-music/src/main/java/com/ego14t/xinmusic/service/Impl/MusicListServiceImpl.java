@@ -125,7 +125,7 @@ public class MusicListServiceImpl implements MusicListService {
     public String createMusicList(MusicListVo musicListVo) {
         MusicListEntity createEntity = new MusicListEntity();
 
-        String nextId = new IDworker(workID.getMusiclist(), 0).nextId();
+        String nextId = new IDworker(workID.getValue(), 0).nextId();
         String musiclistId = EgoCode.encode(Long.parseLong(nextId));
 
         createEntity.setId(nextId);

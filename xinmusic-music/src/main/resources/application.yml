@@ -46,10 +46,7 @@ logging:
     com.ego14t.xinmusic.mapper: debug
 
 workid:
-  user: 0
-  music: 1
-  musiclist: 2
-  comments: 3
+  value: 1
 
 springfox:
   documentation:
