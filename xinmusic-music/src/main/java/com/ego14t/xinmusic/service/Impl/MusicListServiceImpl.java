@@ -45,8 +45,8 @@ public class MusicListServiceImpl implements MusicListService {
     private WorkID workID;
 
     @Override
-    public List<UserMusicList> getCreateMusicListInfo(String userId) {
-        List<UserMusicList> userCreateMusicList = musicListMapper.getUserCreateMusicList(userId);
+    public List<UserMusicList> getCreateMusicListInfo(String currentUserId, String userId) {
+        List<UserMusicList> userCreateMusicList = musicListMapper.getUserCreateMusicList(currentUserId, userId);
         UserMusicList remove = new UserMusicList();
         for (int i = 0; i < userCreateMusicList.size(); i++) {
             if (userCreateMusicList.get(i).getStatus() == 0){
@@ -114,7 +114,35 @@ public class MusicListServiceImpl implements MusicListService {
     public MusicListInfo getMusicListInfo(String userID, String musicListID) {
         return musicListMapper.getMusicListInfo(userID, musicListID);
     }
-    
+
+    /**
+     * @param musicListVo 歌单信息
+     * @return 状态码和信息  返回主键id
+     * Description：添加歌单
+     */
+    @Override
+    @Transactional
+    public String createMusicList(MusicListVo musicListVo) {
+        MusicListEntity createEntity = new MusicListEntity();
+
+        String nextId = new IDworker(workID.getMusiclist(), 0).nextId();
+        String musiclistId = EgoCode.encode(Long.parseLong(nextId));
+
+        createEntity.setId(nextId);
+        createEntity.setMusiclistId(musiclistId);
+        createEntity.setCreateUserId("1");
+        createEntity.setMusiclistName(musicListVo.getMusiclistName());
+        createEntity.setTags(musicListVo.getTags());
+        createEntity.setDescription(musicListVo.getDescription());
+        createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + musiclistId + ".jpg");
+        createEntity.setStatus(DataConsts.NORMAL_STATUS);
+        Integer res = musicListMapper.createMusicList(createEntity);
+        if (res == 1){
+            return createEntity.getMusiclistId();
+        }
+        return null;
+    }
+
     /**
      * @param userID      用户ID
      * @param musiclistId 歌单ID
@@ -144,31 +172,6 @@ public class MusicListServiceImpl implements MusicListService {
 
         return "204";
 
-    }
-
-    /**
-     * @param musicListVo 歌单信息
-     * @return 状态码和信息  返回主键id
-     * Description：添加歌单
-     */
-    @Override
-    @Transactional
-    public String createMusicList(MusicListVo musicListVo) {
-        MusicListEntity createEntity = new MusicListEntity();
-
-        String nextId = new IDworker(workID.getMusiclist(), 0).nextId();
-        String musiclistId = EgoCode.encode(Long.parseLong(nextId));
-
-        createEntity.setId(nextId);
-        createEntity.setMusiclistId(musiclistId);
-        createEntity.setCreateUserId("1");
-        createEntity.setMusiclistName(musicListVo.getMusiclistName());
-        createEntity.setTags(musicListVo.getTags());
-        createEntity.setDescription(musicListVo.getDescription());
-        createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + musiclistId + ".jpg");
-        createEntity.setStatus(DataConsts.NORMAL_STATUS);
-        Integer res = musicListMapper.createMusicList(createEntity);
-        return res.toString();
     }
 
     /**

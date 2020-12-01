@@ -23,10 +23,12 @@ public interface MusicListMapper {
 
     /**
      * 获取用户创建歌单的信息带歌曲总数
+     *
+     * @param currentUserId 当前登录用户
      * @param userid 用户ID
      * @return 创建歌单信息
      */
-    List<UserMusicList> getUserCreateMusicList(String userid);
+    List<UserMusicList> getUserCreateMusicList(String currentUserId, String userid);
 
     /**
      * @return 获取推荐歌单
@@ -56,7 +58,7 @@ public interface MusicListMapper {
 
     Integer delCollect(String userid, String musiclistId);
 
-    Integer delCreatedList(String userID, String musiclistId);
+    Integer delCreatedList(String userid, String musiclistId);
 
     void delMusicFromList(String musiclistId);
 }

@@ -15,7 +15,7 @@
         GROUP BY
             a.musiclist_id
         ORDER BY
-	        a.create_time
+	        b.create_time
     </select>
 
     <!-- 查询用户创建的歌单信息 带歌曲总数 -->
@@ -28,6 +28,9 @@
             LEFT JOIN xinmusic_musiclist_music c ON c.musiclist_id = a.musiclist_id
         WHERE
             a.create_user_id = #{userid}
+            <if test="userid != currentUserId">
+                AND a.status != 2
+            </if>
         GROUP BY
             a.musiclist_id
         ORDER BY

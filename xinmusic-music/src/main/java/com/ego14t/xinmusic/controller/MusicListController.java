@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ego14t.xinmusic.common.vaildator.group.AddGroup;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -27,9 +26,6 @@ public class MusicListController extends AbstractController{
     @Resource
     MusicListService musicListService;
 
-    @Resource
-    private HttpServletRequest request;
-
     /**
      * 检索用户的歌单列表(创建&默认)
      * @param userId 用户ID
@@ -40,7 +36,8 @@ public class MusicListController extends AbstractController{
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
 
     public List<UserMusicList> getCreateMusicListInfo(@PathVariable(value="userID") String userId){
-        return musicListService.getCreateMusicListInfo(userId);
+        String currentUserId = getUserId();
+        return musicListService.getCreateMusicListInfo(currentUserId, userId);
     }
 
     /**
@@ -74,7 +71,7 @@ public class MusicListController extends AbstractController{
     @ApiOperation(value="用户收藏歌单",notes="歌单列表")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public Integer collectMusicList(@PathVariable(name="musicListID") String musicListID){
-        String userId = getUserId(request);
+        String userId = getUserId();
         return musicListService.collectMusicList(userId,musicListID);
     }
 
@@ -85,10 +82,10 @@ public class MusicListController extends AbstractController{
      * @return  歌单的详细信息
      */
     @GetMapping(value = "/{musicListID}")
-    @ApiOperation(value="根据歌单id返回歌曲列表包括歌曲,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
+    @ApiOperation(value="根据歌单id返回歌曲列表,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public List<MusicInfoVo> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
-        String userId = getUserId(request);
+        String userId = getUserId();
         return musicListService.getUserMusicList(musicListID,userId);
     }
 
@@ -104,7 +101,7 @@ public class MusicListController extends AbstractController{
             @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     })
     public MusicListInfo getMusicListInfo(@PathVariable(name = "musicListID") String musicListID){
-        String userId = getUserId(request);
+        String userId = getUserId();
         return musicListService.getMusicListInfo(userId,musicListID);
     }
 
@@ -128,7 +125,7 @@ public class MusicListController extends AbstractController{
     @ApiOperation(value = "根据歌单id删除歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public String delMusicList(@PathVariable(value = "musicListID")String musicListID){
-        String userId = getUserId(request);
+        String userId = getUserId();
         return musicListService.delMusicList(userId,musicListID);
     }
 

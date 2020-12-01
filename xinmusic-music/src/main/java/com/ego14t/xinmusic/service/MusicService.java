@@ -18,5 +18,4 @@ public interface MusicService {
     String addMusicToList(String musicListID, String musicID);
     //检索歌曲(登录&&未登录)
     List<MusicInfoVo> getSearchUserList(String userID, String keyword);
-
 }
