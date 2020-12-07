@@ -1,8 +1,7 @@
 package com.ego14t.comments.service;
 
-import com.ego14t.comments.entity.CommentsEntity;
-import com.ego14t.comments.entity.CommentsResponseResult;
-import com.ego14t.comments.pojo.Comments;
+import com.ego14t.comments.vo.CommentsResponseVo;
+import com.ego14t.comments.vo.CreateCommentsVo;
 
 import java.util.List;
 
@@ -13,12 +12,16 @@ import java.util.List;
  * Description:
  */
 public interface CommentsService {
+
     /**
      * 新增评论
-     * @param comments 评论实体
-     * @return 该条评论
+     * @param createCommentsVo 评论vo
+     * @param fromUserId 创建人
+     * @return 新建评论的ID
      */
-    CommentsResponseResult saveComments(Comments comments);
+    String saveComments(CreateCommentsVo createCommentsVo, String fromUserId);
 
-    List<CommentsResponseResult> getComments(String showId, Integer page, Integer total);
+    CommentsResponseVo getComment(String commentId, String userid);
+
+    List<CommentsResponseVo> getAllComments(String showId, Integer page, Integer total);
 }

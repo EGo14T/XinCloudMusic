@@ -3,6 +3,8 @@ package com.ego14t.comments.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * @author 王富昕
  * Created by EGo1ST
@@ -11,41 +13,16 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "workid")
-public class WorkID {
-    private int user;
-    private int music;
-    private int musiclist;
-    private int comments;
+public class WorkID implements Serializable {
+    private static final long serialVersionUID = 407195737913942355L;
 
-    public int getUser() {
-        return user;
+    private Integer value;
+
+    public Integer getValue() {
+        return value;
     }
 
-    public void setUser(int user) {
-        this.user = user;
-    }
-
-    public int getMusic() {
-        return music;
-    }
-
-    public void setMusic(int music) {
-        this.music = music;
-    }
-
-    public int getMusiclist() {
-        return musiclist;
-    }
-
-    public void setMusiclist(int musiclist) {
-        this.musiclist = musiclist;
-    }
-
-    public int getComments() {
-        return comments;
-    }
-
-    public void setComments(int comments) {
-        this.comments = comments;
+    public void setValue(Integer value) {
+        this.value = value;
     }
 }

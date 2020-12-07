@@ -1,11 +1,17 @@
-package com.ego14t.comments.entity;
+package com.ego14t.comments.pojo;
 
 import com.ego14t.comments.common.DataConsts;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-public class CommentsEntity extends BaseEntity implements Serializable {
-
-    private static final long serialVersionUID = 1646838200314938153L;
+/**
+ * @author wangfx
+ * @date 2020/12/7 15:30
+ */
+public class UserComment implements Serializable {
+    private static final long serialVersionUID = -1437848214347436616L;
 
     /**
      * 被评论的资源ID musicId、musiclistId、commentsId
@@ -41,6 +47,10 @@ public class CommentsEntity extends BaseEntity implements Serializable {
      * 状态 1-有效 0-已删除
      */
     private Integer status = DataConsts.NORMAL_STATUS;
+
+    private String nickname;
+
+    private String avatar;
 
     public String getShowId() {
         return showId;
@@ -96,5 +106,21 @@ public class CommentsEntity extends BaseEntity implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
