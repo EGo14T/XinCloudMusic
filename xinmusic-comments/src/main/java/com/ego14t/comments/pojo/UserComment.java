@@ -1,16 +1,15 @@
 package com.ego14t.comments.pojo;
 
 import com.ego14t.comments.common.DataConsts;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ego14t.comments.entity.BaseEntity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author wangfx
  * @date 2020/12/7 15:30
  */
-public class UserComment implements Serializable {
+public class UserComment extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -1437848214347436616L;
 
     /**

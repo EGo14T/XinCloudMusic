@@ -8,13 +8,12 @@ import com.ego14t.comments.vo.CommentsResponseVo;
 import com.ego14t.comments.mapper.CommentsMapper;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.vo.CreateCommentsVo;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -65,21 +64,16 @@ public class CommentsServiceImpl implements CommentsService {
         if (userCommentList == null) {
             return null;
         }
+        //转换成<id,UserComment>
+        Map<String, UserComment> collect = userCommentList.stream().collect(Collectors.toMap(UserComment::getId, userComment -> userComment));
 
-        List<CommentsResponseVo> commentsResponseVoList = new ArrayList<>();
-
-        for (UserComment userComment : userCommentList) {
-            if (userComment.getToId() == null){
-                CommentsResponseVo commentsResponseVo = new CommentsResponseVo();
-                commentsResponseVo.setOriginComments(userComment);
-                commentsResponseVoList.add(commentsResponseVo);
-            }else {
-                userCommentList.remove(userComment);
+        return userCommentList.stream().map(comment -> {
+            CommentsResponseVo resultVo = new CommentsResponseVo();
+            if (comment.getToId() != null) {
+                resultVo.setReplyComments(collect.get(comment.getToId()));
             }
-        }
-
-        commentsResponseVoList.forEach(s-> System.out.println(s.getOriginComments().getContent()));
-
-        return null;
+            resultVo.setOriginComments(comment);
+            return resultVo;
+        }).collect(Collectors.toList());
     }
 }
