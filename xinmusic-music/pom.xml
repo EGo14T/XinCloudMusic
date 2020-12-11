@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ego14t</groupId>
-        <artifactId>common</artifactId>
+        <artifactId>XinCloudMusic</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../xinmusic-common/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>music</artifactId>
@@ -55,7 +55,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -128,7 +127,6 @@
             <groupId>com.ego14t</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -139,6 +137,12 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

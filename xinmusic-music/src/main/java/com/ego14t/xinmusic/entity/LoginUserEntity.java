@@ -1,10 +1,12 @@
 package com.ego14t.xinmusic.entity;
 
+import com.ego14t.common.entity.BaseEntity;
+
 /**
  * @author wangfx
  * @date 2020/11/13 12:01
  */
-public class LoginUserEntity extends BaseEntity{
+public class LoginUserEntity extends BaseEntity {
 
     private static final long serialVersionUID = 4470210963922573871L;
 

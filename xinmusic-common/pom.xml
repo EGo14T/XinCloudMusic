@@ -1,109 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.ego14t</groupId>
+        <artifactId>XinCloudMusic</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ego14t</groupId>
-	<artifactId>common</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>common</name>
-	<description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
-	<modules>
-		<module>../xinmusic-eureka</module>
-		<module>../xinmusic-comments</module>
-		<module>../xinmusic-user</module>
-		<module>../xinmusic-oauth2</module>
-		<module>../xinmusic-feign</module>
-		<module>../xinmusic-gateway</module>
-		<module>../xinmusic-music</module>
-	</modules>
+    <artifactId>common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>common</name>
 
-	<packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<springboot.version>2.3.5.RELEASE</springboot.version>
-		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-		<mybatis.version>2.1.3</mybatis.version>
-		<pagehelper.version>1.3.0</pagehelper.version>
-		<fastjson.version>1.2.75</fastjson.version>
-		<nimbus-jose-jwt.version>9.1.2</nimbus-jose-jwt.version>
-		<java-jwt.version>3.11.0</java-jwt.version>
-		<commons-lang3.version>3.11</commons-lang3.version>
-	</properties>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
 
-	<dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+        </dependency>
 
-	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<!-- 使用SpringBoot中的版本依赖 -->
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-dependencies</artifactId>
-				<version>${springboot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<!-- 使用SpringCloud中的版本依赖 -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-
-			<!-- database相关 Start-->
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>${mybatis.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper-spring-boot-starter</artifactId>
-				<version>${pagehelper.version}</version>
-			</dependency>
-			<!-- database相关 End-->
-
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>${fastjson.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.nimbusds</groupId>
-				<artifactId>nimbus-jose-jwt</artifactId>
-				<version>${nimbus-jose-jwt.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.auth0</groupId>
-				<artifactId>java-jwt</artifactId>
-				<version>${java-jwt.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>${commons-lang3.version}</version>
-			</dependency>
-
-		</dependencies>
-	</dependencyManagement>
-
-
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+    </dependencies>
 </project>

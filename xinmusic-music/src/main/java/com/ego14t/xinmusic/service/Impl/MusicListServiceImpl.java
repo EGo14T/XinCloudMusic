@@ -1,9 +1,9 @@
 package com.ego14t.xinmusic.service.Impl;
 
 
-import com.ego14t.xinmusic.common.CdnConsts;
-import com.ego14t.xinmusic.common.DataConsts;
-import com.ego14t.xinmusic.common.TypePath;
+import com.ego14t.common.common.CdnConsts;
+import com.ego14t.common.common.DataConsts;
+import com.ego14t.common.common.TypePath;
 import com.ego14t.xinmusic.config.WorkID;
 
 import com.ego14t.xinmusic.entity.MusicListCollectEntity;

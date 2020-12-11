@@ -1,17 +1,17 @@
-package com.ego14t.xinmusic.entity;
+package com.ego14t.user.entity;
 
-import com.ego14t.common.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
- * @author wangfx
- * @date 2020/11/13 12:00
+ * user_info
+ * @author 
  */
 public class BaseUserEntity extends BaseEntity {
-
-    private static final long serialVersionUID = -1198359963445706335L;
+    private static final long serialVersionUID = 6051459811254710081L;
 
     /**
      * 用户ID
@@ -24,12 +24,7 @@ public class BaseUserEntity extends BaseEntity {
     private String nickname;
 
     /**
-     * 性别
-     */
-    private Integer gender;
-
-    /**
-     * 个人介绍
+     * 介绍
      */
     private String introduce;
 
@@ -37,15 +32,15 @@ public class BaseUserEntity extends BaseEntity {
      * 生日
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birth;
+    private LocalDateTime birth;
 
     /**
-     * 所在地区
+     * 地区
      */
     private String area;
 
     /**
-     * 用户头像
+     * 头像地址
      */
     private String avatar;
 
@@ -65,14 +60,6 @@ public class BaseUserEntity extends BaseEntity {
         this.nickname = nickname;
     }
 
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
     public String getIntroduce() {
         return introduce;
     }
@@ -81,11 +68,11 @@ public class BaseUserEntity extends BaseEntity {
         this.introduce = introduce;
     }
 
-    public LocalDate getBirth() {
+    public LocalDateTime getBirth() {
         return birth;
     }
 
-    public void setBirth(LocalDate birth) {
+    public void setBirth(LocalDateTime birth) {
         this.birth = birth;
     }
 

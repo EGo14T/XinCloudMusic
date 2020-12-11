@@ -1,7 +1,7 @@
 package com.ego14t.xinmusic.interceptor;
 
 import com.ego14t.xinmusic.config.WorkID;
-import com.ego14t.xinmusic.entity.BaseEntity;
+import com.ego14t.common.entity.BaseEntity;
 import com.ego14t.xinmusic.util.IDworker;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;

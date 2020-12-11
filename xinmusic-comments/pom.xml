@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ego14t</groupId>
-        <artifactId>common</artifactId>
+        <artifactId>XinCloudMusic</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../xinmusic-common/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>comments</artifactId>

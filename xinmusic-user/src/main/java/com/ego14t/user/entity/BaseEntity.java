@@ -1,4 +1,4 @@
-package com.ego14t.xinmusic.entity;
+package com.ego14t.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
  */
 public class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = 2319091265045501074L;
-
+    private static final long serialVersionUID = -5151708296416727307L;
     /**
      * 主键ID
      */

@@ -1,4 +1,4 @@
-package com.ego14t.xinmusic.common;
+package com.ego14t.common.common;
 
 /**
  * @author wangfx

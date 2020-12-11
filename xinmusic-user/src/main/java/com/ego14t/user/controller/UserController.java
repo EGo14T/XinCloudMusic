@@ -17,19 +17,18 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserController {
+public class UserController extends AbstractController{
 
     @Resource
     private UserService userService;
 
-
-    @GetMapping(value = "/UserInfo/{userID}")
-    public UserInfo getUserInfo(@PathVariable(value = "userID")String userId){
-        return userService.getUserInfo(userId);
+    @GetMapping(value = "/userInfo")
+    public UserInfo getUserInfo(){
+        return userService.getUserInfo(getUserId());
 
     }
 
-    @PatchMapping(value = "/UserInfo")
+    @PatchMapping(value = "/userInfo")
     public UserInfo updateUserInfo(@RequestBody UserInfo userInfo){
         return userService.updateUserInfo(userInfo);
 
