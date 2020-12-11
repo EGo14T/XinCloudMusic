@@ -1,7 +1,7 @@
 package com.ego14t.comments.vo;
 
-import com.ego14t.comments.common.DataConsts;
-import com.ego14t.comments.common.vaildator.group.AddGroup;
+import com.ego14t.common.constant.DataConsts;
+import com.ego14t.common.constant.vaildator.group.AddGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotBlank;

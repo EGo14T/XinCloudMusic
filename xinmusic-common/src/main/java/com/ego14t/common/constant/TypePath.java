@@ -1,4 +1,4 @@
-package com.ego14t.comments.common;
+package com.ego14t.common.constant;
 
 public enum TypePath {
 

@@ -1,4 +1,4 @@
-package com.ego14t.xinmusic.controller;
+package com.ego14t.common.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

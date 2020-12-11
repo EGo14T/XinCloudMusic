@@ -1,6 +1,6 @@
 package com.ego14t.comments.pojo;
 
-import com.ego14t.comments.common.DataConsts;
+import com.ego14t.common.constant.DataConsts;
 import com.ego14t.comments.entity.BaseEntity;
 
 import java.io.Serializable;

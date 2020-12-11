@@ -1,5 +1,7 @@
 package com.ego14t.xinmusic.controller;
 
+import com.ego14t.common.controller.AbstractController;
+import com.ego14t.common.entity.Result;
 import com.ego14t.xinmusic.pojo.MusicListInfo;
 import com.ego14t.xinmusic.pojo.UserMusicList;
 import com.ego14t.xinmusic.service.MusicListService;
@@ -11,7 +13,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.ego14t.common.common.vaildator.group.AddGroup;
+import com.ego14t.common.constant.vaildator.group.AddGroup;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 @RequestMapping(value = "/musiclist")
 @CrossOrigin
 @Api(value = "歌单Controller",tags = {"歌单操作类接口"})
-public class MusicListController extends AbstractController{
+public class MusicListController extends AbstractController {
 
     @Resource
     MusicListService musicListService;
@@ -35,9 +37,9 @@ public class MusicListController extends AbstractController{
     @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
 
-    public List<UserMusicList> getCreateMusicListInfo(@PathVariable(value="userID") String userId){
+    public Result getCreateMusicListInfo(@PathVariable(value="userID") String userId){
         String currentUserId = getUserId();
-        return musicListService.getCreateMusicListInfo(currentUserId, userId);
+        return Result.ok(musicListService.getCreateMusicListInfo(currentUserId, userId));
     }
 
     /**

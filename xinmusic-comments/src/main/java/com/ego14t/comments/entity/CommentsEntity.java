@@ -1,6 +1,6 @@
 package com.ego14t.comments.entity;
 
-import com.ego14t.comments.common.DataConsts;
+import com.ego14t.common.constant.DataConsts;
 import java.io.Serializable;
 
 public class CommentsEntity extends BaseEntity implements Serializable {

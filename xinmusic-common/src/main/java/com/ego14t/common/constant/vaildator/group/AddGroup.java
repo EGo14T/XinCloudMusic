@@ -1,4 +1,4 @@
-package com.ego14t.comments.common.vaildator.group;
+package com.ego14t.common.constant.vaildator.group;
 
 /**
  * 添加数据Group

@@ -1,12 +1,13 @@
 package com.ego14t.xinmusic.service.Impl;
 
-import com.ego14t.common.common.CdnConsts;
-import com.ego14t.common.common.TypePath;
+import com.ego14t.common.constant.CdnConsts;
+import com.ego14t.common.constant.TypePath;
 
+import com.ego14t.common.error.ErrorCode;
+import com.ego14t.common.exception.XMException;
 import com.ego14t.xinmusic.entity.MusicEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.entity.MusicListMusicEntity;
-import com.ego14t.xinmusic.mapper.MusicListMapper;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.pojo.SearchUserList;
 import com.ego14t.xinmusic.service.MusicService;
@@ -32,9 +33,6 @@ public class MusicServiceImpl implements MusicService {
     @Resource
     private MusicMapper mapper;
 
-    @Resource
-    private MusicListMapper musicListMapper;
-
     /**
      * 根据歌曲id返回歌曲信息
      * @param musicId 歌曲id
@@ -44,20 +42,32 @@ public class MusicServiceImpl implements MusicService {
     public MusicInfoVo getMusicInfo(String musicId) {
         MusicInfoVo musicInfo = new MusicInfoVo();
         MusicEntity musicEntity = mapper.getMusicInfo(musicId);
-
         if (musicEntity == null){
-            return null;
+            throw new XMException(ErrorCode.NOTFOUNDMUSICINFO);
         }
-
         musicInfo.setMusicId(musicEntity.getMusicId());
         musicInfo.setMusicName(musicEntity.getMusicName());
         musicInfo.setSinger(musicEntity.getSinger());
         musicInfo.setAlbum(musicEntity.getAlbum());
         musicInfo.setLength(musicEntity.getLength());
-        musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE.getPath()+ "/" + musicEntity.getMusicId()+".mp3");
+        musicInfo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE.getPath() + musicEntity.getMusicId()+".mp3");
 
         return musicInfo;
 
+    }
+
+    @Override
+    @Transactional
+    public void addMusicToList(String musicListID, String musicID) {
+        MusicListMusicEntity musiclistMusic = mapper.getMusiclistMusic(musicListID, musicID);
+        if (musiclistMusic != null){
+            throw new XMException(ErrorCode.MUSIC_IS_EXISTS);
+        }
+        MusicListMusicEntity addEntity = new MusicListMusicEntity();
+        addEntity.setMusicId(musicID);
+        addEntity.setMusiclistId(musicListID);
+        addEntity.setCreateTime(LocalDateTime.now());
+        mapper.addMusicToList(addEntity);
     }
 
     /**
@@ -68,29 +78,11 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     @Transactional
-    public String delMusicFromList(String musiclistId, String musicId) {
-        //int res = musiclistMusicMapper.deleteByPrimaryKey(new MusiclistMusicKey(musicListID,musicID));
+    public void delMusicFromList(String musiclistId, String musicId) {
         int res = mapper.delMusicFromList(musiclistId,musicId);
-        if (res == 1){
-            //返回删除报文
-            return "204";
-        }else {
-            return "删除失败";
+        if (res != 1){
+            throw new XMException(ErrorCode.ERROR);
         }
-    }
-
-    @Override
-    @Transactional
-    public String addMusicToList(String musicListID, String musicID) {
-        MusicListMusicEntity musiclistMusic = mapper.getMusiclistMusic(musicListID, musicID);
-        if (musiclistMusic == null){
-            MusicListMusicEntity addEntity = new MusicListMusicEntity();
-            addEntity.setMusicId(musicID);
-            addEntity.setMusiclistId(musicListID);
-            addEntity.setCreateTime(LocalDateTime.now());
-            return mapper.addMusicToList(addEntity).toString();
-        }
-        return "歌曲已存在";
     }
 
     @Override

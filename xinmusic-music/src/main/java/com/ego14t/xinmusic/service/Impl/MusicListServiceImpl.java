@@ -1,9 +1,10 @@
 package com.ego14t.xinmusic.service.Impl;
 
-
-import com.ego14t.common.common.CdnConsts;
-import com.ego14t.common.common.DataConsts;
-import com.ego14t.common.common.TypePath;
+import com.ego14t.common.constant.CdnConsts;
+import com.ego14t.common.constant.DataConsts;
+import com.ego14t.common.constant.TypePath;
+import com.ego14t.common.error.ErrorCode;
+import com.ego14t.common.exception.XMException;
 import com.ego14t.xinmusic.config.WorkID;
 
 import com.ego14t.xinmusic.entity.MusicListCollectEntity;
@@ -47,6 +48,11 @@ public class MusicListServiceImpl implements MusicListService {
     @Override
     public List<UserMusicList> getCreateMusicListInfo(String currentUserId, String userId) {
         List<UserMusicList> userCreateMusicList = musicListMapper.getUserCreateMusicList(currentUserId, userId);
+
+        if (userCreateMusicList == null || userCreateMusicList.size() == 0) {
+            throw new XMException(ErrorCode.CREATE_MUSICLIST_IS_NOT_EXISTS);
+        }
+
         UserMusicList remove = new UserMusicList();
         for (int i = 0; i < userCreateMusicList.size(); i++) {
             if (userCreateMusicList.get(i).getStatus() == 0){

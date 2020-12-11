@@ -12,10 +12,10 @@ import java.util.List;
 public interface MusicService {
     //根据歌曲id返回歌曲信息
     MusicInfoVo getMusicInfo(String musicId);
-    //根据歌曲id删除歌曲（从歌单中删除）
-    String delMusicFromList(String musiclistId, String musicId);
     //把歌曲添加到歌单中
-    String addMusicToList(String musicListID, String musicID);
+    void addMusicToList(String musicListID, String musicID);
+    //根据歌曲id删除歌曲（从歌单中删除）
+    void delMusicFromList(String musiclistId, String musicId);
     //检索歌曲(登录&&未登录)
     List<MusicInfoVo> getSearchUserList(String userID, String keyword);
 }

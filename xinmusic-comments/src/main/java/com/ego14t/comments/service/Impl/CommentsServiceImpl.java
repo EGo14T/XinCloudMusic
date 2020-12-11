@@ -1,14 +1,13 @@
 package com.ego14t.comments.service.Impl;
 
 
-import com.ego14t.comments.common.DataConsts;
+import com.ego14t.common.constant.DataConsts;
 import com.ego14t.comments.entity.CommentsEntity;
 import com.ego14t.comments.pojo.UserComment;
 import com.ego14t.comments.vo.CommentsResponseVo;
 import com.ego14t.comments.mapper.CommentsMapper;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.vo.CreateCommentsVo;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

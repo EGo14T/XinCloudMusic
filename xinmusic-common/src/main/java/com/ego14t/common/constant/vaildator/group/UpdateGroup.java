@@ -1,4 +1,4 @@
-package com.ego14t.common.common.vaildator.group;
+package com.ego14t.common.constant.vaildator.group;
 
 /**
  * 修改数据Group

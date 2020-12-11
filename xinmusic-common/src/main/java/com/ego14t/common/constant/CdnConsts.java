@@ -1,4 +1,4 @@
-package com.ego14t.common.common;
+package com.ego14t.common.constant;
 
 public class CdnConsts {
 
