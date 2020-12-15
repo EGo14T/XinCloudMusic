@@ -1,4 +1,4 @@
-package com.ego14t.user.utils;
+package com.ego14t.common.util;
 
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.util.CollectionUtils;
@@ -48,6 +48,7 @@ public class BeanCopyUtils {
         }
     }
 
+    //放入缓存，减少实例化开销
     private static <S,T> BeanCopier getBeanCopier(Class<S> sourceClass, Class<T> targetClass ){
         Map<Class<?>,BeanCopier> map = beanCopierMap.get(sourceClass);
         if(CollectionUtils.isEmpty(map)){

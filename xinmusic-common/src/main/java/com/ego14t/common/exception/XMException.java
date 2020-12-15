@@ -1,6 +1,5 @@
 package com.ego14t.common.exception;
 
-import com.ego14t.common.constant.DataConsts;
 import com.ego14t.common.error.ServiceErrors;
 
 /**

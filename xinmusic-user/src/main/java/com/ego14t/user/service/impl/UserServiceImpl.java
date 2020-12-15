@@ -1,23 +1,17 @@
 package com.ego14t.user.service.impl;
 
-import com.ego14t.user.common.CdnConsts;
-import com.ego14t.user.common.TypePath;
-import com.ego14t.user.config.WorkID;
-import com.ego14t.user.entity.RegisterUser;
-import com.ego14t.user.mapper.MusiclistUserMapper;
+import com.ego14t.common.error.ErrorCode;
+import com.ego14t.common.exception.XMException;
+import com.ego14t.common.util.BeanCopyUtils;
+import com.ego14t.user.entity.BaseUserEntity;
 import com.ego14t.user.mapper.UserInfoMapper;
-import com.ego14t.user.mapper.UserMapper;
-import com.ego14t.user.pojo.MusiclistUser;
-import com.ego14t.user.pojo.UserExample;
-import com.ego14t.user.pojo.UserInfo;
 import com.ego14t.user.service.UserService;
-import com.ego14t.user.utils.IDworker;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.ego14t.user.vo.BaseUserVo;
+import com.ego14t.user.vo.UpdateUserVo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author 王富昕
@@ -32,78 +26,37 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
-    @Resource
-    private UserMapper userMapper;
-
-    @Resource
-    private MusiclistUserMapper musiclistUserMapper;
-
-    @Resource
-    private WorkID workID;
-
+    /**
+     * 获取用户信息
+     * @param userId userid
+     * @return userinfo
+     */
     @Override
-    public UserInfo getUserInfo(String userId) {
-        return userInfoMapper.selectByPrimaryKey(userId);
+    public BaseUserVo getUserInfo(String userId) {
+        BaseUserEntity userInfoEntity = userInfoMapper.getUserInfo(userId);
+        if (userInfoEntity == null) {
+            throw new XMException(ErrorCode.USER_IS_NOT_EXISTS);
+        }
+        BaseUserVo userInfo = new BaseUserVo();
+        BeanCopyUtils.copy(userInfoEntity,userInfo);
+        return userInfo;
     }
 
     @Override
-    public UserInfo updateUserInfo(UserInfo userInfo) {
-        int res = userInfoMapper.updateByPrimaryKeySelective(userInfo);
-        if (res == 1) {
-            return userInfoMapper.selectByPrimaryKey(userInfo.getId());
-        } else {
-            return null;
+    @Transactional
+    public void updateUserInfo(UpdateUserVo updateUserVo) {
+        BaseUserEntity baseUserEntity = new BaseUserEntity();
+        BeanCopyUtils.copy(updateUserVo,baseUserEntity);
+        Integer res = userInfoMapper.update(baseUserEntity);
+        if (res != 1){
+            throw new XMException(ErrorCode.USERINFO_UPDATE_FAILURE);
         }
     }
 
     @Override
-    public String register(RegisterUser user) {
-
-        UserInfo userInfo = new UserInfo();
-        MusiclistUser musiclistUser = new MusiclistUser();
-        System.out.println(workID.getUser());
-
-        String id = new IDworker(workID.getUser(), 0).nextId();
-        String password = new BCryptPasswordEncoder().encode(user.getPassword());
-
-        user.setId(id);
-        user.setPassword(password);
-
-        userInfo.setId(id);
-        userInfo.setName(user.getNickName());
-        userInfo.setGender(0);
-        userInfo.setAvatar("https://cdn.ego1st.cn/xinmusic/useravatar/defaultAvatar.jpg");
-
-
-        musiclistUser.setUserid(id);
-        musiclistUser.setMusiclistid(new IDworker(workID.getMusiclist(), 0).nextId());
-        musiclistUser.setMusiclistName("我喜欢的音乐");
-        musiclistUser.setStatus(0);
-        musiclistUser.setCreateTime(LocalDateTime.now());
-        musiclistUser.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG + "/default.jpg");
-
-        if (isRepeat(user.getUsername())){
-            int res = userMapper.insert(user);
-            int register = userInfoMapper.insertSelective(userInfo);
-            int musiclist = musiclistUserMapper.insertSelective(musiclistUser);
-
-            if (res == 1 && register == 1 && musiclist == 1){
-                return "200";
-            }else {
-                return "208";
-            }
-        }else {
-            return "206";
-        }
+    public void createUser(BaseUserVo createVo) {
 
     }
 
 
-    public Boolean isRepeat(String id){
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUsernameEqualTo(id);
-
-        List<?> user = userMapper.selectByExample(userExample);
-        return user.isEmpty();
-    }
 }

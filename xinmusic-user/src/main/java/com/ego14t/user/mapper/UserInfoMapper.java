@@ -1,32 +1,18 @@
 package com.ego14t.user.mapper;
 
-import com.ego14t.user.pojo.UserInfo;
-import com.ego14t.user.pojo.example.UserInfoExample;
-import java.util.List;
+import com.ego14t.user.entity.BaseUserEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
+/**
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2020/12/15 11:05
+ * Description:
+ */
 @Mapper
 public interface UserInfoMapper {
-    long countByExample(UserInfoExample example);
 
-    int deleteByExample(UserInfoExample example);
+    BaseUserEntity getUserInfo(String userid);
 
-    int deleteByPrimaryKey(String id);
-
-    int insert(UserInfo record);
-
-    int insertSelective(UserInfo record);
-
-    List<UserInfo> selectByExample(UserInfoExample example);
-
-    UserInfo selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByExample(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByPrimaryKeySelective(UserInfo record);
-
-    int updateByPrimaryKey(UserInfo record);
+    Integer update(BaseUserEntity baseUserEntity);
 }

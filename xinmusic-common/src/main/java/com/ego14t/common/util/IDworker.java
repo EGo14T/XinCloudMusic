@@ -1,4 +1,4 @@
-package com.ego14t.user.utils;
+package com.ego14t.common.util;
 
 /**
  * Twitter_Snowflake<br>
@@ -79,7 +79,7 @@ public class IDworker {
      * 获得下一个ID (该方法是线程安全的)
      * @return SnowflakeId
      */
-    public  synchronized String nextId() {
+    public synchronized String nextId() {
         long timestamp = timeGen();
 
         //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
@@ -139,10 +139,10 @@ public class IDworker {
     /** 测试 */
 //    public static void main(String[] args) {
 //        IDworker idWorker = new IDworker(0, 0);
-//        for (int i = 0; i < 4; i++) {
-//            String nextId = idWorker.nextId();
+//        for (int i = 0; i < 10; i++) {
+//            long id = idWorker.nextId();
 //            //System.out.println(Long.toBinaryString(id));
-//            System.out.println(nextId);
+//            System.out.println(id);
 //        }
 //    }
 }

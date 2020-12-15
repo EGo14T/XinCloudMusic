@@ -1,9 +1,7 @@
 package com.ego14t.user.service;
 
-import com.ego14t.user.entity.RegisterUser;
-import com.ego14t.user.pojo.User;
-import com.ego14t.user.pojo.UserInfo;
-import org.springframework.stereotype.Service;
+import com.ego14t.user.vo.BaseUserVo;
+import com.ego14t.user.vo.UpdateUserVo;
 
 /**
  * @author 王富昕
@@ -15,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
     //根据Id获取用户信息
-    UserInfo getUserInfo(String userId);
+    BaseUserVo getUserInfo(String userId);
 
-    UserInfo updateUserInfo(UserInfo userInfo);
+    void updateUserInfo(UpdateUserVo updateUserVo);
 
-    String register(RegisterUser user);
+    void createUser(BaseUserVo createVo);
 }

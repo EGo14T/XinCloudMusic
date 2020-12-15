@@ -13,14 +13,24 @@ public enum ErrorCode implements ServiceErrors{
     /** 失败 */
     ERROR(500,"系统错误"),
 
+
+    MUSIC_MODULE_ERROR(1001,"音乐模块错误，请联系管理员"),
     /** 没有检索到该音乐信息 */
-    NOTFOUNDMUSICINFO(1001,"没有检索到该音乐信息"),
-
+    NOTFOUNDMUSICINFO(1002,"没有检索到该音乐信息"),
     /** 歌曲已存在 */
-    MUSIC_IS_EXISTS(1002,"歌曲已存在"),
-
+    MUSIC_IS_EXISTS(1003,"歌曲已存在"),
     /** 创建歌单不存在 */
-    CREATE_MUSICLIST_IS_NOT_EXISTS(1003,"创建歌单不存在"),
+    CREATE_MUSICLIST_IS_NOT_EXISTS(1004,"创建歌单不存在"),
+
+
+    /** 用户模块错误，请联系管理员 */
+    USER_MODULE_ERROR(3001,"用户模块错误，请联系管理员"),
+    /** 用户信息不存在 */
+    USER_IS_NOT_EXISTS(3002,"用户信息不存在"),
+    /** 用户信息更新失败，请联系管理员 */
+    USERINFO_UPDATE_FAILURE(3003,"用户信息更新失败，请联系管理员"),
+
+
 
     ;
 

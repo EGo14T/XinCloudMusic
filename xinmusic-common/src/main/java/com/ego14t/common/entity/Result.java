@@ -36,7 +36,7 @@ public class Result implements Serializable {
         return result;
     }
 
-    public static  Result ok(Object data, String message) {
+    public static Result ok(Object data, String message) {
         Result result = new Result();
         result.code = 0;
         result.message = message;
@@ -44,14 +44,22 @@ public class Result implements Serializable {
         return result;
     }
 
-    public static  Result error(ServiceErrors errors) {
+    public static Result error(ServiceErrors errors) {
         Result result = new Result();
         result.code = errors.getCode();
         result.message = errors.getMessage();
         return result;
     }
 
-    public static  Result error(Integer code, String message) {
+    public static Result error(ServiceErrors errors, Object data) {
+        Result result = new Result();
+        result.code = errors.getCode();
+        result.message = errors.getMessage();
+        result.data = data;
+        return result;
+    }
+
+    public static Result error(Integer code, String message) {
         Result result = new Result();
         result.code = code;
         result.message = message;

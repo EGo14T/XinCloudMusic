@@ -1,16 +1,20 @@
-package com.ego14t.user.entity;
+package com.ego14t.user.vo;
 
-import com.ego14t.common.entity.BaseEntity;
+import com.ego14t.common.constant.vaildator.group.AddGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * user_info
- * @author 
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2020/12/15 11:01
+ * Description:
  */
-public class BaseUserEntity extends BaseEntity {
-    private static final long serialVersionUID = 6051459811254710081L;
+public class BaseUserVo implements Serializable {
+    private static final long serialVersionUID = -9084407225690769138L;
 
     /**
      * 用户ID
@@ -20,11 +24,13 @@ public class BaseUserEntity extends BaseEntity {
     /**
      * 昵称
      */
+    @NotBlank(groups = {AddGroup.class},message = "nickname不能为空")
     private String nickname;
 
     /**
      * 性别
      */
+    @NotBlank(groups = {AddGroup.class},message = "gender不能为空")
     private Integer gender;
 
     /**
@@ -47,6 +53,12 @@ public class BaseUserEntity extends BaseEntity {
      * 头像地址
      */
     private String avatar;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     public String getUserid() {
         return userid;
@@ -102,5 +114,13 @@ public class BaseUserEntity extends BaseEntity {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
     }
 }
