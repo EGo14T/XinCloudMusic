@@ -15,4 +15,8 @@ public interface UserInfoMapper {
     BaseUserEntity getUserInfo(String userid);
 
     Integer update(BaseUserEntity baseUserEntity);
+
+    Integer create(BaseUserEntity baseUserEntity);
+
+    Integer initMusiclist();
 }

@@ -54,7 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void createUser(BaseUserVo createVo) {
+        BaseUserEntity baseUserEntity = new BaseUserEntity();
+        BeanCopyUtils.copy(createVo, baseUserEntity);
+        Integer createRes = userInfoMapper.create(baseUserEntity);
+        Integer initList = userInfoMapper.initMusiclist();
 
     }
 

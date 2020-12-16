@@ -19,9 +19,11 @@
             t.userid = #{userid}
     </select>
 
-    <update id="update"></update>
+    <update id="update" parameterType="com.ego14t.user.entity.BaseUserEntity"></update>
 
+    <insert id="create"></insert>
 
+    <insert id="initMusiclist"></insert>
 
 
 </mapper>
