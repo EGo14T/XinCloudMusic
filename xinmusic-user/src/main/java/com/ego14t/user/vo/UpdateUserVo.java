@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * @author wangfx
@@ -40,7 +40,7 @@ public class UpdateUserVo implements Serializable {
      * 生日
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime birth;
+    private LocalDate birth;
 
     /**
      * 地区
@@ -56,7 +56,7 @@ public class UpdateUserVo implements Serializable {
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDate createTime;
 
     public String getUserid() {
         return userid;
@@ -90,11 +90,11 @@ public class UpdateUserVo implements Serializable {
         this.introduce = introduce;
     }
 
-    public LocalDateTime getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(LocalDateTime birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
@@ -114,11 +114,11 @@ public class UpdateUserVo implements Serializable {
         this.avatar = avatar;
     }
 
-    public LocalDateTime getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(LocalDate createTime) {
         this.createTime = createTime;
     }
 }

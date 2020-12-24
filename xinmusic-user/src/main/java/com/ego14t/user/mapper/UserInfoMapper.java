@@ -1,6 +1,7 @@
 package com.ego14t.user.mapper;
 
 import com.ego14t.user.entity.BaseUserEntity;
+import com.ego14t.user.entity.MusicListEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -18,5 +19,5 @@ public interface UserInfoMapper {
 
     Integer create(BaseUserEntity baseUserEntity);
 
-    Integer initMusiclist();
+    Integer initMusiclist(MusicListEntity musicListEntity);
 }

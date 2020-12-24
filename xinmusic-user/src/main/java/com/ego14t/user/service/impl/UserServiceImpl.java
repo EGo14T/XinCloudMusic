@@ -2,7 +2,7 @@ package com.ego14t.user.service.impl;
 
 import com.ego14t.common.error.ErrorCode;
 import com.ego14t.common.exception.XMException;
-import com.ego14t.common.util.BeanCopyUtils;
+import com.ego14t.common.utils.BeanCopyUtils;
 import com.ego14t.user.entity.BaseUserEntity;
 import com.ego14t.user.mapper.UserInfoMapper;
 import com.ego14t.user.service.UserService;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         BaseUserEntity baseUserEntity = new BaseUserEntity();
         BeanCopyUtils.copy(createVo, baseUserEntity);
         Integer createRes = userInfoMapper.create(baseUserEntity);
-        Integer initList = userInfoMapper.initMusiclist();
+        //Integer initList = userInfoMapper.initMusiclist();
 
     }
 

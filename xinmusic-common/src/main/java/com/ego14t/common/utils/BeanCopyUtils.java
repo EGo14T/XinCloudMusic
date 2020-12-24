@@ -1,4 +1,4 @@
-package com.ego14t.common.util;
+package com.ego14t.common.utils;
 
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.util.CollectionUtils;

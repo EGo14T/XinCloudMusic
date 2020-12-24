@@ -19,7 +19,31 @@
             t.userid = #{userid}
     </select>
 
-    <update id="update" parameterType="com.ego14t.user.entity.BaseUserEntity"></update>
+    <update id="update" parameterType="com.ego14t.user.entity.BaseUserEntity">
+        UPDATE xinmusic_base_user
+        SET
+        <if test="nickname != null and nickname != ''">
+            nickname = #{nickname},
+        </if>
+        <if test="gender != null">
+            gender = #{gender},
+        </if>
+        <if test="introduce != null and introduce != ''">
+            introduce = #{introduce},
+        </if>
+        <if test="birth != null and birth != ''">
+            birth = #{birth},
+        </if>
+        <if test="area != null and area != ''">
+            area = #{area},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
+        update_time = #{updateTime}
+        WHERE
+        userid = #{userid}
+    </update>
 
     <insert id="create"></insert>
 

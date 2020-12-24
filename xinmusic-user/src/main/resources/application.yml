@@ -18,7 +18,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/xinmusic?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/xinmusic_new?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
     password: admin
     hikari:
@@ -43,7 +43,4 @@ logging:
     com.ego14t.user.mapper: debug
 
 workid:
-  user: 0
-  music: 1
-  musiclist: 2
-  comments: 3
+  value: 0
