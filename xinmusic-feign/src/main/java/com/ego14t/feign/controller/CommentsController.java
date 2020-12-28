@@ -1,13 +1,12 @@
-package com.ego14t.xinmusicfeign.controller;
+package com.ego14t.feign.controller;
 
-import com.ego14t.xinmusicfeign.pojo.Comments;
-import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
-import com.ego14t.xinmusicfeign.service.CommentsService;
+import com.ego14t.feign.pojo.Comments;
+import com.ego14t.feign.pojo.ResponseJsonResult;
+import com.ego14t.feign.service.CommentsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author 王富昕

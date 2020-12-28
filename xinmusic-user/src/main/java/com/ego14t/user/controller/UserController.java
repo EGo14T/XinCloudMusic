@@ -3,7 +3,7 @@ package com.ego14t.user.controller;
 import com.ego14t.common.constant.vaildator.group.AddGroup;
 import com.ego14t.common.constant.vaildator.group.UpdateGroup;
 import com.ego14t.common.controller.AbstractController;
-import com.ego14t.common.entity.Result;
+import com.ego14t.common.entity.ResultEntity;
 import com.ego14t.user.service.UserService;
 import com.ego14t.user.vo.BaseUserVo;
 import com.ego14t.user.vo.UpdateUserVo;
@@ -27,19 +27,19 @@ public class UserController extends AbstractController {
     private UserService userService;
 
     @GetMapping(value = "/userinfo/{userid}")
-    public Result getUserInfo(@PathVariable(value = "userid")String userid) {
-        return Result.ok(userService.getUserInfo(userid));
+    public ResultEntity getUserInfo(@PathVariable(value = "userid")String userid) {
+        return ResultEntity.ok(userService.getUserInfo(userid));
     }
 
     @PatchMapping(value = "/userinfo")
-    public Result updateUserInfo(@RequestBody @Validated({UpdateGroup.class}) UpdateUserVo updateUserVo) {
+    public ResultEntity updateUserInfo(@RequestBody @Validated({UpdateGroup.class}) UpdateUserVo updateUserVo) {
         userService.updateUserInfo(updateUserVo);
-        return Result.ok();
+        return ResultEntity.ok();
     }
 
     @PostMapping(value = "/register")
-    public Result register(@RequestBody @Validated({AddGroup.class}) BaseUserVo createVo) {
+    public ResultEntity register(@RequestBody @Validated({AddGroup.class}) BaseUserVo createVo) {
         userService.createUser(createVo);
-        return Result.ok();
+        return ResultEntity.ok();
     }
 }

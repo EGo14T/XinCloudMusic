@@ -3,12 +3,12 @@
 <mapper namespace="com.ego14t.oauth2.mapper.UserInfoMapper">
   <resultMap id="BaseResultMap" type="com.ego14t.oauth2.pojo.UserInfo">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="INTEGER" property="gender" />
-    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
-    <result column="birth" jdbcType="DATE" property="birth" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
-    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <resultEntity column="name" jdbcType="VARCHAR" property="name" />
+    <resultEntity column="gender" jdbcType="INTEGER" property="gender" />
+    <resultEntity column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <resultEntity column="birth" jdbcType="DATE" property="birth" />
+    <resultEntity column="area" jdbcType="VARCHAR" property="area" />
+    <resultEntity column="avatar" jdbcType="VARCHAR" property="avatar" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

@@ -43,7 +43,7 @@ public class MusicServiceImpl implements MusicService {
         MusicInfoVo musicInfo = new MusicInfoVo();
         MusicEntity musicEntity = mapper.getMusicInfo(musicId);
         if (musicEntity == null){
-            throw new XMException(ErrorCode.NOTFOUNDMUSICINFO);
+            throw new XMException(ErrorCode.NOT_FOUND_MUSICINFO);
         }
         musicInfo.setMusicId(musicEntity.getMusicId());
         musicInfo.setMusicName(musicEntity.getMusicName());

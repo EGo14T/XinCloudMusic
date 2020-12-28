@@ -1,4 +1,4 @@
-package com.ego14t.xinmusicfeign.pojo;
+package com.ego14t.feign.pojo;
 
 /**
  * @author 王富昕

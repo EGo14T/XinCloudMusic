@@ -1,4 +1,4 @@
-package com.ego14t.xinmusicfeign;
+package com.ego14t.feign;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.ego14t.xinmusicfeign.pojo;
+package com.ego14t.feign.pojo;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.ego14t.xinmusicfeign.config;
+package com.ego14t.feign.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

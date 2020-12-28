@@ -3,8 +3,8 @@
 <mapper namespace="com.ego14t.oauth2.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.ego14t.oauth2.pojo.User">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
+    <resultEntity column="username" jdbcType="VARCHAR" property="username" />
+    <resultEntity column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>

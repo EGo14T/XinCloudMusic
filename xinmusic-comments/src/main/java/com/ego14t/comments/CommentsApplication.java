@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.ego14t.*")
 //@EnableDiscoveryClient
 @MapperScan("com.ego14t.comments.mapper")
 public class CommentsApplication {

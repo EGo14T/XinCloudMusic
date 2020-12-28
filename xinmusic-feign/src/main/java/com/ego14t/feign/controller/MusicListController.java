@@ -1,8 +1,8 @@
-package com.ego14t.xinmusicfeign.controller;
+package com.ego14t.feign.controller;
 
-import com.ego14t.xinmusicfeign.pojo.MusiclistUser;
-import com.ego14t.xinmusicfeign.pojo.ResponseJsonResult;
-import com.ego14t.xinmusicfeign.service.MusicListService;
+import com.ego14t.feign.pojo.MusiclistUser;
+import com.ego14t.feign.pojo.ResponseJsonResult;
+import com.ego14t.feign.service.MusicListService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -11,4 +11,6 @@ public class DataConsts {
     public static final String DEFAULT_ERROR_MSG = "未知异常，请联系管理员";
 
     public static final Integer DEFAULT_ERROR_CODE = 500;
+
+    public static final Integer DEFAULT_SUCCESS_CODE = 200;
 }

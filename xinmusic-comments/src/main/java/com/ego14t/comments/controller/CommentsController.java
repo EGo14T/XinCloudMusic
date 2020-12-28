@@ -3,6 +3,7 @@ package com.ego14t.comments.controller;
 import com.ego14t.comments.vo.CommentsResponseVo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.vo.CreateCommentsVo;
+import com.ego14t.common.entity.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,22 +23,22 @@ public class CommentsController extends AbstractController{
      * @return  评论信息 包括用户昵称和用户头像
      */
     @PostMapping(value = "/saveComments")
-    public String saveComments(@RequestBody CreateCommentsVo createCommentsVo){
-        return commentsService.saveComments(createCommentsVo,getUserId());
+    public Result<?> saveComments(@RequestBody CreateCommentsVo createCommentsVo){
+        return Result.OK(commentsService.saveComments(createCommentsVo,getUserId()));
     }
 
     @GetMapping("/getComment/{commentId}")
-    public CommentsResponseVo getComment(@PathVariable(value = "commentId")String commentId) {
-        return commentsService.getComment(commentId, getUserId());
+    public Result<?> getComment(@PathVariable(value = "commentId")String commentId) {
+        return Result.OK(commentsService.getComment(commentId, getUserId()));
     }
 
 
     @GetMapping(value = "/getAllComments/{showId}/{page}/{total}")
     @ResponseBody
-    public List<CommentsResponseVo> getAllComments(@PathVariable(value = "showId")String showId,
+    public Result<?> getAllComments(@PathVariable(value = "showId")String showId,
                                                    @PathVariable(value = "page")Integer page,
                                                    @PathVariable(value = "total")Integer total){
-        return commentsService.getAllComments(showId,page,total);
+        return Result.OK(commentsService.getAllComments(showId,page,total));
     }
 
 

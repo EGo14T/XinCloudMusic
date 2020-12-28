@@ -1,4 +1,4 @@
-package com.ego14t.xinmusicfeign.pojo;
+package com.ego14t.feign.pojo;
 
 public class UserLogin {
     private Integer id;

@@ -8,6 +8,8 @@ import com.ego14t.comments.vo.CommentsResponseVo;
 import com.ego14t.comments.mapper.CommentsMapper;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.vo.CreateCommentsVo;
+import com.ego14t.common.error.ErrorCode;
+import com.ego14t.common.exception.XMException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,8 +51,13 @@ public class CommentsServiceImpl implements CommentsService {
     public CommentsResponseVo getComment(String commentId, String userid) {
         CommentsResponseVo result = new CommentsResponseVo();
         UserComment originComment = commentsMapper.getComment(commentId);
+
+        if (originComment == null) {
+            throw new XMException(ErrorCode.NOT_FOUND_COMMENT);
+        }
+
         result.setOriginComments(originComment);
-        if (originComment != null && originComment.getToId() != null){
+        if (originComment.getToId() != null){
             UserComment replyComment = commentsMapper.getComment(originComment.getToId());
             result.setReplyComments(replyComment);
         }

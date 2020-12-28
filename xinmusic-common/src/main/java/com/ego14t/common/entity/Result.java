@@ -1,92 +1,54 @@
 package com.ego14t.common.entity;
 
-import com.ego14t.common.error.ServiceErrors;
-
-import java.io.Serializable;
+import com.ego14t.common.constant.DataConsts;
+import com.ego14t.common.error.ErrorCode;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 /**
  * @author wangfx
  * Created by EGo1sT
- * @Date Created in 2020/12/11 10:32
+ * @Date Created in 2020/12/28 15:55
  * Description:
  */
-public class Result implements Serializable {
-    private static final long serialVersionUID = -437797791789260731L;
+public class Result<T> extends ResponseEntity<T> {
 
-    private Object data;
-
-    private Integer code;
-
-    private String message;
-
-    public Result() {}
-
-    public static Result ok() {
-        Result result = new Result();
-        result.code = 0;
-        result.message = "success";
-        return result;
+    public Result(HttpStatus status) {
+        super(status);
     }
 
-    public static Result ok(Object data) {
-        Result result = new Result();
-        result.code = 0;
-        result.message = "success";
-        result.data = data;
-        return result;
+    public Result(HttpStatus status, T data) {
+        super(data, status);
     }
 
-    public static Result ok(Object data, String message) {
-        Result result = new Result();
-        result.code = 0;
-        result.message = message;
-        result.data = data;
-        return result;
+    public static Result<?> OK() {
+        ResultEntity res = new ResultEntity();
+        res.setCode(DataConsts.DEFAULT_SUCCESS_CODE);
+        res.setMessage("success");
+        return new Result<>(HttpStatus.OK, res);
     }
 
-    public static Result error(ServiceErrors errors) {
-        Result result = new Result();
-        result.code = errors.getCode();
-        result.message = errors.getMessage();
-        return result;
+    public static Result<?> OK(Object data) {
+        ResultEntity res = new ResultEntity();
+        res.setData(data);
+        res.setCode(DataConsts.DEFAULT_SUCCESS_CODE);
+        res.setMessage("success");
+        return new Result<>(HttpStatus.OK, res);
     }
 
-    public static Result error(ServiceErrors errors, Object data) {
-        Result result = new Result();
-        result.code = errors.getCode();
-        result.message = errors.getMessage();
-        result.data = data;
-        return result;
+    public static Result<?> ERROR(Integer code, String message) {
+        ResultEntity res = new ResultEntity();
+        res.setCode(code);
+        res.setMessage(message);
+        return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR, res);
     }
 
-    public static Result error(Integer code, String message) {
-        Result result = new Result();
-        result.code = code;
-        result.message = message;
-        return result;
+    public static Result<?> ERROR(ErrorCode errorCode) {
+        ResultEntity res = new ResultEntity();
+        res.setCode(errorCode.getCode());
+        res.setMessage(errorCode.getMessage());
+        return new Result<>(HttpStatus.INTERNAL_SERVER_ERROR, res);
     }
 
-    public Object getData() {
-        return data;
-    }
 
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

@@ -1,6 +1,7 @@
 package com.ego14t.common.handler;
 
 import com.ego14t.common.entity.Result;
+import com.ego14t.common.entity.ResultEntity;
 import com.ego14t.common.error.ErrorCode;
 import com.ego14t.common.exception.XMException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,8 +23,8 @@ public class XmExceptionHandler {
      * @return errmsg
      */
     @ExceptionHandler(XMException.class)
-    public Result handleXMException(XMException e) {
-        return Result.error(e.getErrcode(),e.getErrmsg());
+    public Result<?> handleXMException(XMException e) {
+        return Result.ERROR(e.getErrcode(),e.getErrmsg());
     }
 
     /**
@@ -32,8 +33,8 @@ public class XmExceptionHandler {
      * @return errmsg
      */
     @ExceptionHandler(Throwable.class)
-    public Result handleThrowable(Throwable t) {
-        return Result.error(ErrorCode.ERROR);
+    public Result<?> handleThrowable(Throwable t) {
+        return Result.ERROR(ErrorCode.ERROR);
     }
 
 

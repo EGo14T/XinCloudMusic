@@ -1,7 +1,7 @@
-package com.ego14t.xinmusicfeign.service;
+package com.ego14t.feign.service;
 
-import com.ego14t.xinmusicfeign.config.FeignConfig;
-import com.ego14t.xinmusicfeign.pojo.MusicList;
+import com.ego14t.feign.config.FeignConfig;
+import com.ego14t.feign.pojo.MusicList;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

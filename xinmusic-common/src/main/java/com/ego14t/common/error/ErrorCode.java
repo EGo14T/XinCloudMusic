@@ -16,11 +16,16 @@ public enum ErrorCode implements ServiceErrors{
 
     MUSIC_MODULE_ERROR(1001,"音乐模块错误，请联系管理员"),
     /** 没有检索到该音乐信息 */
-    NOTFOUNDMUSICINFO(1002,"没有检索到该音乐信息"),
+    NOT_FOUND_MUSICINFO(1002,"没有检索到该音乐信息"),
     /** 歌曲已存在 */
     MUSIC_IS_EXISTS(1003,"歌曲已存在"),
     /** 创建歌单不存在 */
     CREATE_MUSICLIST_IS_NOT_EXISTS(1004,"创建歌单不存在"),
+
+
+    /** 评论信息不存在 */
+    NOT_FOUND_COMMENT(2001, "评论信息不存在"),
+
 
 
     /** 用户模块错误，请联系管理员 */
