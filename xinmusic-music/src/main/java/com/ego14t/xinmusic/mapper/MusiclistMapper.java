@@ -3,7 +3,7 @@ package com.ego14t.xinmusic.mapper;
 import com.ego14t.xinmusic.entity.MusicListCollectEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.pojo.MusicListInfo;
-import com.ego14t.xinmusic.pojo.UserMusicList;
+import com.ego14t.xinmusic.pojo.UserMusiclist;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.List;
  * @date 2020/11/18 14:05
  */
 @Mapper
-public interface MusicListMapper {
+public interface MusiclistMapper {
     /**
      * 获取用户收藏歌单的信息带歌曲总数
      * @param userid 用户ID
      * @return 收藏歌单信息
      */
-    List<UserMusicList> getUserCollectMusicList(String userid);
+    List<UserMusiclist> getUserCollectMusicList(String userid);
 
     /**
      * 获取用户创建歌单的信息带歌曲总数
@@ -28,12 +28,12 @@ public interface MusicListMapper {
      * @param userid 用户ID
      * @return 创建歌单信息
      */
-    List<UserMusicList> getUserCreateMusicList(String currentUserId, String userid);
+    List<UserMusiclist> getUserCreateMusicList(String currentUserId, String userid);
 
     /**
      * @return 获取推荐歌单
      */
-    List<UserMusicList> getDiscoverMusicList();
+    List<UserMusiclist> getDiscoverMusicList();
 
     /**
      * 收藏歌单

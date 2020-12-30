@@ -7,7 +7,7 @@ import com.ego14t.xinmusic.entity.MusicListEntity;
  * @date 2020/11/18 14:10
  * 用户创建&&收藏的歌单
  */
-public class UserMusicList extends MusicListEntity {
+public class UserMusiclist extends MusicListEntity {
 
     private static final long serialVersionUID = 2657783957671867309L;
 

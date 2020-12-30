@@ -8,8 +8,10 @@ import com.ego14t.common.exception.XMException;
 import com.ego14t.xinmusic.entity.MusicEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
 import com.ego14t.xinmusic.entity.MusicListMusicEntity;
+import com.ego14t.xinmusic.mapper.MusiclistMapper;
 import com.ego14t.xinmusic.mapper.MusicMapper;
 import com.ego14t.xinmusic.pojo.SearchUserList;
+import com.ego14t.xinmusic.service.MusicListService;
 import com.ego14t.xinmusic.service.MusicService;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,13 @@ import java.util.List;
 public class MusicServiceImpl implements MusicService {
 
     @Resource
-    private MusicMapper mapper;
+    private MusicMapper musicMapper;
+
+    @Resource
+    private MusiclistMapper musicListMapper;
+
+    @Resource
+    private MusicListService musicListService;
 
     /**
      * 根据歌曲id返回歌曲信息
@@ -41,7 +49,7 @@ public class MusicServiceImpl implements MusicService {
     @Override
     public MusicInfoVo getMusicInfo(String musicId) {
         MusicInfoVo musicInfo = new MusicInfoVo();
-        MusicEntity musicEntity = mapper.getMusicInfo(musicId);
+        MusicEntity musicEntity = musicMapper.getMusicInfo(musicId);
         if (musicEntity == null){
             throw new XMException(ErrorCode.NOT_FOUND_MUSICINFO);
         }
@@ -59,15 +67,19 @@ public class MusicServiceImpl implements MusicService {
     @Override
     @Transactional
     public void addMusicToList(String musicListID, String musicID) {
-        MusicListMusicEntity musiclistMusic = mapper.getMusiclistMusic(musicListID, musicID);
+        MusicListEntity musicListEntity = musicListMapper.queryObject(null, musicListID);
+        if (musicListEntity == null) {
+            throw new XMException(ErrorCode.MUSICLIST_IS_NOT_EXISTS); //歌单不存在
+        }
+        MusicListMusicEntity musiclistMusic = musicMapper.getMusiclistMusic(musicListID, musicID);
         if (musiclistMusic != null){
-            throw new XMException(ErrorCode.MUSIC_IS_EXISTS);
+            throw new XMException(ErrorCode.MUSIC_IS_EXISTS); //歌曲已存在
         }
         MusicListMusicEntity addEntity = new MusicListMusicEntity();
         addEntity.setMusicId(musicID);
         addEntity.setMusiclistId(musicListID);
         addEntity.setCreateTime(LocalDateTime.now());
-        mapper.addMusicToList(addEntity);
+        musicMapper.addMusicToList(addEntity);
     }
 
     /**
@@ -79,7 +91,7 @@ public class MusicServiceImpl implements MusicService {
     @Override
     @Transactional
     public void delMusicFromList(String musiclistId, String musicId) {
-        int res = mapper.delMusicFromList(musiclistId,musicId);
+        int res = musicMapper.delMusicFromList(musiclistId,musicId);
         if (res != 1){
             throw new XMException(ErrorCode.ERROR);
         }
@@ -89,25 +101,11 @@ public class MusicServiceImpl implements MusicService {
     public List<MusicInfoVo> getSearchUserList(String userID, String keyword) {
         String defaultId = "";
         if (userID != null){
-            MusicListEntity defaultList = mapper.getDefaultList(userID);
+            MusicListEntity defaultList = musicMapper.getDefaultList(userID);
             defaultId = defaultList.getMusiclistId();
         }
 
-        List<SearchUserList> searchUserLists = mapper.searchUserList(defaultId, keyword);
-        List<MusicInfoVo> musicInfoVos = new ArrayList<>();
-        for (SearchUserList s : searchUserLists) {
-            MusicInfoVo musicInfoVo = new MusicInfoVo();
-            musicInfoVo.setMusicId(s.getMusicId());
-            musicInfoVo.setMusicName(s.getMusicName());
-            musicInfoVo.setSinger(s.getSinger());
-            musicInfoVo.setAlbum(s.getAlbum());
-            musicInfoVo.setLength(s.getLength());
-            musicInfoVo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + s.getMusicId()+".mp3");
-            if (s.getCollect() != null) {
-                musicInfoVo.setCollection(1);
-            }
-            musicInfoVos.add(musicInfoVo);
-        }
-        return musicInfoVos;
+        List<SearchUserList> searchUserLists = musicMapper.searchUserList(defaultId, keyword);
+        return musicListService.getMusicInfoVos(searchUserLists);
     }
 }

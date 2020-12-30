@@ -5,12 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-//import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * @author EGo1ST
  */
-//@EnableEurekaClient
+@EnableEurekaClient
 @SpringBootApplication(scanBasePackages = "com.ego14t.*")
 @EnableSwagger2
 @EnableCaching

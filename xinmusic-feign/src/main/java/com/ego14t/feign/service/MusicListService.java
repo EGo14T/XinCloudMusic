@@ -1,63 +1,44 @@
 package com.ego14t.feign.service;
 
 import com.ego14t.feign.config.FeignConfig;
-import com.ego14t.feign.pojo.MusiclistUser;
+import com.ego14t.feign.vo.MusicListVo;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
 /**
- * Create By EGo1ST
- * Date ：Created in 2019/8/10 19:09
- * Description：
- *
- * 调用xinmusic项目的接口
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2020/12/30 14:00
+ * Description:
  */
 @FeignClient(value = "xinmusic-music",configuration = FeignConfig.class)
 public interface MusicListService {
-    /**
-     * 根据歌单ID查询歌单 创建&默认
-     * @param id 歌单ID
-     * @return 歌单信息
-     */
-    @GetMapping(value = "/my/music/create/musiclist/{userID}")
-    List<Object> getCreateMusicList(@PathVariable(value="userID") String id);
 
-    /**
-     * 根据歌单ID查询歌单 收藏
-     * @param id 歌单ID
-     * @return 歌单信息
-     */
-    @GetMapping(value = "/my/music/collect/musiclist/{userID}")
-    List<Object> getCollectMusicList(@PathVariable(value="userID") String id);
+    @GetMapping("/musiclist/created/{userId}")
+    ResponseEntity<?> getCreateMusicListInfo(@PathVariable("userId") String userId);
 
-    @GetMapping(value = "/my/music/discover/musiclist")
-    List<Object> getDiscoverMusicList();
+    @GetMapping("/musiclist/collected/{userId}")
+    ResponseEntity<?> getCollectMusicListInfo(@PathVariable("userId") String userId);
 
-    @PostMapping(value = "/my/music/collect/musiclist/{userID}/{musicListID}")
-    int collectMusicList(@PathVariable(name="musicListID") String musicListID);
+    @GetMapping("/musiclist/discover")
+    ResponseEntity<?> getDiscoverMusicListInfo();
 
-    @GetMapping(value = "/my/music/musiclist/{musicListID}")
-    List<Object> getUserMusicList(@PathVariable(name="musicListID") String musicListID);
+    @PostMapping("/musiclist/collect/{musicListId}")
+    ResponseEntity<?> collectMusicList(@PathVariable("musicListId")String musicListId);
 
-    @GetMapping(value = "/my/music/musiclist/{musicListID}")
-    List<Object> getMusicList(@PathVariable(name="musicListID") String musicListID);
+    @GetMapping("/musiclist/{musicListId}")
+    ResponseEntity<?> getUserMusicList(@PathVariable("musicListId")String musicListId);
 
-    @GetMapping(value = "/my/music/musiclistinfo/{userID}/{musicListID}")
-    Object getMusicListInfo(@PathVariable(value = "userID")String userID,
-                            @PathVariable(value = "musicListID") String musicListID);
+    @GetMapping("/musiclist/getinfo/{musicListId}")
+    ResponseEntity<?> getMusicListInfo(@PathVariable("musicListId")String musicListId);
 
+    @PostMapping("/musiclist/created")
+    ResponseEntity<?> createMusicList(@RequestBody MusicListVo musicListVo);
 
-    @PostMapping(value = "my/music/musiclist")
-    String addMusicList(@RequestBody MusiclistUser musiclistUser);
+    @DeleteMapping("/musiclist/{musiclistId}")
+    ResponseEntity<?> delMusicList(@PathVariable("musiclistId")String musiclistId);
 
-    @DeleteMapping(value = ("/my/music/musiclist/{userID}/{musicListID}"))
-    String delMusicList(@PathVariable(value="musicListID") String musicListID);
-
-    @PatchMapping(value = "/my/music/musiclist/{musicListID}")
-    String updateMusicList(@PathVariable(value = "musicListID")String musicListID
-            ,@RequestBody MusiclistUser musiclistUser);
-
+    @PatchMapping("/musiclist/update")
+    ResponseEntity<?> updateMusicList(@RequestBody MusicListVo musicListVo);
 }

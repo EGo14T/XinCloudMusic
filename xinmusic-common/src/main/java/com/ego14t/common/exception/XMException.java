@@ -1,5 +1,7 @@
 package com.ego14t.common.exception;
 
+import com.ego14t.common.entity.Result;
+import com.ego14t.common.entity.ResultEntity;
 import com.ego14t.common.error.ServiceErrors;
 
 /**
@@ -24,6 +26,12 @@ public class XMException extends RuntimeException{
         super(errors.getMessage(),null,false,false);
         this.setErrmsg(errors.getMessage());
         this.errcode = errors.getCode();
+    }
+
+    public XMException(ResultEntity result) {
+        super(result.getMessage(), null, false, false);
+        this.setErrmsg(result.getMessage());
+        this.errcode = result.getCode();
     }
 
     public XMException(String errmsg, Throwable e) {

@@ -41,10 +41,10 @@ public class CommentsServiceImpl implements CommentsService {
         createEntity.setContent(createCommentsVo.getContent());
         createEntity.setToId(Optional.ofNullable(createCommentsVo.getToId()).orElse(null));
         Integer res = commentsMapper.createComments(createEntity);
-        if (res ==1) {
-            return createEntity.getId();
+        if (res !=1) {
+            throw new XMException(ErrorCode.SAVE_COMMENTS_FAILED); //保存评论失败，请查看日志
         }
-        return null;
+        return createEntity.getId();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public List<CommentsResponseVo> getAllComments(String showId, Integer page, Integer total) {
         List<UserComment> userCommentList = commentsMapper.getCommentsList(showId);
-        if (userCommentList == null) {
-            return null;
+        if (userCommentList == null || new Integer(0).equals(userCommentList.size())) {
+            throw new XMException(ErrorCode.SAVE_COMMENTS_FAILED);
         }
         //转换成<id,UserComment>
         Map<String, UserComment> collect = userCommentList.stream().collect(Collectors.toMap(UserComment::getId, userComment -> userComment));

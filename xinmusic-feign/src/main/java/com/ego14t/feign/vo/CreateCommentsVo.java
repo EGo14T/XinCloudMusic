@@ -1,54 +1,62 @@
-package com.ego14t.feign.pojo;
+package com.ego14t.feign.vo;
 
+import com.ego14t.common.constant.vaildator.group.AddGroup;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * comments
- * @author
+ * @author wangfx
+ * @date 2020/12/1 14:36
  */
-public class Comments implements Serializable {
+public class CreateCommentsVo implements Serializable {
+    private static final long serialVersionUID = 6525107781568689165L;
+
     /**
      * 评论主键ID
      */
     private String id;
 
     /**
-     * 评论的内容id 如歌曲资源ID
+     * 被评论的资源ID musicId、musiclistId、commentsId
      */
+    @NotBlank(groups = {AddGroup.class}, message = "评论的资源ID不能为空")
     private String showId;
 
     /**
-     * 评论者id 是谁评论的
+     * 评论用户的userId
      */
-    private String fromId;
+    @NotBlank(groups = {AddGroup.class}, message = "评论用户的userId不能为空")
+    private String fromUserId;
 
     /**
-     * 被评论的id
+     * 被评论用户的userId
      */
+    private String toUserId;
 
+    /**
+     * 子评论的父评论的主键ID
+     */
     private String toId;
 
     /**
      * 评论内容
      */
+    @NotBlank(groups = {AddGroup.class}, message = "评论内容不能为空")
     private String content;
 
     /**
      * 点赞数
      */
-
-    private Integer like = 0;
-
-    /**
-     * 状态：1：有效  0：已删除
-     */
-    private Integer state = 1;
+    private Integer like;
 
     /**
-     * 评论时间
+     * 状态 1-有效 0-已删除
      */
+    private Integer status;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
@@ -68,12 +76,20 @@ public class Comments implements Serializable {
         this.showId = showId;
     }
 
-    public String getFromId() {
-        return fromId;
+    public String getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromId(String fromId) {
-        this.fromId = fromId;
+    public void setFromUserId(String fromUserId) {
+        this.fromUserId = fromUserId;
+    }
+
+    public String getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId;
     }
 
     public String getToId() {
@@ -100,12 +116,12 @@ public class Comments implements Serializable {
         this.like = like;
     }
 
-    public Integer getState() {
-        return state;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreateTime() {
@@ -115,6 +131,4 @@ public class Comments implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
-
-    private static final long serialVersionUID = 1L;
 }
