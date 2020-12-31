@@ -92,13 +92,13 @@ public class MusicListServiceImpl implements MusicListService {
     /**
      * 收藏歌单
      * @param userId
-     * @param musicListID
+     * @param musiclistId
      */
     @Override
     @Transactional
-    public void collectMusicList(String userId, String musicListID) {
+    public void collectMusicList(String userId, String musiclistId) {
         MusicListCollectEntity addEntity = new MusicListCollectEntity();
-        addEntity.setMusiclistId(musicListID);
+        addEntity.setMusiclistId(musiclistId);
         addEntity.setUserid(userId);
         Integer res = musiclistMapper.collectMusicList(addEntity);
         if (res != 1) {
@@ -125,22 +125,22 @@ public class MusicListServiceImpl implements MusicListService {
 
 
     @Override
-    public MusicListInfo getMusicListInfo(String userID, String musicListID) {
-        MusicListInfo musicListInfo = musiclistMapper.getMusicListInfo(userID, musicListID);
-        if (musicListInfo == null) {
+    public MusicListInfo getMusicListInfo(String userId, String musiclistId) {
+        MusicListInfo musiclistInfo = musiclistMapper.getMusicListInfo(userId, musiclistId);
+        if (musiclistInfo == null) {
             throw new XMException(ErrorCode.MUSICLISTINFO_IS_NOT_EXISTS); //歌单信息不存在
         }
-        return musicListInfo;
+        return musiclistInfo;
     }
 
     /**
-     * @param musicListVo 歌单信息
+     * @param musiclistVo 歌单信息
      * @return 状态码和信息  返回主键id
      * Description：添加歌单
      */
     @Override
     @Transactional
-    public String createMusicList(MusicListVo musicListVo) {
+    public String createMusicList(MusicListVo musiclistVo) {
         MusicListEntity createEntity = new MusicListEntity();
 
         String nextId = new IDworker(workID.getValue(), 0).nextId();
@@ -149,9 +149,9 @@ public class MusicListServiceImpl implements MusicListService {
         createEntity.setId(nextId);
         createEntity.setMusiclistId(musiclistId);
         createEntity.setCreateUserId("1");
-        createEntity.setMusiclistName(musicListVo.getMusiclistName());
-        createEntity.setTags(musicListVo.getTags());
-        createEntity.setDescription(musicListVo.getDescription());
+        createEntity.setMusiclistName(musiclistVo.getMusiclistName());
+        createEntity.setTags(musiclistVo.getTags());
+        createEntity.setDescription(musiclistVo.getDescription());
         createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + musiclistId + ".jpg");
         createEntity.setStatus(DataConsts.NORMAL_STATUS);
         Integer res = musiclistMapper.createMusicList(createEntity);
@@ -162,24 +162,24 @@ public class MusicListServiceImpl implements MusicListService {
     }
 
     /**
-     * @param userID      用户ID
+     * @param userId      用户ID
      * @param musiclistId 歌单ID
      * @return
      * Description：删除歌单
      */
     @Override
     @Transactional
-    public void delMusicList(String userID, String musiclistId, String delType) {
-        MusicListEntity musicListEntity = musiclistMapper.queryObject(userID, musiclistId);
-        if (musicListEntity == null) {
+    public void delMusicList(String userId, String musiclistId, String delType) {
+        MusicListEntity musiclistEntity = musiclistMapper.queryObject(userId, musiclistId);
+        if (musiclistEntity == null) {
             throw new XMException(ErrorCode.MUSICLIST_IS_NOT_EXISTS); //歌单不存在
         }
         if ("created".equals(delType)){
-            if (musicListEntity.getStatus() == 0) {
+            if (musiclistEntity.getStatus() == 0) {
                 throw new XMException(ErrorCode.DEFAULT_MUSICLIST_CANT_DEL); //默认歌单无法删除
             }
         }
-        musiclistMapper.delCreatedList(userID,musiclistId);
+        musiclistMapper.delCreatedList(userId,musiclistId);
         musiclistMapper.delMusicFromList(musiclistId);
     }
 

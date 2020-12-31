@@ -19,5 +19,5 @@ public interface UserInfoMapper {
 
     Integer create(BaseUserEntity baseUserEntity);
 
-    Integer initMusiclist(MusicListEntity musicListEntity);
+    Integer initMusiclist(MusicListEntity musiclistEntity);
 }

@@ -3,10 +3,11 @@ package com.ego14t.user.controller;
 import com.ego14t.common.constant.vaildator.group.AddGroup;
 import com.ego14t.common.constant.vaildator.group.UpdateGroup;
 import com.ego14t.common.controller.AbstractController;
-import com.ego14t.common.entity.ResultEntity;
+import com.ego14t.common.entity.Result;
 import com.ego14t.user.service.UserService;
 import com.ego14t.user.vo.BaseUserVo;
 import com.ego14t.user.vo.UpdateUserVo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,19 +28,19 @@ public class UserController extends AbstractController {
     private UserService userService;
 
     @GetMapping("/userinfo/{userid}")
-    public ResultEntity getUserInfo(@PathVariable("userid")String userid) {
-        return ResultEntity.ok(userService.getUserInfo(userid));
+    public ResponseEntity<?> getUserInfo(@PathVariable("userid")String userid) {
+        return Result.OK(userService.getUserInfo(userid));
     }
 
     @PatchMapping("/userinfo")
-    public ResultEntity updateUserInfo(@RequestBody @Validated({UpdateGroup.class}) UpdateUserVo updateUserVo) {
+    public ResponseEntity<?> updateUserInfo(@RequestBody @Validated({UpdateGroup.class}) UpdateUserVo updateUserVo) {
         userService.updateUserInfo(updateUserVo);
-        return ResultEntity.ok();
+        return Result.OK();
     }
 
     @PostMapping("/register")
-    public ResultEntity register(@RequestBody @Validated({AddGroup.class}) BaseUserVo createVo) {
+    public ResponseEntity<?> register(@RequestBody @Validated({AddGroup.class}) BaseUserVo createVo) {
         userService.createUser(createVo);
-        return ResultEntity.ok();
+        return Result.OK();
     }
 }

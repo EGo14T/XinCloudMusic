@@ -37,10 +37,10 @@ public interface MusiclistMapper {
 
     /**
      * 收藏歌单
-     * @param musicListCollectEntity 实体
+     * @param musiclistCollectEntity 实体
      * @return 主键ID
      */
-    Integer collectMusicList(MusicListCollectEntity musicListCollectEntity);
+    Integer collectMusicList(MusicListCollectEntity musiclistCollectEntity);
 
     /**
      * 查询歌单信息

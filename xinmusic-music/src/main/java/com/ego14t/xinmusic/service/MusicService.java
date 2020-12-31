@@ -13,9 +13,9 @@ public interface MusicService {
     //根据歌曲id返回歌曲信息
     MusicInfoVo getMusicInfo(String musicId);
     //把歌曲添加到歌单中
-    void addMusicToList(String musicListID, String musicID);
+    void addMusicToList(String musiclistId, String musicID);
     //根据歌曲id删除歌曲（从歌单中删除）
     void delMusicFromList(String musiclistId, String musicId);
     //检索歌曲(登录&&未登录)
-    List<MusicInfoVo> getSearchUserList(String userID, String keyword);
+    List<MusicInfoVo> getSearchUserList(String userId, String keyword);
 }

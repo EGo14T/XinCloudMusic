@@ -60,7 +60,6 @@ public class UserServiceImpl implements UserService {
         BeanCopyUtils.copy(createVo, baseUserEntity);
         Integer createRes = userInfoMapper.create(baseUserEntity);
         //Integer initList = userInfoMapper.initMusiclist();
-
     }
 
 

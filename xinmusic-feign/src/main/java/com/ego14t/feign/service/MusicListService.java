@@ -24,21 +24,21 @@ public interface MusicListService {
     @GetMapping("/musiclist/discover")
     ResponseEntity<?> getDiscoverMusicListInfo();
 
-    @PostMapping("/musiclist/collect/{musicListId}")
-    ResponseEntity<?> collectMusicList(@PathVariable("musicListId")String musicListId);
+    @PostMapping("/musiclist/collect/{musiclistId}")
+    ResponseEntity<?> collectMusicList(@PathVariable("musiclistId")String musiclistId);
 
-    @GetMapping("/musiclist/{musicListId}")
-    ResponseEntity<?> getUserMusicList(@PathVariable("musicListId")String musicListId);
+    @GetMapping("/musiclist/{musiclistId}")
+    ResponseEntity<?> getUserMusicList(@PathVariable("musiclistId")String musiclistId);
 
-    @GetMapping("/musiclist/getinfo/{musicListId}")
-    ResponseEntity<?> getMusicListInfo(@PathVariable("musicListId")String musicListId);
+    @GetMapping("/musiclist/getinfo/{musiclistId}")
+    ResponseEntity<?> getMusicListInfo(@PathVariable("musiclistId")String musiclistId);
 
     @PostMapping("/musiclist/created")
-    ResponseEntity<?> createMusicList(@RequestBody MusicListVo musicListVo);
+    ResponseEntity<?> createMusicList(@RequestBody MusicListVo musiclistVo);
 
     @DeleteMapping("/musiclist/{musiclistId}")
     ResponseEntity<?> delMusicList(@PathVariable("musiclistId")String musiclistId);
 
     @PatchMapping("/musiclist/update")
-    ResponseEntity<?> updateMusicList(@RequestBody MusicListVo musicListVo);
+    ResponseEntity<?> updateMusicList(@RequestBody MusicListVo musiclistVo);
 }
