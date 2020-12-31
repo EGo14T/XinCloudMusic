@@ -1,7 +1,5 @@
 package com.ego14t.feign.service;
 
-import com.ego14t.common.entity.Result;
-import com.ego14t.common.entity.ResultEntity;
 import com.ego14t.feign.config.FeignConfig;
 import com.ego14t.feign.vo.CreateCommentsVo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,7 +22,7 @@ public interface CommentsService {
      * @param createCommentsVo 评论实体
      * @return 评论信息
      */
-    @PostMapping(value = "/comments/saveComments")
+    @PostMapping("/comments/saveComments")
     ResponseEntity<?> saveComments(@RequestBody CreateCommentsVo createCommentsVo);
 
     /**
@@ -33,7 +31,7 @@ public interface CommentsService {
      * @return 评论信息
      */
     @GetMapping("/comments/getComment/{commentId}")
-    ResponseEntity<?> getComment(@PathVariable(value = "commentId") String commentId);
+    ResponseEntity<?> getComment(@PathVariable("commentId") String commentId);
 
     /**
      * @param showId 资源ID
@@ -41,8 +39,8 @@ public interface CommentsService {
      * @param total 每页显示总数
      * @return 评论信息
      */
-    @GetMapping(value = "/comments/getAllComments/{showId}/{page}/{total}")
-    ResponseEntity<?> getAllComments(@PathVariable(value = "showId")String showId,
-                                     @PathVariable(value = "page")Integer page,
-                                     @PathVariable(value = "total")Integer total);
+    @GetMapping("/comments/getAllComments/{showId}/{page}/{total}")
+    ResponseEntity<?> getAllComments(@PathVariable("showId")String showId,
+                                     @PathVariable("page")Integer page,
+                                     @PathVariable("total")Integer total);
 }

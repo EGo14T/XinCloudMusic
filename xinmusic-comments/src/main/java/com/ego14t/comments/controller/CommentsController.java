@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/comments")
+@RequestMapping("/comments")
 public class CommentsController extends AbstractController{
 
     @Resource
@@ -23,21 +23,21 @@ public class CommentsController extends AbstractController{
      * @param createCommentsVo 评论实体
      * @return  评论信息 包括用户昵称和用户头像
      */
-    @PostMapping(value = "/saveComments")
+    @PostMapping("/saveComments")
     public ResponseEntity<?> saveComments(@RequestBody CreateCommentsVo createCommentsVo){
         return Result.OK(commentsService.saveComments(createCommentsVo,getUserId()));
     }
 
     @GetMapping("/getComment/{commentId}")
-    public ResponseEntity<?> getComment(@PathVariable(value = "commentId")String commentId) {
+    public ResponseEntity<?> getComment(@PathVariable("commentId")String commentId) {
         return Result.OK(commentsService.getComment(commentId, getUserId()));
     }
 
 
-    @GetMapping(value = "/getAllComments/{showId}/{page}/{total}")
-    public ResponseEntity<?> getAllComments(@PathVariable(value = "showId")String showId,
-                                                   @PathVariable(value = "page")Integer page,
-                                                   @PathVariable(value = "total")Integer total){
+    @GetMapping("/getAllComments/{showId}/{page}/{total}")
+    public ResponseEntity<?> getAllComments(@PathVariable("showId")String showId,
+                                                   @PathVariable("page")Integer page,
+                                                   @PathVariable("total")Integer total){
         return Result.OK(commentsService.getAllComments(showId,page,total));
     }
 }

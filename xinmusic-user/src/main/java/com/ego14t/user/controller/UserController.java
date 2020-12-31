@@ -20,24 +20,24 @@ import javax.annotation.Resource;
  */
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping("/user")
 public class UserController extends AbstractController {
 
     @Resource
     private UserService userService;
 
-    @GetMapping(value = "/userinfo/{userid}")
-    public ResultEntity getUserInfo(@PathVariable(value = "userid")String userid) {
+    @GetMapping("/userinfo/{userid}")
+    public ResultEntity getUserInfo(@PathVariable("userid")String userid) {
         return ResultEntity.ok(userService.getUserInfo(userid));
     }
 
-    @PatchMapping(value = "/userinfo")
+    @PatchMapping("/userinfo")
     public ResultEntity updateUserInfo(@RequestBody @Validated({UpdateGroup.class}) UpdateUserVo updateUserVo) {
         userService.updateUserInfo(updateUserVo);
         return ResultEntity.ok();
     }
 
-    @PostMapping(value = "/register")
+    @PostMapping("/register")
     public ResultEntity register(@RequestBody @Validated({AddGroup.class}) BaseUserVo createVo) {
         userService.createUser(createVo);
         return ResultEntity.ok();

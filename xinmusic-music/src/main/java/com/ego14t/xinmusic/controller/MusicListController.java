@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 
 
 @RestController
-@RequestMapping(value = "/musiclist")
+@RequestMapping("/musiclist")
 @CrossOrigin
 @Api(value = "歌单Controller",tags = {"歌单操作类接口"})
 public class MusicListController extends AbstractController {
@@ -30,7 +30,7 @@ public class MusicListController extends AbstractController {
      * @param userId 用户ID
      * @return 返回歌单列表
      */
-    @GetMapping(value = "/created/{userID}")
+    @GetMapping("/created/{userID}")
     @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
 
@@ -43,7 +43,7 @@ public class MusicListController extends AbstractController {
      * @param userId 用户ID
      * @return 返回歌单列表
      */
-    @GetMapping(value = "/collected/{userID}")
+    @GetMapping("/collected/{userID}")
     @ApiOperation(value="根据歌单id返回用户的歌单列表（用户收藏的歌单）",notes="歌单列表")
     @ApiImplicitParam(name = "userID", value = "用户ID", required = true)
     public ResponseEntity<?> getCollectMusicListInfo(@PathVariable(value="userID") String userId){
@@ -54,7 +54,7 @@ public class MusicListController extends AbstractController {
      * 推荐歌单
      * @return 返回歌单列表
      */
-    @GetMapping(value = "/discover")
+    @GetMapping("/discover")
     @ApiOperation(value="返回推荐歌单",notes="歌单列表")
     public ResponseEntity<?> getDiscoverMusicListInfo(){
         return Result.OK(musicListService.getDiscoverMusicListInfo());
@@ -65,7 +65,7 @@ public class MusicListController extends AbstractController {
      * @param musicListID
      * @return
      */
-    @PostMapping(value = "/collect/{musicListID}")
+    @PostMapping("/collect/{musicListID}")
     @ApiOperation(value="用户收藏歌单",notes="歌单列表")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public ResponseEntity<?> collectMusicList(@PathVariable(name="musicListID") String musicListID){
@@ -80,7 +80,7 @@ public class MusicListController extends AbstractController {
      * @param musicListID 歌单ID
      * @return  歌单的详细信息
      */
-    @GetMapping(value = "/{musicListID}")
+    @GetMapping("/{musicListID}")
     @ApiOperation(value="根据歌单id返回歌曲列表,还需要用户id",notes="根据歌单id和用户id，组合出带收藏状态的歌单")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
     public ResponseEntity<?> getUserMusicList(@PathVariable(name="musicListID") String musicListID){
@@ -93,7 +93,7 @@ public class MusicListController extends AbstractController {
      * @param musicListID
      * @return
      */
-    @GetMapping(value = "/getinfo/{musicListID}")
+    @GetMapping("/getinfo/{musicListID}")
     @ApiOperation(value="根据歌单id返回歌单详细信息",notes="歌单信息，谁创建的  创建时间  收藏信息 tag 等")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userID", value = "用户ID", required = true),
@@ -109,7 +109,7 @@ public class MusicListController extends AbstractController {
      * @param musicListVo 歌单信息实体
      * @return 添加歌单的主键
      */
-    @PostMapping(value = "/created")
+    @PostMapping("/created")
     @ApiOperation(value = "新建歌单",notes="注意问题点")
     public ResponseEntity<?> addMusicList(@RequestBody @Validated({AddGroup.class}) MusicListVo musicListVo) {
         return Result.OK(musicListService.createMusicList(musicListVo));
@@ -120,10 +120,10 @@ public class MusicListController extends AbstractController {
      * @param musicListID 歌单ID
      * @return 状态
      */
-    @DeleteMapping(value = "/{delType}/{musicListID}")
+    @DeleteMapping("/{delType}/{musicListID}")
     @ApiOperation(value = "根据歌单id删除歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musicListID", value = "歌单ID", required = true)
-    public ResponseEntity<?> delCreatedMusicList(@PathVariable("delType") String delType, @PathVariable(value = "musicListID")String musicListID){
+    public ResponseEntity<?> delCreatedMusicList(@PathVariable("delType") String delType, @PathVariable("musicListID")String musicListID){
         musicListService.delMusicList(getUserId(), musicListID, delType);
         return Result.OK();
     }
@@ -133,7 +133,7 @@ public class MusicListController extends AbstractController {
      * @param musicListVo 修改的参数
      * @return 修改结果
      */
-    @PatchMapping(value = "/update")
+    @PatchMapping("/update")
     @ApiOperation(value = "修改歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musicListVo", value = "歌单修改实体", required = true)
     public ResponseEntity<?> updateMusicList(@Validated @RequestBody MusicListVo musicListVo) {

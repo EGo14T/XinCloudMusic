@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * Description：
  */
 @RestController
-@RequestMapping(value = "/music")
+@RequestMapping("/music")
 public class MusicController extends AbstractController {
 
     @Resource
@@ -25,7 +25,7 @@ public class MusicController extends AbstractController {
      * @param musicId 歌单ID
      * @return 歌单list
      */
-    @GetMapping(value = "/song/{musicId}")
+    @GetMapping("/song/{musicId}")
     public ResponseEntity<?> getMusicInfo(@PathVariable(name="musicId") String musicId){
         return musicService.getMusicInfo(musicId);
     }
@@ -36,7 +36,7 @@ public class MusicController extends AbstractController {
      * @param musicId  歌曲ID
      * @return 状态码
      */
-    @PostMapping(value = "/song/{musiclistId}/{musicId}")
+    @PostMapping("/song/{musiclistId}/{musicId}")
     public ResponseEntity<?> addMusicToList(@PathVariable(name = "musiclistId" )String musiclistId,
                                        @PathVariable(name="musicId") String musicId){
         return musicService.addMusicToList(musiclistId, musicId);
@@ -49,7 +49,7 @@ public class MusicController extends AbstractController {
      * @param musicId 歌曲ID
      * @return 删除信息
      */
-    @DeleteMapping(value = "/song/{musiclistId}/{musicId}")
+    @DeleteMapping("/song/{musiclistId}/{musicId}")
     public ResponseEntity<?> delMusic(@PathVariable(name = "musiclistId" )String musiclistId,
                                  @PathVariable(name="musicId") String musicId){
         return musicService.delMusicFromList(musiclistId,musicId);
@@ -59,8 +59,8 @@ public class MusicController extends AbstractController {
      * 歌曲查询功能(登录&&未登录)
      * @return
      */
-    @GetMapping(value = "/song/search")
-    public ResponseEntity<?> getSearchList(@RequestParam(value = "keyword")String keyword){
+    @GetMapping("/song/search")
+    public ResponseEntity<?> getSearchList(@RequestParam("keyword")String keyword){
         return musicService.getSearchUserList(keyword);
     }
 }

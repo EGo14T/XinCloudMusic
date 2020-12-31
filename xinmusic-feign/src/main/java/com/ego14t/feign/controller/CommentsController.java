@@ -1,6 +1,5 @@
 package com.ego14t.feign.controller;
 
-import com.ego14t.common.entity.Result;
 import com.ego14t.feign.service.CommentsService;
 import com.ego14t.feign.vo.CreateCommentsVo;
 import org.springframework.http.ResponseEntity;
@@ -28,20 +27,20 @@ public class CommentsController {
      * @param createCommentsVo 评论实体
      * @return  评论信息 包括用户昵称和用户头像
      */
-    @PostMapping(value = "/saveComments")
+    @PostMapping("/saveComments")
     public ResponseEntity<?> saveComments(@RequestBody CreateCommentsVo createCommentsVo){
         return commentsService.saveComments(createCommentsVo);
     }
 
     @GetMapping("/getComment/{commentId}")
-    public ResponseEntity<?> getComment(@PathVariable(value = "commentId")String commentId) {
+    public ResponseEntity<?> getComment(@PathVariable("commentId")String commentId) {
         return commentsService.getComment(commentId);
     }
 
-    @GetMapping(value = "/getAllComments/{showId}/{page}/{total}")
-    public ResponseEntity<?> getComments(@PathVariable(value = "showId")String showId,
-                                         @PathVariable(value = "page")Integer page,
-                                         @PathVariable(value = "total")Integer total){
+    @GetMapping("/getAllComments/{showId}/{page}/{total}")
+    public ResponseEntity<?> getComments(@PathVariable("showId")String showId,
+                                         @PathVariable("page")Integer page,
+                                         @PathVariable("total")Integer total){
         return commentsService.getAllComments(showId,page,total);
     }
 }

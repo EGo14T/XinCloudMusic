@@ -2,7 +2,6 @@ package com.ego14t.xinmusic.controller;
 
 import com.ego14t.common.controller.AbstractController;
 import com.ego14t.common.entity.Result;
-import com.ego14t.common.entity.ResultEntity;
 import com.ego14t.xinmusic.service.MusicService;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
  * Description：
  */
 @RestController
-@RequestMapping(value = "/music")
+@RequestMapping("/music")
 @Api(value = "歌曲Controller",tags = {"歌曲操作类接口"})
 public class MusicController extends AbstractController {
 
@@ -29,7 +28,7 @@ public class MusicController extends AbstractController {
      * @param musicId 歌单ID
      * @return 歌单list
      */
-    @GetMapping(value = "/song/{musicId}")
+    @GetMapping("/song/{musicId}")
     @ApiOperation(value="根据歌曲id返回歌曲信息",notes="根据歌曲id返回歌曲信息")
     @ApiImplicitParam(name = "musicId", value = "单曲ID", required = true)
     public ResponseEntity<?> getMusicInfo(@PathVariable(name="musicId") String musicId){
@@ -42,7 +41,7 @@ public class MusicController extends AbstractController {
      * @param musicId  歌曲ID
      * @return 状态码
      */
-    @PostMapping(value = "/song/{musiclistId}/{musicId}")
+    @PostMapping("/song/{musiclistId}/{musicId}")
     @ApiOperation(value="将歌曲添加到歌单中",notes="将歌曲添加到歌单中")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "musiclistId", value = "歌单ID", required = true),
@@ -60,7 +59,7 @@ public class MusicController extends AbstractController {
      * @param musicId 歌曲ID
      * @return 删除信息
      */
-    @DeleteMapping(value = "/song/{musiclistId}/{musicId}")
+    @DeleteMapping("/song/{musiclistId}/{musicId}")
     @ApiOperation(value="根据歌曲id删除歌曲",notes="从歌单中删除歌曲")
     @ApiImplicitParams({
       @ApiImplicitParam(name = "musiclistId", value = "歌单ID", required = true),
@@ -76,10 +75,10 @@ public class MusicController extends AbstractController {
      * 歌曲查询功能(登录&&未登录)
      * @return
      */
-    @GetMapping(value = "/song/search")
+    @GetMapping("/song/search")
     @ApiOperation(value="搜索歌曲",notes="根据关键字")
     @ApiModelProperty(name = "keyword", value = "关键字", required = true)
-    public ResponseEntity<?> getSearchList(@RequestParam(value = "keyword")String keyword){
+    public ResponseEntity<?> getSearchList(@RequestParam("keyword")String keyword){
         String userId = getUserId();
         return Result.OK(musicService.getSearchUserList(userId, keyword));
     }
