@@ -27,6 +27,9 @@ public interface MusicListService {
     @PostMapping("/musiclist/collect/{musiclistId}")
     ResponseEntity<?> collectMusicList(@PathVariable("musiclistId")String musiclistId);
 
+    @DeleteMapping("/musiclist/collect/{musiclistId}")
+    ResponseEntity<?> unCollectMusicList(@PathVariable("musiclistId")String musiclistId);
+
     @GetMapping("/musiclist/{musiclistId}")
     ResponseEntity<?> getUserMusicList(@PathVariable("musiclistId")String musiclistId);
 

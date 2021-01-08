@@ -10,7 +10,8 @@ public enum ErrorCode implements ServiceErrors{
 
     /** 没有对参数进行序列化，不是json数据 */
     NOT_JSON_DATA(-1, "没有对参数进行序列化，不是json数据"),
-
+    /** 数据库已存在数据 */
+    EXISTS_DATA(-2, "数据库已存在数据"),
     /** 成功 */
     SUCCESS(200,"success"),
     /** 失败 */

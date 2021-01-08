@@ -64,6 +64,15 @@
          #{createTime})
     </insert>
 
+    <delete id="unCollectMusicList" parameterType="com.ego14t.xinmusic.entity.MusicListCollectEntity">
+        DELETE FROM
+            xinmusic_collect
+        WHERE
+            userid = #{userid}
+          AND
+            musiclist_id = #{musiclistId}
+    </delete>
+
     <select id="getMusicListInfo" resultType="com.ego14t.xinmusic.pojo.MusicListInfo">
         SELECT
             a.*,

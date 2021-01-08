@@ -55,6 +55,15 @@ public class MusiclistController extends AbstractController {
         return musiclistService.collectMusicList(musiclistId);
     }
 
+    /**
+     * 取消收藏歌单操作
+     * @param musiclistId
+     * @return
+     */
+    @PostMapping("/unCollect/{musiclistId}")
+    public ResponseEntity<?> unCollectMusicList(@PathVariable(name="musiclistId") String musiclistId){
+        return musiclistService.unCollectMusicList(musiclistId);
+    }
 
     /**
      * 根据歌单ID查询带状态的歌单歌曲列表

@@ -33,7 +33,6 @@ public class MusicListController extends AbstractController {
     @GetMapping("/created/{userId}")
     @ApiOperation(value="根据歌单id返回用户的歌单列表（创建&默认）",notes="歌单列表")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true)
-
     public ResponseEntity<?> getCreateMusicListInfo(@PathVariable(value="userId") String userId){
         return Result.OK(musiclistService.getCreateMusicListInfo(getUserId(), userId));
     }
@@ -74,6 +73,20 @@ public class MusicListController extends AbstractController {
         return Result.OK();
     }
 
+    /**
+     * 取消收藏歌单操作
+     * @param musiclistId
+     * @return
+     */
+    @DeleteMapping("/unCollect/{musiclistId}")
+    @ApiOperation(value="用户收藏歌单",notes="歌单列表")
+    @ApiImplicitParam(name = "musiclistId", value = "歌单ID", required = true)
+    public ResponseEntity<?> unCollectMusicList(@PathVariable(name="musiclistId") String musiclistId){
+        String userId = getUserId();
+        musiclistService.unCollectMusicList(userId,musiclistId);
+        return Result.OK();
+    }
+
 
     /**
      * 根据歌单ID查询带状态的歌单歌曲列表
@@ -111,19 +124,19 @@ public class MusicListController extends AbstractController {
      */
     @PostMapping("/created")
     @ApiOperation(value = "新建歌单",notes="注意问题点")
-    public ResponseEntity<?> addMusicList(@RequestBody @Validated({AddGroup.class}) MusicListVo musiclistVo) {
+    public ResponseEntity<?> createMusicList(@RequestBody @Validated({AddGroup.class}) MusicListVo musiclistVo) {
         return Result.OK(musiclistService.createMusicList(musiclistVo));
     }
 
     /**
-     * 删除歌单(创建)
+     * 删除歌单
      * @param musiclistId 歌单ID
      * @return 状态
      */
     @DeleteMapping("/{delType}/{musiclistId}")
     @ApiOperation(value = "根据歌单id删除歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musiclistId", value = "歌单ID", required = true)
-    public ResponseEntity<?> delCreatedMusicList(@PathVariable("delType") String delType, @PathVariable("musiclistId")String musiclistId){
+    public ResponseEntity<?> delMusiclist(@PathVariable("delType") String delType, @PathVariable("musiclistId")String musiclistId){
         musiclistService.delMusicList(getUserId(), musiclistId, delType);
         return Result.OK();
     }
@@ -136,7 +149,7 @@ public class MusicListController extends AbstractController {
     @PatchMapping("/update")
     @ApiOperation(value = "修改歌单",notes="注意问题点")
     @ApiImplicitParam(name = "musiclistVo", value = "歌单修改实体", required = true)
-    public ResponseEntity<?> updateMusicList(@Validated @RequestBody MusicListVo musiclistVo) {
+    public ResponseEntity<?> updateMusiclist(@Validated @RequestBody MusicListVo musiclistVo) {
         musiclistService.updateMusicList(musiclistVo);
         return Result.OK();
     }

@@ -38,7 +38,7 @@ public class MusicController extends AbstractController {
      */
     @PostMapping("/song/{musiclistId}/{musicId}")
     public ResponseEntity<?> addMusicToList(@PathVariable(name = "musiclistId" )String musiclistId,
-                                       @PathVariable(name="musicId") String musicId){
+                                            @PathVariable(name="musicId") String musicId){
         return musicService.addMusicToList(musiclistId, musicId);
 
     }
@@ -53,6 +53,27 @@ public class MusicController extends AbstractController {
     public ResponseEntity<?> delMusic(@PathVariable(name = "musiclistId" )String musiclistId,
                                  @PathVariable(name="musicId") String musicId){
         return musicService.delMusicFromList(musiclistId,musicId);
+    }
+
+    /**
+     * 喜欢音乐
+     * @param musicId 歌曲ID
+     * @return ResponseEntity<?>
+     */
+    @PostMapping("/song/likeMusic/{musicId}")
+    public ResponseEntity<?> likeMusic(@PathVariable(name="musicId") String musicId){
+        return musicService.likeMusic(musicId);
+
+    }
+
+    /**
+     * 不喜欢音乐
+     * @param musicId 歌曲ID
+     * @return ResponseEntity<?>
+     */
+    @DeleteMapping("/song/dislikeMusic/{musicId}")
+    public ResponseEntity<?> dislikeMusic(@PathVariable(name="musicId") String musicId){
+        return musicService.dislikeMusic(musicId);
     }
 
     /**

@@ -22,6 +22,8 @@ public interface MusicListService {
     List<UserMusiclist> getDiscoverMusicListInfo();
     //收藏歌单
     void collectMusicList(String userId, String musiclistId);
+    //取消收藏歌单
+    void unCollectMusicList(String userId, String musiclistId);
     //获取歌单中的歌曲（用户）
     List<MusicInfoVo> getUserMusicList(String musiclistId, String userId);
     //获取歌单信息

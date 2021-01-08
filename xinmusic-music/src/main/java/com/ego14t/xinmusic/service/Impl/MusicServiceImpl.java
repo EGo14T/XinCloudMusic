@@ -106,4 +106,18 @@ public class MusicServiceImpl implements MusicService {
         List<SearchUserList> searchUserLists = musicMapper.searchUserList(defaultId, keyword);
         return musiclistService.getMusicInfoVos(searchUserLists);
     }
+
+    @Override
+    public void likeMusic(String userId, String musicId) {
+        MusicListEntity defaultList = musicMapper.getDefaultList(userId);
+        String defaultListId = defaultList.getMusiclistId();
+        addMusicToList(defaultListId, musicId);
+    }
+
+    @Override
+    public void dislikeMusic(String userId, String musicId) {
+        MusicListEntity defaultList = musicMapper.getDefaultList(userId);
+        String defaultListId = defaultList.getMusiclistId();
+        delMusicFromList(defaultListId, musicId);
+    }
 }

@@ -43,6 +43,13 @@ public interface MusiclistMapper {
     Integer collectMusicList(MusicListCollectEntity musiclistCollectEntity);
 
     /**
+     * 取消收藏歌单
+     * @param musiclistCollectEntity 实体
+     * @return 主键ID
+     */
+    Integer unCollectMusicList(MusicListCollectEntity musiclistCollectEntity);
+
+    /**
      * 查询歌单信息
      * @param userid 用户ID
      * @param musiclistId 歌单ID
@@ -61,4 +68,5 @@ public interface MusiclistMapper {
     Integer delCreatedList(String userid, String musiclistId);
 
     void delMusicFromList(String musiclistId);
+
 }

@@ -3,6 +3,7 @@ package com.ego14t.common.handler;
 import com.ego14t.common.entity.Result;
 import com.ego14t.common.error.ErrorCode;
 import com.ego14t.common.exception.XMException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,14 +34,26 @@ public class XmExceptionHandler {
      * @param t Throwable
      * @return errmsg
      */
-    @ExceptionHandler(Throwable.class)
-    public ResponseEntity<?> handleThrowable(Throwable t) {
-        return Result.ERROR(ErrorCode.ERROR);
-    }
+//    @ExceptionHandler(Throwable.class)
+//    public ResponseEntity<?> handleThrowable(Throwable t) {
+//        System.out.println(t.getMessage());
+//        return Result.ERROR(ErrorCode.ERROR);
+//    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         return Result.ERROR(ErrorCode.NOT_JSON_DATA);
+    }
+
+    /**
+     * 数据库唯一性约束异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<?> handleDuplicateKeyException(DuplicateKeyException e) {
+        return Result.ERROR(ErrorCode.EXISTS_DATA);
     }
 
 

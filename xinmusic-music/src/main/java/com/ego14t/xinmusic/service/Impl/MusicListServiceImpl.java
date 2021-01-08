@@ -106,6 +106,17 @@ public class MusicListServiceImpl implements MusicListService {
         }
     }
 
+    @Override
+    public void unCollectMusicList(String userId, String musiclistId) {
+        MusicListCollectEntity addEntity = new MusicListCollectEntity();
+        addEntity.setMusiclistId(musiclistId);
+        addEntity.setUserid(userId);
+        Integer res = musiclistMapper.unCollectMusicList(addEntity);
+        if (res != 1) {
+            throw new XMException(ErrorCode.COLLECT_MUSICLIST_FAILED); //收藏歌单失败
+        }
+    }
+
     /**
      * @param musiclistId 歌单ID
      * @param userId      用户ID
@@ -209,7 +220,7 @@ public class MusicListServiceImpl implements MusicListService {
             musicInfoVo.setSinger(s.getSinger());
             musicInfoVo.setAlbum(s.getAlbum());
             musicInfoVo.setLength(s.getLength());
-            musicInfoVo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE + "/" + s.getMusicId()+".mp3");
+            musicInfoVo.setUrl(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSIC_FILE.getPath() + "/" + s.getMusicId()+".mp3");
             if (s.getCollect() != null) {
                 musicInfoVo.setCollection(1);
             }

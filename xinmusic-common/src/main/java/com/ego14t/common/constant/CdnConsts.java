@@ -5,7 +5,7 @@ public class CdnConsts {
     /**
      * CDN地址
      */
-    public static final String CDN_PATH = "http://cdn.ego1st.cn";
+    public static final String CDN_PATH = "https://cdn.ego1st.cn";
 
     /**
      * 项目名

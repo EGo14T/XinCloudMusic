@@ -69,8 +69,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
     }
 
     @Override
-    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-
+    public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .tokenServices(defaultTokenServices)
                 .authenticationManager(authenticationManager)

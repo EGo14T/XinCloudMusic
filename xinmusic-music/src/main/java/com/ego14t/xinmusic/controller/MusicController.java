@@ -73,7 +73,7 @@ public class MusicController extends AbstractController {
 
     /**
      * 歌曲查询功能(登录&&未登录)
-     * @return
+     * @return 查询结果
      */
     @GetMapping("/song/search")
     @ApiOperation(value="搜索歌曲",notes="根据关键字")
@@ -81,6 +81,28 @@ public class MusicController extends AbstractController {
     public ResponseEntity<?> getSearchList(@RequestParam("keyword")String keyword){
         String userId = getUserId();
         return Result.OK(musicService.getSearchUserList(userId, keyword));
+    }
+
+    /**
+     * 喜欢音乐
+     * @param musicId 歌曲ID
+     * @return ResponseEntity<?>
+     */
+    @PostMapping("/song/likeMusic/{musicId}")
+    public ResponseEntity<?> likeMusic(@PathVariable(name="musicId") String musicId){
+        musicService.likeMusic(getUserId(),musicId);
+        return Result.OK();
+    }
+
+    /**
+     * 不喜欢音乐
+     * @param musicId 歌曲ID
+     * @return ResponseEntity<?>
+     */
+    @DeleteMapping("/song/dislikeMusic/{musicId}")
+    public ResponseEntity<?> dislikeMusic(@PathVariable(name="musicId") String musicId){
+        musicService.dislikeMusic(getUserId(),musicId);
+        return Result.OK();
     }
 
     @GetMapping("/test")

@@ -1,6 +1,7 @@
 package com.ego14t.xinmusic.service;
 
 import com.ego14t.xinmusic.vo.MusicInfoVo;
+
 import java.util.List;
 
 /**
@@ -18,4 +19,8 @@ public interface MusicService {
     void delMusicFromList(String musiclistId, String musicId);
     //检索歌曲(登录&&未登录)
     List<MusicInfoVo> getSearchUserList(String userId, String keyword);
+    //喜欢音乐
+    void likeMusic(String userId, String musicId);
+    //不喜欢音乐
+    void dislikeMusic(String userId, String musicId);
 }

@@ -1,6 +1,5 @@
 package com.ego14t.comments.controller;
 
-import com.ego14t.comments.vo.CommentsResponseVo;
 import com.ego14t.comments.service.CommentsService;
 import com.ego14t.comments.vo.CreateCommentsVo;
 import com.ego14t.common.entity.Result;
@@ -8,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 
 @RestController
@@ -28,12 +26,24 @@ public class CommentsController extends AbstractController{
         return Result.OK(commentsService.saveComments(createCommentsVo,getUserId()));
     }
 
+    /**
+     * 获取单条评论内容
+     * @param commentId
+     * @return
+     */
     @GetMapping("/getComment/{commentId}")
     public ResponseEntity<?> getComment(@PathVariable("commentId")String commentId) {
         return Result.OK(commentsService.getComment(commentId, getUserId()));
     }
 
 
+    /**
+     * 获取资源评论
+     * @param showId
+     * @param page
+     * @param total
+     * @return
+     */
     @GetMapping("/getAllComments/{showId}/{page}/{total}")
     public ResponseEntity<?> getAllComments(@PathVariable("showId")String showId,
                                                    @PathVariable("page")Integer page,

@@ -25,4 +25,10 @@ public interface MusicService {
 
     @GetMapping("/music/song/search")
     ResponseEntity<?> getSearchUserList(@RequestParam("keyword") String keyword);
+
+    @PostMapping("/music/song/likeMusic/{musicId}")
+    ResponseEntity<?> likeMusic(String musicId);
+
+    @DeleteMapping("/music/song/dislikeMusic/{musicId}")
+    ResponseEntity<?> dislikeMusic(String musicId);
 }
