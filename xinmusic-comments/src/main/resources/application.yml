@@ -14,7 +14,7 @@ eureka:
 
 spring:
   application:
-    name: xinmusic-comments
+    name: XinMusic-Comments
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver

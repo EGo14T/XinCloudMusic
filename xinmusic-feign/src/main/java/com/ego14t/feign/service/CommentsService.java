@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Date：Created in 2020/3/24
  * Description: 调用评论模块
  */
-@FeignClient(value = "xinmusic-comments",configuration = FeignConfig.class)
+@FeignClient(value = "XinMusic-Comments",configuration = FeignConfig.class)
 public interface CommentsService {
     /**
      * 添加评论

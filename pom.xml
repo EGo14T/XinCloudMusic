@@ -56,7 +56,7 @@
 			</dependency>
 
 			<!-- 使用SpringCloud中的版本依赖 -->
-			<dependency>
+			<dependency>e
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>

@@ -35,7 +35,7 @@
         LEFT JOIN xinmusic_base_user b ON b.userid = a.from_user_id
         WHERE
             a.show_id = #{showId}
-        ORDER BY a.create_time
+        ORDER BY a.create_time DESC
     </select>
 
     <select id="getComment" resultType="com.ego14t.comments.pojo.UserComment">

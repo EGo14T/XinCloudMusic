@@ -1,5 +1,5 @@
 server:
-  port: 8082 #端口号
+  port: 8090 #端口号
 
 eureka:
   client:
@@ -13,7 +13,7 @@ eureka:
   #  instance-id: 49.232.14.91:8083 # 线上地址
 spring:
   application:
-      name: xinmusic-music #服务名称--调用的时候根据名称来调用该服务的方法
+      name: XinMusic-Music #服务名称--调用的时候根据名称来调用该服务的方法
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

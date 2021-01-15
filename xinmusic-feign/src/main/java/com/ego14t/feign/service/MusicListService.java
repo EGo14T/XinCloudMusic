@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date Created in 2020/12/30 14:00
  * Description:
  */
-@FeignClient(value = "xinmusic-music",configuration = FeignConfig.class)
+@FeignClient(value = "XinMusic-Music",configuration = FeignConfig.class)
 public interface MusicListService {
 
     @GetMapping("/musiclist/created/{userId}")

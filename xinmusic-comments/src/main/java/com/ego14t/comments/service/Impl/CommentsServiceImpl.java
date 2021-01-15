@@ -50,17 +50,19 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public CommentsResponseVo getComment(String commentId, String userid) {
         CommentsResponseVo result = new CommentsResponseVo();
-        UserComment originComment = commentsMapper.getComment(commentId);
+        UserComment replyComments = commentsMapper.getComment(commentId);
 
-        if (originComment == null) {
+        if (replyComments == null) {
             throw new XMException(ErrorCode.NOT_FOUND_COMMENT);
         }
 
-        result.setOriginComments(originComment);
-        if (originComment.getToId() != null){
-            UserComment replyComment = commentsMapper.getComment(originComment.getToId());
-            result.setReplyComments(replyComment);
+        result.setReplyComments(replyComments);
+        if (replyComments.getToId() == null){
+            return result;
         }
+
+        UserComment originComments = commentsMapper.getComment(replyComments.getToId());
+        result.setOriginComments(originComments);
         return result;
     }
 
@@ -73,13 +75,14 @@ public class CommentsServiceImpl implements CommentsService {
         //转换成<id,UserComment>
         Map<String, UserComment> collect = userCommentList.stream().collect(Collectors.toMap(UserComment::getId, userComment -> userComment));
 
-        return userCommentList.stream().map(comment -> {
+        List<CommentsResponseVo> res = userCommentList.stream().map(comment -> {
             CommentsResponseVo resultVo = new CommentsResponseVo();
             if (comment.getToId() != null) {
-                resultVo.setReplyComments(collect.get(comment.getToId()));
+                resultVo.setOriginComments(collect.get(comment.getToId()));
             }
-            resultVo.setOriginComments(comment);
+            resultVo.setReplyComments(comment);
             return resultVo;
         }).collect(Collectors.toList());
+        return res;
     }
 }

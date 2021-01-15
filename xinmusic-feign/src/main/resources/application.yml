@@ -1,5 +1,5 @@
 server:
-  port: 8090 #端口号
+  port: 8082 #端口号
 
 eureka:
   client:
@@ -12,8 +12,8 @@ spring:
   main:
     allow-bean-definition-overriding: true  #允许相同的名称覆盖
 
-feign:
-  httpclient:
-    connection-timeout: 5000
-  hystrix:
-    enabled: false
+#feign:
+#  httpclient:
+#    connection-timeout: 5000
+#  hystrix:
+#    enabled: false

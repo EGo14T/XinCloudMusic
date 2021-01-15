@@ -16,6 +16,11 @@ spring:
       predicates:
         - Path=/music/**
 
+    - id: musiclist-resource
+      uri: lb://XinMusic-Feign/
+      predicates:
+        - Path=/musiclist/**
+
     - id: music-comments
       uri: lb://XinMusic-Feign/
       predicates:
@@ -31,7 +36,7 @@ spring:
       predicates:
         - Path=/oauth/**
 
-  security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
+  #security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 
 
 

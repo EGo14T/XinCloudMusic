@@ -60,4 +60,6 @@ public interface MusicMapper {
      * @param addEntity 添加实体
      */
     Integer addMusicToList(MusicListMusicEntity addEntity);
+
+    void updateId(String id, String musicId);
 }

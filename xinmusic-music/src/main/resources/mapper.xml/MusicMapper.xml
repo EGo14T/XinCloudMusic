@@ -65,4 +65,8 @@
         INSERT INTO xinmusic_musiclist_music (musiclist_id,music_id,create_time) VALUES (#{musiclistId},#{musicId},#{createTime})
     </insert>
 
+    <update id="updateId">
+        UPDATE xinmusic_music SET music_id = #{musicId} WHERE id = #{id}
+    </update>
+
 </mapper>
