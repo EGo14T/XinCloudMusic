@@ -70,7 +70,7 @@ public class CommentsServiceImpl implements CommentsService {
     public List<CommentsResponseVo> getAllComments(String showId, Integer page, Integer total) {
         List<UserComment> userCommentList = commentsMapper.getCommentsList(showId);
         if (userCommentList == null || new Integer(0).equals(userCommentList.size())) {
-            throw new XMException(ErrorCode.SAVE_COMMENTS_FAILED);
+            return null;
         }
         //转换成<id,UserComment>
         Map<String, UserComment> collect = userCommentList.stream().collect(Collectors.toMap(UserComment::getId, userComment -> userComment));

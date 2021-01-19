@@ -1,6 +1,6 @@
 package com.ego14t.oauth2.service;
 
-import com.ego14t.oauth2.mapper.UserMapper;
+import com.ego14t.oauth2.mapper.UserLoginMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +18,10 @@ import javax.annotation.Resource;
 public class Oauth2UserService implements UserDetailsService {
 
     @Resource
-    private UserMapper userMapper;
+    private UserLoginMapper userLoginMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userMapper.selectByUserName(username);
+        return userLoginMapper.queryByUserName(username);
     }
 }

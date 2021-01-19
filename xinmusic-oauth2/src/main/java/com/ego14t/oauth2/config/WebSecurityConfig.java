@@ -1,8 +1,5 @@
 package com.ego14t.oauth2.config;
 
-import com.ego14t.oauth2.config.Handler.WebAuthenticationEntryPoint;
-import com.ego14t.oauth2.config.Handler.WebAuthenticationFailureHandler;
-import com.ego14t.oauth2.config.Handler.WebAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -30,15 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private SelfAuthenticationProvider selfAuthenticationProvider;
 
-    @Resource
-    private WebAuthenticationFailureHandler webAuthenticationFailureHandler;
-
-    @Resource
-    private WebAuthenticationSuccessHandler webAuthenticationSuccessHandler;
-
-    @Resource
-    private WebAuthenticationEntryPoint webAuthenticationEntryPoint;
-
     //允许通过的站点
     private final String[] ALL_REQUEST = {
             "/login",                   //登录
@@ -64,9 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 //使用JWT 关闭session
               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-              .and()
-                //设置未登录的处理方式
-              .httpBasic().authenticationEntryPoint(webAuthenticationEntryPoint)
               .and()
                 //设置过滤地址
               .authorizeRequests()

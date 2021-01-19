@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego14t.oauth2.mapper.UserLoginMapper">
+    <select id="queryByUserName" resultType="com.ego14t.oauth2.entity.UserLogin">
+        SELECT t.id, t.username, t.password FROM xinmusic_login_user t WHERE t.username = #{username}
+    </select>
+
+
+</mapper>

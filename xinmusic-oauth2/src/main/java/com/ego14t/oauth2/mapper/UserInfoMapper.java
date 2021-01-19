@@ -1,32 +1,16 @@
 package com.ego14t.oauth2.mapper;
 
-import com.ego14t.oauth2.pojo.UserInfo;
-import com.ego14t.oauth2.pojo.example.UserInfoExample;
-import java.util.List;
+import com.ego14t.oauth2.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
+/**
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2021/1/19 17:11
+ * Description:
+ */
 @Mapper
 public interface UserInfoMapper {
-    long countByExample(UserInfoExample example);
 
-    int deleteByExample(UserInfoExample example);
-
-    int deleteByPrimaryKey(String id);
-
-    int insert(UserInfo record);
-
-    int insertSelective(UserInfo record);
-
-    List<UserInfo> selectByExample(UserInfoExample example);
-
-    UserInfo selectByPrimaryKey(String id);
-
-    int updateByExampleSelective(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByExample(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByPrimaryKeySelective(UserInfo record);
-
-    int updateByPrimaryKey(UserInfo record);
+    UserInfo getUserInfo(String userid);
 }

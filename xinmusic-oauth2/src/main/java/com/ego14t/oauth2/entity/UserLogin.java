@@ -1,52 +1,28 @@
-package com.ego14t.oauth2.pojo;
+package com.ego14t.oauth2.entity;
+
+import com.ego14t.common.entity.BaseEntity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 /**
- * user
- * @author 
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2021/1/19 17:12
+ * Description:
  */
-public class User implements Serializable, UserDetails {
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    private String id;
+public class UserLogin extends BaseEntity implements UserDetails, Serializable {
 
     private String username;
 
     private String password;
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6021695742877202347L;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,6 +30,16 @@ public class User implements Serializable, UserDetails {
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
     }
 
 
