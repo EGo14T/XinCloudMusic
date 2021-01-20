@@ -1,9 +1,10 @@
-package com.ego14t.oauth2.config;
+package com.ego14t.oauth2.config.SecurityConfig;
 
+import com.ego14t.common.error.ErrorCode;
+import com.ego14t.common.exception.XMException;
 import com.ego14t.oauth2.service.Oauth2UserService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -31,13 +32,13 @@ public class SelfAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails userDetails = oauth2UserService.loadUserByUsername(userName);
         if(userDetails==null){
-            throw new BadCredentialsException("用户名不存在！");
+            throw new XMException(ErrorCode.PASSWORD_CHECK_ERROR); //账号或密码错误
         }
 
         boolean check = BCrypt.checkpw(password, userDetails.getPassword());
 
         if (!check) {
-            throw new BadCredentialsException("密码不正确，请重新登陆！");
+            throw new XMException(ErrorCode.PASSWORD_CHECK_ERROR); //账号或密码错误
         }
 
         return new UsernamePasswordAuthenticationToken(userName, password, userDetails.getAuthorities());

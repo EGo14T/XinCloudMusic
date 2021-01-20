@@ -1,4 +1,4 @@
-package com.ego14t.oauth2.config;
+package com.ego14t.oauth2.config.SecurityConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

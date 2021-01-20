@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 /**
  * @author EGo1ST
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.ego14t.*")
 @EnableDiscoveryClient
 @EnableAuthorizationServer
 public class Oauth2Application {

@@ -61,8 +61,7 @@ public class TokenConfig {
     @Primary
     public DefaultTokenServices tokenServices() {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer, accessTokenConverter));
-
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(customTokenEnhancer,accessTokenConverter));
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
         defaultTokenServices.setTokenStore(tokenStore());
@@ -70,7 +69,6 @@ public class TokenConfig {
         defaultTokenServices.setReuseRefreshToken(false);
         defaultTokenServices.setAccessTokenValiditySeconds(86400);
         defaultTokenServices.setRefreshTokenValiditySeconds(604800);
-
         return defaultTokenServices;
     }
 }

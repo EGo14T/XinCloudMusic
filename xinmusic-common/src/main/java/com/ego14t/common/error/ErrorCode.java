@@ -16,7 +16,8 @@ public enum ErrorCode implements ServiceErrors{
     SUCCESS(200,"success"),
     /** 失败 */
     ERROR(500,"系统错误"),
-
+    /** 账号或密码错误 */
+    PASSWORD_CHECK_ERROR(401, "账号或密码错误"),
 
     MUSIC_MODULE_ERROR(1001,"音乐模块错误，请联系管理员"),
     /** 没有检索到该音乐信息 */
