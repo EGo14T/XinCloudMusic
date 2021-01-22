@@ -1,26 +1,23 @@
 package com.ego14t.xinmusic.service.Impl;
 
 import com.ego14t.common.constant.CdnConsts;
-import com.ego14t.common.constant.DataConsts;
 import com.ego14t.common.constant.TypePath;
 import com.ego14t.common.error.ErrorCode;
 import com.ego14t.common.exception.XMException;
 import com.ego14t.common.utils.BeanCopyUtils;
 import com.ego14t.xinmusic.config.WorkID;
-
 import com.ego14t.xinmusic.entity.MusicListCollectEntity;
 import com.ego14t.xinmusic.entity.MusicListEntity;
-import com.ego14t.xinmusic.mapper.MusiclistMapper;
 import com.ego14t.xinmusic.mapper.MusicMapper;
+import com.ego14t.xinmusic.mapper.MusiclistMapper;
 import com.ego14t.xinmusic.pojo.MusicListInfo;
 import com.ego14t.xinmusic.pojo.SearchUserList;
 import com.ego14t.xinmusic.pojo.UserMusiclist;
 import com.ego14t.xinmusic.service.MusicListService;
-
 import com.ego14t.xinmusic.util.EgoCode;
 import com.ego14t.xinmusic.util.IDworker;
-import com.ego14t.xinmusic.vo.MusicListVo;
 import com.ego14t.xinmusic.vo.MusicInfoVo;
+import com.ego14t.xinmusic.vo.MusicListVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -163,8 +160,8 @@ public class MusicListServiceImpl implements MusicListService {
         createEntity.setMusiclistName(musiclistVo.getMusiclistName());
         createEntity.setTags(musiclistVo.getTags());
         createEntity.setDescription(musiclistVo.getDescription());
-        createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + musiclistId + ".jpg");
-        createEntity.setStatus(DataConsts.NORMAL_STATUS);
+        createEntity.setMusiclistImg(CdnConsts.CDN_PATH + CdnConsts.PROJECT_PATH + TypePath.MUSICLIST_IMG.getPath() + "default.jpg");
+        createEntity.setStatus(musiclistVo.getStatus());
         Integer res = musiclistMapper.createMusicList(createEntity);
         if (res != 1){
            throw new XMException(ErrorCode.CREATE_MUSICLIST_FAILED); //新建歌单失败
@@ -203,7 +200,6 @@ public class MusicListServiceImpl implements MusicListService {
     public void updateMusicList(MusicListVo updateMusicListVo) {
         MusicListEntity updateEntity = new MusicListEntity();
         BeanCopyUtils.copy(updateMusicListVo, updateEntity);
-        updateEntity.setStatus(DataConsts.NORMAL_STATUS);
         Integer res = musiclistMapper.update(updateEntity);
         if (res != 1){
             throw new XMException(ErrorCode.UPDATE_MUSICLISTINFO_FAILED); //修改歌单信息失败

@@ -39,8 +39,8 @@ public interface MusicListService {
     @PostMapping("/musiclist/created")
     ResponseEntity<?> createMusicList(@RequestBody MusicListVo musiclistVo);
 
-    @DeleteMapping("/musiclist/{musiclistId}")
-    ResponseEntity<?> delMusicList(@PathVariable("musiclistId")String musiclistId);
+    @DeleteMapping("/musiclist/{delType}/{musiclistId}")
+    ResponseEntity<?> delMusicList(@PathVariable("delType") String delType, @PathVariable("musiclistId")String musiclistId);
 
     @PatchMapping("/musiclist/update")
     ResponseEntity<?> updateMusicList(@RequestBody MusicListVo musiclistVo);

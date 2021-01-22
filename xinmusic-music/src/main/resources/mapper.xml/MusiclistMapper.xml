@@ -34,7 +34,7 @@
         GROUP BY
             a.musiclist_id
         ORDER BY
-	        a.create_time
+	        a.create_time DESC
     </select>
 
     <select id="getDiscoverMusicList" resultType="com.ego14t.xinmusic.pojo.UserMusiclist">

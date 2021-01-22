@@ -100,9 +100,9 @@ public class MusiclistController extends AbstractController {
      * @param musiclistId 歌单ID
      * @return 状态
      */
-    @DeleteMapping("/{musiclistId}")
-    public ResponseEntity<?> delMusicList(@PathVariable("musiclistId")String musiclistId){
-        return musiclistService.delMusicList(musiclistId);
+    @DeleteMapping("/{delType}/{musiclistId}")
+    public ResponseEntity<?> delMusicList(@PathVariable("delType") String delType, @PathVariable("musiclistId")String musiclistId){
+        return musiclistService.delMusicList(delType, musiclistId);
     }
 
     /**
