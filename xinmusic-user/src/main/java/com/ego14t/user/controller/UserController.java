@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController extends AbstractController {
 
     @Resource
