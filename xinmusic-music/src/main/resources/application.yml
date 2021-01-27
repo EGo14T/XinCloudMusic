@@ -5,7 +5,9 @@ eureka:
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8081/eureka/
-    #registerWithEureka: true
+  instance:
+    hostname: localhost
+  #registerWithEureka: true
     #fetchRegistry: true #change to true，ok ok Last：Thanks
     #enabled: true
   #instance:

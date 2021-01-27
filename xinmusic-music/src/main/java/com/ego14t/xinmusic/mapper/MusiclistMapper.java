@@ -69,4 +69,8 @@ public interface MusiclistMapper {
 
     void delMusicFromList(String musiclistId);
 
+    List<MusicListEntity> queryAllObject();
+
+    void updateEgoCode(String musiclistId, String id);
+
 }

@@ -153,4 +153,9 @@ public class MusicListController extends AbstractController {
         musiclistService.updateMusicList(musiclistVo);
         return Result.OK();
     }
+
+//    @GetMapping("/test")
+//    public void test(){
+//        musiclistService.test();
+//    }
 }

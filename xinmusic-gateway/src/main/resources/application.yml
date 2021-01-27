@@ -5,6 +5,9 @@ eureka:
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8081/eureka/
+  instance:
+    prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
+    hostname: localhost
 
 spring:
   application:
@@ -32,11 +35,9 @@ spring:
         - Path=/users/**
 
     - id: music-oauth
-      uri: lb://xinmusic-oauth/
+      uri: lb://XinMusic-Oauth/
       predicates:
         - Path=/oauth/**
 
   #security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
-
-
 

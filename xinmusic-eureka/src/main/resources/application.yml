@@ -3,14 +3,14 @@ server:
 
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: localhost
 
-  #server:
-    # enable-self-preservation: false # 关闭自我保护模式
-    #eviction-interval-timer-in-ms: 600 # 设置清理间隔
+  #  server:
+#    enable-self-preservation: false # 关闭自我保护模式
+#    eviction-interval-timer-in-ms: 6000 # 设置清理间隔
 
   client:
     registerWithEureka: false #是否注册自己
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

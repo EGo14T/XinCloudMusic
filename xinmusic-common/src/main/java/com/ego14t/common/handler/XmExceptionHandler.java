@@ -3,6 +3,8 @@ package com.ego14t.common.handler;
 import com.ego14t.common.entity.Result;
 import com.ego14t.common.error.ErrorCode;
 import com.ego14t.common.exception.XMException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class XmExceptionHandler {
 
+    private static Logger logger = LoggerFactory.getLogger(XmExceptionHandler.class);
+
     /**
      * 业务流程异常
      * @param e XMException
@@ -28,17 +32,6 @@ public class XmExceptionHandler {
     public ResponseEntity<?> handleXMException(XMException e) {
         return Result.ERROR(e.getErrcode(),e.getErrmsg());
     }
-
-    /**
-     * 其他未知Throwable
-     * @param t Throwable
-     * @return errmsg
-     */
-//    @ExceptionHandler(Throwable.class)
-//    public ResponseEntity<?> handleThrowable(Throwable t) {
-//        System.out.println(t.getMessage());
-//        return Result.ERROR(ErrorCode.ERROR);
-//    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
@@ -54,6 +47,17 @@ public class XmExceptionHandler {
     @ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<?> handleDuplicateKeyException(DuplicateKeyException e) {
         return Result.ERROR(ErrorCode.EXISTS_DATA);
+    }
+
+    /**
+     * 其他未知Throwable
+     * @param t Throwable
+     * @return errmsg
+     */
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleThrowable(Throwable t) {
+        logger.error(t.getMessage(),t);
+        return Result.ERROR(ErrorCode.ERROR);
     }
 
 

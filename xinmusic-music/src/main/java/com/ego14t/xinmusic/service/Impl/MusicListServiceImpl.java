@@ -224,4 +224,14 @@ public class MusicListServiceImpl implements MusicListService {
         }
         return musicInfoVos;
     }
+
+//    @Override
+//    public void test() {
+////        List<MusicListEntity> musicListEntities = musiclistMapper.queryAllObject();
+////        for (MusicListEntity m : musicListEntities) {
+////            String id = m.getId();
+////            String musiclistId = EgoCode.encode(Long.parseLong(id));
+////            musiclistMapper.updateEgoCode(musiclistId, id);
+////        }
+//    }
 }

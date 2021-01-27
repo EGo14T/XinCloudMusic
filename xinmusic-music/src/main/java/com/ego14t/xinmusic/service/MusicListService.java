@@ -36,4 +36,6 @@ public interface MusicListService {
     void updateMusicList(MusicListVo musiclistVo);
     //获取歌单信息公共方法
     List<MusicInfoVo> getMusicInfoVos(List<SearchUserList> searchUserLists);
+
+    //void test();
 }

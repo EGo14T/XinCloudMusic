@@ -50,7 +50,6 @@
             a.musiclist_id
         ORDER BY
             a.create_time
-        LIMIT 10
     </select>
 
     <insert id="collectMusicList" parameterType="com.ego14t.xinmusic.entity.MusicListCollectEntity">
@@ -159,6 +158,14 @@
     <delete id="delMusicFromList">
         DELETE FROM xinmusic_musiclist_music t WHERE t.musiclist_id = #{musiclistId}
     </delete>
+
+    <select id="queryAllObject" resultType="com.ego14t.xinmusic.entity.MusicListEntity">
+        SELECT * FROM xinmusic_musiclist t
+    </select>
+
+    <update id="updateEgoCode">
+        UPDATE xinmusic_musiclist SET musiclist_id = #{musiclistId} WHERE id = #{id}
+    </update>
 
 
 </mapper>

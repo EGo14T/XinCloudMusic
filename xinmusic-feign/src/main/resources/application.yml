@@ -2,6 +2,8 @@ server:
   port: 8082 #端口号
 
 eureka:
+  instance:
+    hostname: localhost
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8081/eureka/

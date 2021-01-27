@@ -47,7 +47,6 @@ public class MusicServiceImpl implements MusicService {
      */
     @Override
     public MusicInfoVo getMusicInfo(String musicId) {
-        updateMusicId();
         MusicInfoVo musicInfo = new MusicInfoVo();
         MusicEntity musicEntity = musicMapper.getMusicInfo(musicId);
         if (musicEntity == null){
@@ -121,46 +120,5 @@ public class MusicServiceImpl implements MusicService {
         MusicListEntity defaultList = musicMapper.getDefaultList(userId);
         String defaultListId = defaultList.getMusiclistId();
         delMusicFromList(defaultListId, musicId);
-    }
-
-    public void updateMusicId() {
-        String[] ids = {"90390131827015680",
-                "90390133198553088",
-                "90390133555068928",
-                "90390133974499328",
-                "90390134242934784",
-                "90390134708502528",
-                "90390135085989888",
-                "90390135404756992",
-                "90390135887101952",
-                "90390136272977920",
-                "90390136952455168",
-                "90390137644515328",
-                "90390138101694464",
-                "90390138516930560",
-                "90390139007664128",
-                "90390139280293888",
-                "90390139666169856",
-                "90390140161097728",
-                "90390140651831296",
-                "90390141171924992",
-                "90390141910122496",
-                "90390142711234560",
-                "90390143130664960",
-                "90390143554289664",
-                "90390144489619456",
-                "90390144837746688",
-                "90390145223622656",
-                "90390145609498624",
-                "90390146003763200",
-                "90390146616131584"};
-
-
-        for (String id :
-                ids) {
-            Long aLong = Long.parseLong(id);
-            String encode = EgoCode.encode(aLong);
-            musicMapper.updateId(id,encode);
-        }
     }
 }
