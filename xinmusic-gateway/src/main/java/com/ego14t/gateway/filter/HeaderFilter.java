@@ -54,7 +54,6 @@ public class HeaderFilter implements GlobalFilter, Ordered {
         //映射jwt中的信息为UserInfo对象
         Claim user = decodedJWT.getClaim("user");
         Map<String, Object> stringObjectMap = user.asMap();
-        String userid = stringObjectMap.get("userid").toString();
-        return userid;
+        return stringObjectMap.get("userid").toString();
     }
 }
