@@ -1,59 +1,48 @@
-package com.ego14t.gateway.pojo;
+package com.ego14t.gateway.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ego14t.common.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class UserInfo {
-    /**
-     * 用户的唯一ID标识
-     */
-    private String id;
+/**
+ * @author wangfx
+ * Created by EGo1sT
+ * @Date Created in 2021/1/19 17:26
+ * Description:
+ */
+public class UserInfo extends BaseEntity implements Serializable {
 
-    /**
-     * 用户名
-     */
-    private String name;
+    private static final long serialVersionUID = -850465471888632654L;
 
-    /**
-     * 用户性别 0:保密 1:男 2:女
-     */
+    private String userid;
+
+    private String nickname;
+
     private Integer gender;
 
-    /**
-     * 用户个人介绍
-     */
     private String introduce;
 
-    /**
-     * 用户的生日
-     */
-    private String birth;
+    private LocalDate birth;
 
-    /**
-     * 用户所在地区
-     */
     private String area;
 
-    /**
-     * 用户头像
-     */
     private String avatar;
 
-    public String getId() {
-        return id;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Integer getGender() {
@@ -72,11 +61,11 @@ public class UserInfo {
         this.introduce = introduce;
     }
 
-    public String getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 

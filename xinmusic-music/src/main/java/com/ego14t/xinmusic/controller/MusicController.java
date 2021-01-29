@@ -48,7 +48,7 @@ public class MusicController extends AbstractController {
             @ApiImplicitParam(name = "musicId", value = "歌曲ID", required = true)
     })
     public ResponseEntity<?> addMusicToList(@PathVariable(name = "musiclistId" )String musiclistId,
-                                       @PathVariable(name="musicId") String musicId){
+                                            @PathVariable(name="musicId") String musicId){
         musicService.addMusicToList(musiclistId, musicId);
         return Result.OK();
     }

@@ -3,7 +3,7 @@ package com.ego14t.gateway.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ego14t.gateway.pojo.UserInfo;
+import com.ego14t.gateway.entity.UserInfo;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Component
@@ -52,7 +53,8 @@ public class HeaderFilter implements GlobalFilter, Ordered {
         DecodedJWT decodedJWT = JWT.decode(jwt);
         //映射jwt中的信息为UserInfo对象
         Claim user = decodedJWT.getClaim("user");
-        UserInfo userInfo = user.as(UserInfo.class);
-        return userInfo.getId();
+        Map<String, Object> stringObjectMap = user.asMap();
+        String userid = stringObjectMap.get("userid").toString();
+        return userid;
     }
 }
