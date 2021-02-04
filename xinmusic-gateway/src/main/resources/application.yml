@@ -5,39 +5,65 @@ eureka:
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8081/eureka/
+    registry-fetch-interval-seconds: 60000  #路由刷新时间
   instance:
     prefer-ip-address: true # 开启以端口ip的形式注册，方便线上找到服务
     hostname: localhost
-
 spring:
   application:
     name: XinMusic-Gateway #服务名称--调用的时候根据名称来调用该服务的方法
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xinmusic_new?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: admin
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10  #<--限制最大连接
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 
-  cloud.gateway.routes:
-    - id: music-resource
-      uri: lb://XinMusic-Feign/
-      predicates:
-        - Path=/music/**
+  security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 
-    - id: musiclist-resource
-      uri: lb://XinMusic-Feign/
-      predicates:
-        - Path=/musiclist/**
+mybatis:
+  mapper-locations: classpath:mapper/xml/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  configuration:
+    map-underscore-to-camel-case: true
 
-    - id: music-comments
-      uri: lb://XinMusic-Feign/
-      predicates:
-        - Path=/comments/**
+logging:
+  level:
+    com.ego14t.gateway.mapper: debug
 
-    - id: music-user
-      uri: lb://XinMusic-Feign/
-      predicates:
-        - Path=/users/**
+#  cloud.gateway.routes:
+#    - id: music-resource
+#      uri: lb://XinMusic-Feign/
+#      predicates:
+#        - Path=/music/**
+#
+#    - id: musiclist-resource
+#      uri: lb://XinMusic-Feign/
+#      predicates:
+#        - Path=/musiclist/**
+#
+#    - id: music-comments
+#      uri: lb://XinMusic-Feign/
+#      predicates:
+#        - Path=/comments/**
+#
+#    - id: music-user
+#      uri: lb://XinMusic-Feign/
+#      predicates:
+#        - Path=/users/**
+#
+#    - id: music-oauth
+#      uri: lb://XinMusic-Oauth/
+#      predicates:
+#        - Path=/oauth/**
 
-    - id: music-oauth
-      uri: lb://XinMusic-Oauth/
-      predicates:
-        - Path=/oauth/**
 
-  #security.oauth2.resourceserver.jwt.jwk-set-uri: 'http://localhost:9000/.well-known/jwks.json'
 

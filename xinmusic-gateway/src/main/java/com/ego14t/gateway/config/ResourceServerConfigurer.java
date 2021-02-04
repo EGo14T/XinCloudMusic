@@ -1,5 +1,11 @@
 package com.ego14t.gateway.config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
 /**
  * @author 王富昕
  * Created by EGo1ST
@@ -7,8 +13,8 @@ package com.ego14t.gateway.config;
  * Description:
  */
 
-//@Configuration
-//@EnableWebFluxSecurity
+@Configuration
+@EnableWebFluxSecurity
 public class ResourceServerConfigurer {
 
     private final String[] ALLOW_REQUEST = {"/oauth/**",
@@ -22,14 +28,14 @@ public class ResourceServerConfigurer {
                                             "/search/musiclist",
                                             "/users/register"};
 
-    //@Bean
-//    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-//        http.csrf().disable()
-//                .authorizeExchange()
-//                .pathMatchers(ALLOW_REQUEST).permitAll()
-//                .anyExchange().authenticated()
-//                .and()
-//                .oauth2ResourceServer().jwt();
-//        return http.build();
-//    }
+    @Bean
+    SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        http.csrf().disable()
+                .authorizeExchange()
+                .pathMatchers(ALLOW_REQUEST).permitAll()
+                .anyExchange().authenticated()
+                .and()
+                .oauth2ResourceServer().jwt();
+        return http.build();
+    }
 }

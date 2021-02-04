@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ego14t.gateway.mapper.GatewayMapper">
+
+    <select id="queryAllRoutes" resultType="com.ego14t.gateway.entity.RoutesEntity">
+        select * from xinmusic_gateway_routes
+    </select>
+
+    <insert id="create" parameterType="com.ego14t.gateway.entity.RoutesEntity">
+        INSERT INTO xinmusic_gateway_routes
+        (route_id,
+        uri,
+        `order`,
+        predicates,
+        filters
+        )
+        values (
+        #{routeId},
+        #{uri},
+        #{order},
+        #{predicates},
+        #{filters}
+        )
+    </insert>
+
+    <delete id="deleteByRouteId">
+        delete from xinmusic_gateway_routes where route_id = #{routeId}
+    </delete>
+    
+    <update id="updateRouteById" parameterType="com.ego14t.gateway.entity.RoutesEntity">
+        UPDATE xinmusic_gateway_routes
+        SET
+        <if test="routeId != null">
+            route_id = #{routeId},
+        </if>
+        <if test="uri != null">
+            uri = #{uri},
+        </if>
+        <if test="order != null">
+            `order` = #{order},
+        </if>
+        <if test="predicates != null">
+            predicates = #{predicates},
+        </if>
+        <if test="filters != null">
+            filters = #{filters},
+        </if>
+        WHERE route_id = #{routeId}
+    </update>
+</mapper>

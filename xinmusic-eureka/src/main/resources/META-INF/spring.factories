@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.ego14t.eureka.config.TEnvironmentPostProcessor
