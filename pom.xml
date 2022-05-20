@@ -38,7 +38,7 @@
 		<nimbus-jose-jwt.version>9.1.2</nimbus-jose-jwt.version>
 		<java-jwt.version>3.11.0</java-jwt.version>
 		<commons-lang3.version>3.11</commons-lang3.version>
-		<gson.version>2.8.6</gson.version>
+		<gson.version>2.8.9</gson.version>
 	</properties>
 
 	<dependencies>
